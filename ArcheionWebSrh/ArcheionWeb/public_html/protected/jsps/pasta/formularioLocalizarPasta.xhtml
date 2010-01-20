@@ -201,6 +201,12 @@
 							</h:column>			
 							<h:column>
 								<f:facet name="header">
+									<h:outputText value="#{msgs['geral.descricao']}" />
+								</f:facet>
+								<h:outputText value="#{lista.descricao}" />
+							</h:column>									
+							<h:column>
+								<f:facet name="header">
 									<h:outputText value="#{msgs['pasta.texto.caixeta']}" />
 								</f:facet>
 								<h:outputText value="#{lista.caixeta}" />

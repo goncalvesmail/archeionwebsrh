@@ -79,7 +79,8 @@
 				<table class="tabelasemlinha" align="center" cellpadding="2"
 					cellspacing="2" >
 					<tr>
-						<td><t:dataTable id="itens" rows="20"
+						<td>
+						<t:dataTable id="itens" rows="20"
 							value="#{pastaBean.listaPasta}" var="lista"
 							rendered="#{not empty pastaBean.listaPasta}" align="center"
 							cellpadding="0" cellspacing="0" styleClass="tabela tabelaCss"
@@ -93,6 +94,12 @@
 								</f:facet>
 								<h:outputText value="#{lista.titulo}" />
 							</t:column>	
+							<t:column defaultSorted="true" sortable="true">
+								<f:facet name="header">
+									<h:outputText value="#{msgs['geral.descricao']}" />
+								</f:facet>
+								<h:outputText value="#{lista.descricao}" />
+							</t:column>								
 							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['geral.caixa']}" />

@@ -106,6 +106,17 @@ td,input {
 							<h:message for="titulo" errorStyle="color: red;" />
 						</td>	
 					</tr>
+					
+					<tr>
+						<td align="right" width="50%">
+							<h:outputLabel styleClass="label" value="#{msgs['geral.descricao']}:" for="descricao" />
+						</td>
+						<td align="left">
+							<h:inputText id="descricao" required="false" 
+								styleClass="campo" value="#{pastaBean.pasta.descricao}"	/>
+						</td>	
+					</tr>		
+					
 					<tr>
 						<td align="right">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['pasta.data.abertura.referencia']}:" for="dataAbertura" />
@@ -128,7 +139,7 @@ td,input {
 										<a4j:support event="onchange" reRender="outEvento" id="dataAjax"/>
 								</t:inputCalendar>
 							</a4j:region>
-							<h:message for="data" errorStyle="color: red;" />
+							<h:message for="dataAbertura" errorStyle="color: red;" />
 						</td>
 					</tr>		
 					<tr>
