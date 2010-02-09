@@ -24,11 +24,13 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="idEmprestimoCaixa" isForPrompting="false" class="java.lang.Long"/>
+	<parameter name="ids" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[select e.nm_empresa, l.nm_local, ec.vao_endereco_caixa, c.nu_vao_endereco_caixa,
        c.cs_situacao, c.dt_expurgo, c.dt_criacao, c.cs_tipo_arquivo
 from tb_caixa c join tb_local l on (c.id_local = l.id_local)
      join tb_endereco_caixa ec on (c.id_endereco_caixa = ec.id_endereco_caixa)
      join tb_empresa e on (l.id_empresa = e.id_empresa)
+where c.id_caixa in ($P!{ids})
 order by 1,2,3,4]]></queryString>
 
 	<field name="nm_empresa" class="java.lang.String"/>
@@ -227,7 +229,7 @@ $F{vao_endereco_caixa} + $F{nu_vao_endereco_caixa} )]]></variableExpression>
 					<textElement textAlignment="Center">
 						<font pdfFontName="Helvetica" size="16" isBold="false"/>
 					</textElement>
-				<text><![CDATA[Relação de Pastas]]></text>
+				<text><![CDATA[Relação de Caixas]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -250,7 +252,7 @@ $F{vao_endereco_caixa} + $F{nu_vao_endereco_caixa} )]]></variableExpression>
 		</columnHeader>
 		<detail>
 			<band height="21"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="2"
 						y="3"
@@ -263,7 +265,7 @@ $F{vao_endereco_caixa} + $F{nu_vao_endereco_caixa} )]]></variableExpression>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$V{caixa}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="224"
 						y="3"
@@ -290,7 +292,7 @@ $F{cs_situacao}.equals(new Integer(1))?"Ativa":"Expurgada" )]]></textFieldExpres
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[$F{dt_expurgo}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="125"
 						y="3"

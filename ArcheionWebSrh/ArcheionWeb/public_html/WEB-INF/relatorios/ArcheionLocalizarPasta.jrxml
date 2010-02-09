@@ -25,7 +25,7 @@
 
 	<parameter name="idsPasta" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[select l.nm_local, it.nm_item_documental, p.nm_titulo,
-       ttd.cs_arq_intermediario, ttd.cs_arq_permanente
+       ttd.cs_arq_intermediario, ttd.cs_arq_permanente, p.nm_descricao
 from tb_pasta p, tb_local l, tb_item_documental it, tb_ttd ttd
 where p.id_local = l.id_local
   and p.id_item_documental = it.id_item_documental
@@ -39,6 +39,7 @@ order by 1,2]]></queryString>
 	<field name="nm_titulo" class="java.lang.String"/>
 	<field name="cs_arq_intermediario" class="java.lang.Integer"/>
 	<field name="cs_arq_permanente" class="java.lang.Integer"/>
+	<field name="nm_descricao" class="java.lang.String"/>
 
 	<variable name="situacao" class="java.lang.String" resetType="Report" calculation="Nothing">
 		<variableExpression><![CDATA[new String(
@@ -107,7 +108,7 @@ order by 1,2]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="175"
+						x="164"
 						y="4"
 						width="102"
 						height="20"
@@ -130,6 +131,19 @@ order by 1,2]]></queryString>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Situação]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="318"
+						y="4"
+						width="102"
+						height="20"
+						key="staticText-7"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Descrição]]></text>
 				</staticText>
 			</band>
 			</groupHeader>
@@ -204,12 +218,12 @@ order by 1,2]]></queryString>
 		</columnHeader>
 		<detail>
 			<band height="38"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="6"
 						y="4"
-						width="162"
-						height="18"
+						width="155"
+						height="31"
 						key="textField"/>
 					<box></box>
 					<textElement>
@@ -217,11 +231,11 @@ order by 1,2]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nm_item_documental}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="175"
+						x="164"
 						y="4"
-						width="248"
+						width="149"
 						height="31"
 						key="textField"/>
 					<box></box>
@@ -230,7 +244,7 @@ order by 1,2]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nm_titulo}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="430"
 						y="4"
@@ -242,6 +256,19 @@ order by 1,2]]></queryString>
 						<font/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$V{situacao}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="318"
+						y="4"
+						width="108"
+						height="31"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nm_descricao}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

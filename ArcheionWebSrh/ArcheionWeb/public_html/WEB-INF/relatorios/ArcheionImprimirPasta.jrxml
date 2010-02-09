@@ -26,7 +26,7 @@
 	<parameter name="idEmprestimoCaixa" isForPrompting="false" class="java.lang.Long"/>
 	<parameter name="ids" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[select e.nm_empresa, l.nm_local, itd.nm_item_documental, p.nm_titulo, p.cs_situacao_pasta, 
-       p.dt_expurgo
+       p.dt_expurgo, p.nm_descricao
 from tb_pasta p join tb_local l on (p.id_local = l.id_local)
      join tb_item_documental itd on (p.id_item_documental = itd.id_item_documental)
      join tb_empresa e on (l.id_empresa = e.id_empresa)
@@ -39,6 +39,7 @@ order by 1,2,3,4]]></queryString>
 	<field name="nm_titulo" class="java.lang.String"/>
 	<field name="cs_situacao_pasta" class="java.lang.Integer"/>
 	<field name="dt_expurgo" class="java.sql.Date"/>
+	<field name="nm_descricao" class="java.lang.String"/>
 
 
 		<group  name="empresa" >
@@ -160,8 +161,8 @@ order by 1,2,3,4]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="326"
-						y="25"
+						x="385"
+						y="26"
 						width="49"
 						height="13"
 						key="staticText-7"/>
@@ -173,7 +174,7 @@ order by 1,2,3,4]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="429"
+						x="440"
 						y="26"
 						width="86"
 						height="13"
@@ -183,6 +184,19 @@ order by 1,2,3,4]]></queryString>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
 				<text><![CDATA[Data de Expurgo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="200"
+						y="26"
+						width="73"
+						height="13"
+						key="staticText-9"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Descrição]]></text>
 				</staticText>
 			</band>
 			</groupHeader>
@@ -256,13 +270,13 @@ order by 1,2,3,4]]></queryString>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="33"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+			<band height="41"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
 						y="5"
-						width="314"
-						height="28"
+						width="195"
+						height="36"
 						key="textField"/>
 					<box></box>
 					<textElement>
@@ -270,10 +284,10 @@ order by 1,2,3,4]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nm_titulo}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="326"
-						y="4"
+						x="385"
+						y="5"
 						width="49"
 						height="13"
 						key="textField"/>
@@ -286,7 +300,7 @@ $F{cs_situacao_pasta}.equals(new Integer(1))?"Ativa":"Expurgada" )]]></textField
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="429"
+						x="440"
 						y="4"
 						width="85"
 						height="13"
@@ -296,6 +310,19 @@ $F{cs_situacao_pasta}.equals(new Integer(1))?"Ativa":"Expurgada" )]]></textField
 						<font/>
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[$F{dt_expurgo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="200"
+						y="5"
+						width="180"
+						height="36"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nm_descricao}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

@@ -694,6 +694,12 @@ public class CaixaMBean extends ArcheionBean {
 			String pathJasper = ((ServletContext)context.getExternalContext().getContext()).getRealPath("/WEB-INF/relatorios/")+ 
 			"/ArcheionImprimirCaixa.jasper";
 			HashMap<String, Object> param = new HashMap<String, Object>();
+			ParametrosReport ids = new ParametrosReport();
+			for(Caixa p: listaCaixa) {
+				ids.add(p.getId());
+			}
+			param.put("ids", ids.toString());
+			
 			Relatorio relatorio = empresaBO.getRelatorio(param, pathJasper);
 			relatorio.exportarParaPdfStream(responseStream);
 
