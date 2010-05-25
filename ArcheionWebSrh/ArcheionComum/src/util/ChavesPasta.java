@@ -13,7 +13,8 @@ public enum ChavesPasta {
 	TITULOPASTA(10,"Título Pasta","u.titulo"),
 	VAO(11,"Vão","u.caixa.vao.vao"),
 	VAONUMERO(12,"Número Vão","u.caixa.numeroVao","number"),
-	DESCRICAO(13,"Descrição","u.descricao");
+	DESCRICAO(13,"Descrição","u.descricao"),
+	NUMEROPROTOCOLO(14,"Número de protocolo","u.numeroProtocolo");
 	
 	ChavesPasta(int id, String label, String dataValue) {
 		this.id = id;

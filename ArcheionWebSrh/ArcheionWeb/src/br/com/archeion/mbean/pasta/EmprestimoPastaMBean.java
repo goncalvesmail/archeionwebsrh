@@ -177,9 +177,17 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		else {
 			pastas = new ArrayList<Pasta>();
 		}
-		
+		String auxPasta = "";
 		for( Pasta p:pastas ) {
-			listaPasta.add(new SelectItem(p.getId(),p.getTitulo()));
+			auxPasta = p.getTitulo();
+			if(p.getDescricao() != null){
+				auxPasta += " - " + p.getDescricao(); 
+			}
+			
+			if(p.getNumeroProtocolo() != null){
+				auxPasta += " - " + p.getNumeroProtocolo();
+			}
+			listaPasta.add(new SelectItem(p.getId(),auxPasta));
 		}
 	}
 
@@ -259,7 +267,15 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			}
 			
 			Pasta c = emprestimo.getPasta();
-			listaPasta.add(new SelectItem(c.getId(),c.getTitulo()));
+			String auxPasta = c.getTitulo();
+			if(c.getDescricao() != null){
+				auxPasta += " - " + c.getDescricao(); 
+			}
+			
+			if(c.getNumeroProtocolo() != null){
+				auxPasta += " - " + c.getNumeroProtocolo();
+			}
+			listaPasta.add(new SelectItem(c.getId(),auxPasta));
 
 		} catch (AccessDeniedException aex) {
 			return Constants.ACCESS_DENIED;

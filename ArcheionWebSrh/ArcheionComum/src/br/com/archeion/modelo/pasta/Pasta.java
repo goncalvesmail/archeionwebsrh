@@ -53,6 +53,9 @@ public class Pasta extends AbstractTO implements Serializable {
 	@Column(name = "NM_DESCRICAO")
 	private String descricao;
 	
+	@Column(name = "NM_NUMERO_PROTOCOLO")
+	private String numeroProtocolo;
+	
 	@Column(name = "NM_CAIXETA")
 	private String caixeta;
 	
@@ -291,6 +294,14 @@ public class Pasta extends AbstractTO implements Serializable {
 		buff.append("]");
 		
 		return buff.toString();
+	}
+
+	public String getNumeroProtocolo() {
+		return numeroProtocolo;
+	}
+
+	public void setNumeroProtocolo(String numeroProtocolo) {
+		this.numeroProtocolo = numeroProtocolo;
 	}
 	
 }

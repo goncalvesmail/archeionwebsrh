@@ -115,7 +115,17 @@ td,input {
 							<h:inputText id="descricao" required="false" 
 								styleClass="campo" value="#{pastaBean.pasta.descricao}"	/>
 						</td>	
-					</tr>		
+					</tr>	
+					
+					<tr>
+						<td align="right" width="50%">
+							<h:outputLabel styleClass="label" value="#{msgs['pasta.numero.protocolo']}:" for="numProtocolo" />
+						</td>
+						<td align="left">
+							<h:inputText id="numProtocolo" required="false" 
+								styleClass="campo" value="#{pastaBean.pasta.numeroProtocolo}"	/>
+						</td>	
+					</tr>	
 					
 					<tr>
 						<td align="right">

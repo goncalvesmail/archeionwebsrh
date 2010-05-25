@@ -136,7 +136,19 @@
 									<h:outputText value="#{msgs['emprestimo.pasta.solicitada']}" />
 								</f:facet>
 								<h:outputText value="#{lista.pasta.titulo}" />
-							</h:column>			
+							</h:column>	
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{msgs['geral.descricao']}" />
+								</f:facet>
+								<h:outputText value="#{lista.pasta.descricao}" />
+							</h:column>
+							<t:column>
+								<f:facet name="header">
+									<h:outputText value="#{msgs['pasta.numero.protocolo']}" />
+								</f:facet>
+								<h:outputText value="#{lista.pasta.numeroProtocolo}" />
+							</t:column>				
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{msgs['emprestimo.pasta.solicitante']}" />

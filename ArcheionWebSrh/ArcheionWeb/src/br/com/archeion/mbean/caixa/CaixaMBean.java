@@ -613,8 +613,9 @@ public class CaixaMBean extends ArcheionBean {
 			HttpServletResponse response = (HttpServletResponse) context
 			.getExternalContext().getResponse();
 			
-			//Cria um cache no  C:\tmp
-			JRFileVirtualizer fileVirtualizer = new JRFileVirtualizer(4, "c:\\tmp");
+			//Cria um cache na pasta web-inf
+			JRFileVirtualizer fileVirtualizer = 
+				new JRFileVirtualizer(100, ((ServletContext)context.getExternalContext().getContext()).getRealPath("/WEB-INF/"));
 
 			ServletOutputStream responseStream;
 			responseStream = response.getOutputStream();
