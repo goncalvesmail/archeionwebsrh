@@ -28,7 +28,8 @@
 	
 		<properties>
 			<property name="toplink.jdbc.driver" value="org.postgresql.Driver"/> 
-			<property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432/archeionweb" />
+			<property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432/archeion" />
+			<!-- <property name="toplink.jdbc.url" value="jdbc:postgresql://192.168.1.101:5432/archeion" /> -->
 			<property name="toplink.ddl-generation" value="create-tables"/>  
 			<!--<property name="toplink.ddl-generation" value="drop-and-create-tables"/>-->
 			<property name="toplink.jdbc.user" value="postgres" />
