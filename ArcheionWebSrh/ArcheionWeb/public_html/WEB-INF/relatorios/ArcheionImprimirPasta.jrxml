@@ -152,57 +152,31 @@ order by 1,2,3,4]]></queryString>
 					<reportElement
 						x="65"
 						y="26"
-						width="49"
+						width="112"
 						height="13"
 						key="staticText-6"/>
 					<box></box>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Titulo]]></text>
+				<text><![CDATA[Titulo / Interessado]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="636"
+						x="305"
 						y="26"
-						width="49"
-						height="13"
-						key="staticText-7"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
-				<text><![CDATA[Situação]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="691"
-						y="26"
-						width="86"
-						height="13"
-						key="staticText-8"/>
-					<box></box>
-					<textElement>
-						<font pdfFontName="Helvetica-Bold" isBold="true"/>
-					</textElement>
-				<text><![CDATA[Data de Expurgo]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="264"
-						y="26"
-						width="73"
+						width="107"
 						height="13"
 						key="staticText-9"/>
 					<box></box>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Descrição]]></text>
+				<text><![CDATA[Descrição / Assunto]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="448"
+						x="547"
 						y="25"
 						width="181"
 						height="13"
@@ -298,13 +272,13 @@ order by 1,2,3,4]]></queryString>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="41"  isSplitAllowed="true" >
+			<band height="59"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
 						y="0"
-						width="195"
-						height="36"
+						width="235"
+						height="58"
 						key="textField"/>
 					<box></box>
 					<textElement>
@@ -314,37 +288,10 @@ order by 1,2,3,4]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="636"
+						x="305"
 						y="0"
-						width="49"
-						height="13"
-						key="textField"/>
-					<box></box>
-					<textElement textAlignment="Center" verticalAlignment="Top">
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[new String(
-$F{cs_situacao_pasta}.equals(new Integer(1))?"Ativa":"Expurgada" )]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="691"
-						y="0"
-						width="85"
-						height="13"
-						key="textField"/>
-					<box></box>
-					<textElement textAlignment="Center">
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.util.Date"><![CDATA[$F{dt_expurgo}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="264"
-						y="0"
-						width="180"
-						height="36"
+						width="235"
+						height="58"
 						key="textField"/>
 					<box></box>
 					<textElement>
@@ -354,10 +301,10 @@ $F{cs_situacao_pasta}.equals(new Integer(1))?"Ativa":"Expurgada" )]]></textField
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="449"
+						x="548"
 						y="0"
-						width="180"
-						height="36"
+						width="235"
+						height="58"
 						key="textField"/>
 					<box></box>
 					<textElement>
@@ -370,7 +317,7 @@ $F{cs_situacao_pasta}.equals(new Integer(1))?"Ativa":"Expurgada" )]]></textField
 						x="4"
 						y="0"
 						width="54"
-						height="36"
+						height="58"
 						key="textField"/>
 					<box></box>
 					<textElement>

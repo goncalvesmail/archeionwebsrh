@@ -234,6 +234,18 @@
 									<h:outputText value="#{msgs['geral.expurgo']}" />
 								</f:facet>
 								<h:outputText value="#{lista.previsaoExpurgo}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{msgs['geral.botao.alterar']}" />
+								</f:facet>
+								<h:commandLink action="#{pastaBean.goToAlterar}"
+								 	rendered="#{lista.situacao.id==2}"
+									id="botaoAlterar">
+									<h:graphicImage value="/images/editar2.gif" border="0" />
+									<f:param name="_id" value="#{lista.id}" />
+									<f:param name="_origem" value="formularioPasta" />
+								</h:commandLink>
 							</h:column>															
 														
 						</h:dataTable></td>

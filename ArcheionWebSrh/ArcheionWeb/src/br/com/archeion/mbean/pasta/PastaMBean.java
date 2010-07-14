@@ -79,8 +79,11 @@ public class PastaMBean extends ArcheionBean {
 	private ItemDocumentalBO itemDocumentalBO = (ItemDocumentalBO) Util.getSpringBean("itemDocumentalBO");
 	private TTDBO ttdBO = (TTDBO) Util.getSpringBean("ttdBO");
 	
+	private LocalizarPastaMBean localizarPastaBean = (LocalizarPastaMBean) Util.getManagedBean("localizarPastaBean");
+	
 	private String nomeEventoContagem;
 	private boolean visualizar = false;
+	private String origemAlteracao = "";
 	
 	public PastaMBean() {
 		pasta = new Pasta();
@@ -292,7 +295,9 @@ public class PastaMBean extends ArcheionBean {
 
 	private String preparaTelaAlterar() {
 		try {			
-			Long id = Long.valueOf(Util.getParameter("_id"));			
+			Long id = Long.valueOf(Util.getParameter("_id"));
+			origemAlteracao = Util.getParameter("_origem");
+			
 			pasta = pastaBO.findById(id);
 			
 			preencherCombos();
@@ -317,6 +322,7 @@ public class PastaMBean extends ArcheionBean {
 			excBean.setExc(e);
 			return Constants.ERROR_HANDLER;
 		}
+	
 		return "formularioAlterarPasta";
 	}	
 	
@@ -338,7 +344,14 @@ public class PastaMBean extends ArcheionBean {
 			excBean.setExc(e);
 			return Constants.ERROR_HANDLER;
 		}
-		return findAll();
+		//return findAll();
+		if(origemAlteracao.equals("listaPasta")){
+			//return "listaPasta";
+			return findByEmpresaLocal();
+		} else {
+			//return "formularioLocalizarPasta";
+			return localizarPastaBean.localizarPasta();
+		}
 	}	
 	
 	public String remover() {
@@ -843,6 +856,14 @@ public class PastaMBean extends ArcheionBean {
 
 	public void setListaSituacao(List<SelectItem> listaSituacao) {
 		this.listaSituacao = listaSituacao;
+	}
+
+	public LocalizarPastaMBean getLocalizarPastaBean() {
+		return localizarPastaBean;
+	}
+
+	public void setLocalizarPastaBean(LocalizarPastaMBean localizarPastaBean) {
+		this.localizarPastaBean = localizarPastaBean;
 	}
 	
 	

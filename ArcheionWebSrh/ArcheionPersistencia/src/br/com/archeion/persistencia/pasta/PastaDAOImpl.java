@@ -74,6 +74,8 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 				where = true;
 			}
 		}
+		
+		sql.append(" order by u.titulo ");
 
 		List<Pasta> list = getJpaTemplate().findByNamedParams(sql.toString(),
 				parametros);
@@ -124,6 +126,7 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 		if(where.length() > 2){
 			sql.append(" WHERE ");
 			sql.append(where);
+			sql.append(" order by u.titulo ");
 		}
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 
