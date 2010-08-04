@@ -30,6 +30,7 @@ import br.com.archeion.exception.CadastroDuplicadoException;
 import br.com.archeion.jsf.Constants;
 import br.com.archeion.jsf.Util;
 import br.com.archeion.mbean.ArcheionBean;
+import br.com.archeion.mbean.AuthenticationController;
 import br.com.archeion.mbean.ExceptionManagedBean;
 import br.com.archeion.modelo.SituacaoExpurgo;
 import br.com.archeion.modelo.empresa.Empresa;
@@ -79,6 +80,7 @@ public class PastaMBean extends ArcheionBean {
 	private ItemDocumentalBO itemDocumentalBO = (ItemDocumentalBO) Util.getSpringBean("itemDocumentalBO");
 	private TTDBO ttdBO = (TTDBO) Util.getSpringBean("ttdBO");
 	
+	private AuthenticationController authenticationController = (AuthenticationController) Util.getManagedBean("authenticationController"); 
 	private LocalizarPastaMBean localizarPastaBean = (LocalizarPastaMBean) Util.getManagedBean("localizarPastaBean");
 	
 	private String nomeEventoContagem;
@@ -387,6 +389,16 @@ public class PastaMBean extends ArcheionBean {
 		return "listaPasta";
 	}
 	
+	public String findByCaixeta() {		
+		try {
+			listaPasta = pastaBO.findByCaixeta(pasta.getCaixeta());
+		} catch (AccessDeniedException aex) {
+			return Constants.ACCESS_DENIED;
+		} 
+		
+		return "listaPasta";
+	}
+	
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {
@@ -403,6 +415,7 @@ public class PastaMBean extends ArcheionBean {
 				ids.add(p.getId());
 			}
 			param.put("ids", ids.toString());
+			param.put("user", authenticationController.getUsuario().getNome());
 
 			Relatorio relatorio = pastaBO.getRelatorio(param, pathJasper);
 			relatorio.exportarParaPdfStream(responseStream);
@@ -864,6 +877,15 @@ public class PastaMBean extends ArcheionBean {
 
 	public void setLocalizarPastaBean(LocalizarPastaMBean localizarPastaBean) {
 		this.localizarPastaBean = localizarPastaBean;
+	}
+
+	public AuthenticationController getAuthenticationController() {
+		return authenticationController;
+	}
+
+	public void setAuthenticationController(
+			AuthenticationController authenticationController) {
+		this.authenticationController = authenticationController;
 	}
 	
 	

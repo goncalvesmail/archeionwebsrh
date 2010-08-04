@@ -29,6 +29,7 @@ import util.Relatorio;
 import br.com.archeion.jsf.Constants;
 import br.com.archeion.jsf.Util;
 import br.com.archeion.mbean.ArcheionBean;
+import br.com.archeion.mbean.AuthenticationController;
 import br.com.archeion.modelo.SituacaoExpurgo;
 import br.com.archeion.modelo.pasta.Pasta;
 import br.com.archeion.negocio.pasta.PastaBO;
@@ -69,6 +70,7 @@ public class LocalizarPastaMBean extends ArcheionBean {
 
 	private PastaBO pastaBO = (PastaBO) Util.getSpringBean("pastaBO");
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
+	private AuthenticationController authenticationController = (AuthenticationController) Util.getManagedBean("authenticationController");
 
 	public String goToLocalizarPasta() {
 		preparaTelaConsulta();		
@@ -342,6 +344,7 @@ public class LocalizarPastaMBean extends ArcheionBean {
 				ids.add(p.getId());
 			}
 			param.put("idsPasta", ids.toString());
+			param.put("user", authenticationController.getUsuario().getNome());
 			Relatorio relatorio = pastaBO.getRelatorio(param, pathJasper);
 			relatorio.exportarParaPdfStream(responseStream);
 			
@@ -728,6 +731,15 @@ public class LocalizarPastaMBean extends ArcheionBean {
 
 	public void setListaSituacao(List<SelectItem> listaSituacao) {
 		this.listaSituacao = listaSituacao;
+	}
+
+	public AuthenticationController getAuthenticationController() {
+		return authenticationController;
+	}
+
+	public void setAuthenticationController(
+			AuthenticationController authenticationController) {
+		this.authenticationController = authenticationController;
 	}
 
 }

@@ -25,6 +25,7 @@
 
 	<parameter name="idEmprestimoCaixa" isForPrompting="false" class="java.lang.Long"/>
 	<parameter name="ids" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="user" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[select e.nm_empresa, l.nm_local, itd.nm_item_documental, p.nm_titulo, p.cs_situacao_pasta, 
        p.dt_expurgo, p.nm_descricao, p.nm_numero_protocolo, p.nm_caixeta
 from tb_pasta p join tb_local l on (p.id_local = l.id_local)
@@ -163,7 +164,7 @@ order by 1,2,3,4]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="305"
+						x="396"
 						y="26"
 						width="107"
 						height="13"
@@ -176,16 +177,16 @@ order by 1,2,3,4]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="547"
-						y="25"
-						width="181"
+						x="727"
+						y="23"
+						width="50"
 						height="13"
 						key="staticText-10"/>
 					<box></box>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Número do protocolo]]></text>
+				<text><![CDATA[Protocolo]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -265,10 +266,62 @@ order by 1,2,3,4]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[new Date(System.currentTimeMillis())]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="760"
+						y="29"
+						width="17"
+						height="12"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="39"
+						y="24"
+						width="178"
+						height="17"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{user}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="727"
+						y="29"
+						width="33"
+						height="12"
+						key="staticText-13"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Página]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="29"
+						width="34"
+						height="12"
+						key="staticText-14"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Usuário:]]></text>
+				</staticText>
 			</band>
 		</pageHeader>
 		<columnHeader>
-			<band height="1"  isSplitAllowed="true" >
+			<band height="0"  isSplitAllowed="true" >
 			</band>
 		</columnHeader>
 		<detail>
@@ -277,7 +330,7 @@ order by 1,2,3,4]]></queryString>
 					<reportElement
 						x="64"
 						y="0"
-						width="235"
+						width="324"
 						height="58"
 						key="textField"/>
 					<box></box>
@@ -288,9 +341,9 @@ order by 1,2,3,4]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="305"
+						x="396"
 						y="0"
-						width="235"
+						width="324"
 						height="58"
 						key="textField"/>
 					<box></box>
@@ -301,9 +354,9 @@ order by 1,2,3,4]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="548"
-						y="0"
-						width="235"
+						x="728"
+						y="-2"
+						width="50"
 						height="58"
 						key="textField"/>
 					<box></box>

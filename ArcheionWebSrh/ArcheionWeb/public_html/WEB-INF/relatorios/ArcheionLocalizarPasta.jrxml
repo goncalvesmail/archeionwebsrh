@@ -24,6 +24,7 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="idsPasta" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="user" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[select l.nm_local, it.nm_item_documental, p.nm_titulo,
        ttd.cs_arq_intermediario, ttd.cs_arq_permanente, p.nm_descricao,
        p.nm_numero_protocolo,p.nm_caixeta
@@ -124,7 +125,7 @@ order by 1,2]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="430"
+						x="482"
 						y="4"
 						width="144"
 						height="20"
@@ -137,16 +138,16 @@ order by 1,2]]></queryString>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="617"
+						x="729"
 						y="4"
-						width="102"
+						width="51"
 						height="20"
 						key="staticText-8"/>
 					<box></box>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Número do protocolo]]></text>
+				<text><![CDATA[Protocolo]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -226,6 +227,58 @@ order by 1,2]]></queryString>
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[new Date(System.currentTimeMillis())]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="6"
+						y="31"
+						width="34"
+						height="12"
+						key="staticText-10"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Usuário:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="40"
+						y="26"
+						width="178"
+						height="17"
+						key="textField-2"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{user}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="728"
+						y="31"
+						width="33"
+						height="12"
+						key="staticText-11"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Página]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="761"
+						y="31"
+						width="17"
+						height="12"
+						key="textField-3"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
@@ -251,7 +304,7 @@ order by 1,2]]></queryString>
 					<reportElement
 						x="238"
 						y="0"
-						width="187"
+						width="239"
 						height="75"
 						key="textField"/>
 					<box></box>
@@ -262,9 +315,9 @@ order by 1,2]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="430"
+						x="482"
 						y="0"
-						width="182"
+						width="240"
 						height="75"
 						key="textField"/>
 					<box></box>
@@ -275,9 +328,9 @@ order by 1,2]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="617"
+						x="729"
 						y="0"
-						width="161"
+						width="51"
 						height="75"
 						key="textField"/>
 					<box></box>

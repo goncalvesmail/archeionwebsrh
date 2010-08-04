@@ -25,6 +25,7 @@
 
 	<parameter name="idTtd" isForPrompting="false" class="java.lang.Long"/>
 	<parameter name="idsTTD" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="user" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[select emp.nm_empresa, loc.nm_local, itd.nm_item_documental, ttd.nm_tempo_arq_corrente,
        ttd.nm_tempo_arq_intermediario, cs_arq_permanente,cs_microfilmagem,cs_digitalizacao,
        tx_observacao
@@ -257,13 +258,13 @@ order by 1,2,3]]></queryString>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="46"  isSplitAllowed="true" >
+			<band height="54"  isSplitAllowed="true" >
 				<rectangle>
 					<reportElement
 						x="1"
 						y="1"
 						width="782"
-						height="44"
+						height="50"
 						key="rectangle-1"/>
 					<graphicElement stretchType="NoStretch"/>
 				</rectangle>
@@ -305,6 +306,58 @@ order by 1,2,3]]></queryString>
 						<font/>
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[new Date(System.currentTimeMillis())]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="6"
+						y="39"
+						width="34"
+						height="12"
+						key="staticText-13"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Usuário:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="40"
+						y="34"
+						width="178"
+						height="17"
+						key="textField-2"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{user}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="728"
+						y="39"
+						width="33"
+						height="12"
+						key="staticText-14"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Página]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="761"
+						y="39"
+						width="17"
+						height="12"
+						key="textField-3"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageHeader>

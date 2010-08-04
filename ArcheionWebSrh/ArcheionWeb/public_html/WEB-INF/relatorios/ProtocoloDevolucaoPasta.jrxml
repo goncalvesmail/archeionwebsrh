@@ -24,6 +24,7 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="idEmprestimoPasta" isForPrompting="false" class="java.lang.Long"/>
+	<parameter name="user" isForPrompting="false" class="java.lang.String"/>
 	<queryString><![CDATA[select ep.dt_devolucao, ep.dt_emprestimo, ep.tx_solicitante_externo, 
   u.nm_usuario, p.nm_titulo, p.nm_descricao, p.nm_numero_protocolo, p.nm_caixeta
 from tb_emprestimo_pasta ep left outer join tb_usuarios u on (ep.id_usuario_solicitante = u.id_usuario), tb_pasta p
@@ -100,6 +101,58 @@ where ep.id_pasta = p.id_pasta
 					</textElement>
 				<textFieldExpression   class="java.util.Date"><![CDATA[new Date(System.currentTimeMillis())]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="6"
+						y="32"
+						width="34"
+						height="12"
+						key="staticText-10"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Usuário:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="40"
+						y="27"
+						width="178"
+						height="17"
+						key="textField-3"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{user}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="728"
+						y="32"
+						width="33"
+						height="12"
+						key="staticText-11"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Página]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="761"
+						y="32"
+						width="17"
+						height="12"
+						key="textField-4"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
@@ -108,40 +161,40 @@ where ep.id_pasta = p.id_pasta
 					<reportElement
 						x="72"
 						y="1"
-						width="54"
+						width="105"
 						height="13"
 						key="staticText-3"/>
 					<box></box>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Pasta]]></text>
+				<text><![CDATA[Título / Interessado]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="660"
+						x="714"
 						y="1"
-						width="117"
+						width="56"
 						height="13"
 						key="staticText-4"/>
 					<box></box>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Data de devolução]]></text>
+				<text><![CDATA[Devolução]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="553"
+						x="645"
 						y="1"
-						width="102"
+						width="66"
 						height="13"
 						key="staticText-5"/>
 					<box></box>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Data de empréstimo]]></text>
+				<text><![CDATA[Empréstimo]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -158,34 +211,34 @@ where ep.id_pasta = p.id_pasta
 				</staticText>
 				<staticText>
 					<reportElement
-						x="428"
+						x="591"
 						y="1"
-						width="86"
+						width="51"
 						height="13"
 						key="staticText-8"/>
 					<box></box>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Num. Protocolo]]></text>
+				<text><![CDATA[Protocolo]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="302"
+						x="331"
 						y="0"
-						width="54"
+						width="101"
 						height="13"
 						key="staticText-9"/>
 					<box></box>
 					<textElement>
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Descrição]]></text>
+				<text><![CDATA[Descrição / Assunto]]></text>
 				</staticText>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="85"  isSplitAllowed="true" >
+			<band height="92"  isSplitAllowed="true" >
 				<line direction="TopDown">
 					<reportElement
 						x="0"
@@ -197,8 +250,8 @@ where ep.id_pasta = p.id_pasta
 				</line>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="682"
-						y="4"
+						x="714"
+						y="0"
 						width="66"
 						height="14"
 						key="textField"/>
@@ -210,8 +263,8 @@ where ep.id_pasta = p.id_pasta
 				</textField>
 				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="568"
-						y="4"
+						x="645"
+						y="0"
 						width="66"
 						height="14"
 						key="textField"/>
@@ -225,7 +278,7 @@ where ep.id_pasta = p.id_pasta
 					<reportElement
 						x="71"
 						y="0"
-						width="225"
+						width="254"
 						height="50"
 						key="textField"/>
 					<box></box>
@@ -237,7 +290,7 @@ where ep.id_pasta = p.id_pasta
 				<line direction="TopDown">
 					<reportElement
 						x="1"
-						y="56"
+						y="53"
 						width="783"
 						height="1"
 						key="line-1"/>
@@ -246,7 +299,7 @@ where ep.id_pasta = p.id_pasta
 				<line direction="TopDown">
 					<reportElement
 						x="496"
-						y="61"
+						y="72"
 						width="281"
 						height="1"
 						key="line-3"/>
@@ -255,7 +308,7 @@ where ep.id_pasta = p.id_pasta
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="498"
-						y="61"
+						y="72"
 						width="281"
 						height="19"
 						key="textField"/>
@@ -264,32 +317,6 @@ where ep.id_pasta = p.id_pasta
 						<font/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$V{nomeSolicitante}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement
-						x="20"
-						y="60"
-						width="47"
-						height="14"
-						key="staticText-6"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
-				<text><![CDATA[Fortaleza,]]></text>
-				</staticText>
-				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="68"
-						y="60"
-						width="103"
-						height="14"
-						key="textField-2"/>
-					<box></box>
-					<textElement>
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.util.Date"><![CDATA[new Date(System.currentTimeMillis())]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -306,9 +333,9 @@ where ep.id_pasta = p.id_pasta
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="302"
+						x="331"
 						y="0"
-						width="125"
+						width="255"
 						height="50"
 						key="textField"/>
 					<box></box>
@@ -319,9 +346,9 @@ where ep.id_pasta = p.id_pasta
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="428"
+						x="591"
 						y="0"
-						width="125"
+						width="51"
 						height="50"
 						key="textField"/>
 					<box></box>

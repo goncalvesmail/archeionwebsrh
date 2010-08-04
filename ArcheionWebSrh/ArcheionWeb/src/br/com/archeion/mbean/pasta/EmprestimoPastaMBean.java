@@ -25,6 +25,7 @@ import br.com.archeion.exception.CadastroDuplicadoException;
 import br.com.archeion.jsf.Constants;
 import br.com.archeion.jsf.Util;
 import br.com.archeion.mbean.ArcheionBean;
+import br.com.archeion.mbean.AuthenticationController;
 import br.com.archeion.mbean.ExceptionManagedBean;
 import br.com.archeion.modelo.empresa.Empresa;
 import br.com.archeion.modelo.local.Local;
@@ -61,6 +62,7 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
 	private EmprestimoPastaBO emprestimoPastaBO = (EmprestimoPastaBO) Util.getSpringBean("emprestimoPastaBO");
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
+	private AuthenticationController authenticationController = (AuthenticationController) Util.getManagedBean("authenticationController");
 
 	public EmprestimoPastaMBean() {
 		emprestimo = new EmprestimoPasta();
@@ -484,6 +486,7 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			HashMap<String, Object> param = new HashMap<String, Object>();
 			
 			param.put("idEmprestimoPasta", emprestimo.getId());
+			param.put("user", authenticationController.getUsuario().getNome());
 			Relatorio relatorio = pastaBO.getRelatorio(param, pathJasper);
 			relatorio.exportarParaPdfStream(responseStream);
 			
@@ -521,6 +524,7 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			HashMap<String, Object> param = new HashMap<String, Object>();
 			
 			param.put("idEmprestimoPasta", emprestimo.getId());
+			param.put("user", authenticationController.getUsuario().getNome());
 			Relatorio relatorio = pastaBO.getRelatorio(param, pathJasper);
 			relatorio.exportarParaPdfStream(responseStream);
 			
