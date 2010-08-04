@@ -97,6 +97,16 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 		}
 		return p;
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Pasta> findByCaixeta(String caixeta) {
+		StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u WHERE u.caixeta like :caixeta");
+		HashMap<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("caixeta", caixeta);
+		
+		return getJpaTemplate().findByNamedParams(sql.toString(),
+				parametros);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public Pasta findByTituloLocalEmpresa(String titulo,String nomeLocal, String nomeEmpresa){

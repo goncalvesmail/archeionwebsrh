@@ -53,6 +53,10 @@ public class PastaBOImpl implements PastaBO {
 	public List<Pasta> findPastaAtivasEmprestimo() {
 		return pastaDAO.findPastaAtivasEmprestimo();
 	}
+	
+	public List<Pasta> findByCaixeta(String caixeta){
+		return pastaDAO.findByCaixeta(caixeta);
+	}
 
 	public Pasta merge(Pasta pasta) throws BusinessException,
 			CadastroDuplicadoException {

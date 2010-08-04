@@ -54,6 +54,9 @@ public interface PastaBO {
 
 	@Secured({ "ROLE_BUSCAR_PASTA" })
 	List<Pasta> findByEmpresaLocalSituacao(int emp, int local, SituacaoExpurgo situacao);
+
+	@Secured({ "ROLE_BUSCAR_PASTA" })
+	List<Pasta> findByCaixeta(String caixeta);
 	
 	@Secured({ "ROLE_ATUALIZAR_PASTA" })
 	@Transactional

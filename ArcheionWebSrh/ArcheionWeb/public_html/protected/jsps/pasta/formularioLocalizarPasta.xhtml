@@ -163,78 +163,116 @@
 			<br />
 			<h:outputText value="#{msgs['pasta.lista.vazia']}" styleClass="label" rendered="#{empty localizarPastaBean.listaPasta}"/>
 			<br />
+			<h:form>				
+				<h:commandButton value="#{msgs['geral.botao.imprimir']}" styleClass="botaoIntuitivo"
+					action="#{localizarPastaBean.imprimirLocalizar}" />
+				<h:commandButton value="#{msgs['geral.botao.imprimir.txt']}" styleClass="botaoIntuitivo"
+					action="#{localizarPastaBean.imprimirTxt}" />
+			</h:form>
 			
 			<h:form>
 				<table class="tabelasemlinha" align="center" cellpadding="2"
 					cellspacing="2" >
 					<tr>
-						<td><h:dataTable id="itens" rows="10"
+						<td align="right">
+						<t:dataScroller id="Paginador"
+							for="itens" fastStep="10" pageCountVar="pageCount"
+							pageIndexVar="pageIndex" styleClass="paginacao" paginator="true"
+							paginatorMaxPages="5" paginatorTableClass="paginator"
+							paginatorActiveColumnStyle="font-weight:bold;" immediate="true"
+							rendered="#{not empty localizarPastaBean.listaPasta}">
+							<f:facet name="first">
+								<h:outputText
+									value="#{msgs['geral.pesquisa.paginacao.primeira']} "
+									title="#{msgs['geral.pesquisa.paginacao.primeira.alt']} " />
+							</f:facet>
+							<f:facet name="last">
+								<h:outputText value="#{msgs['geral.pesquisa.paginacao.ultima']} "
+									title="#{msgs['geral.pesquisa.paginacao.ultima.alt']} " />
+							</f:facet>
+							<f:facet name="previous">
+								<h:outputText
+									value="#{msgs['geral.pesquisa.paginacao.anterior']} " />
+							</f:facet>
+							<f:facet name="next">
+								<h:outputText
+									value="#{msgs['geral.pesquisa.paginacao.proxima']} " />
+							</f:facet>
+							<f:facet name="fastforward">
+							</f:facet>
+							<f:facet name="fastrewind">
+							</f:facet>
+						</t:dataScroller>
+						</td>
+					</tr>
+					<tr>
+						<td><t:dataTable id="itens" rows="10"
 							value="#{localizarPastaBean.listaPasta}" var="lista"
 							rendered="#{not empty localizarPastaBean.listaPasta}" align="center"
 							cellpadding="0" cellspacing="0" styleClass="tabela tabelaCss"
 							headerClass="tabela_header" rowClasses="odd, even"
 							columnClasses="col,col,col,col,col,col,col,col,col"
 							style="width: 100%; cellspacing:2;">
-							<h:column>
+							<t:column defaultSorted="true" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['pasta.empresa']}" />
 								</f:facet>
 								<h:outputText value="#{lista.local.empresa.nome}" />
-							</h:column>
-							<h:column>
+							</t:column>
+							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['pasta.texto.local']}" />
 								</f:facet>
 								<h:outputText value="#{lista.local.nome}" />
-							</h:column>
-							<h:column>
+							</t:column>
+							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['pasta.texto.itemdocumental']}" />
 								</f:facet>
 								<h:outputText value="#{lista.itemDocumental.nome}" />
-							</h:column>			
-							<h:column>
+							</t:column>			
+							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['pasta.texto.titulo']}" />
 								</f:facet>
 								<h:outputText value="#{lista.titulo}" />
-							</h:column>			
-							<h:column>
+							</t:column>			
+							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['geral.descricao']}" />
 								</f:facet>
 								<h:outputText value="#{lista.descricao}" />
-							</h:column>
-							<t:column>
+							</t:column>
+							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['pasta.numero.protocolo']}" />
 								</f:facet>
 								<h:outputText value="#{lista.numeroProtocolo}" />
 							</t:column>									
-							<h:column>
+							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['pasta.texto.caixeta']}" />
 								</f:facet>
 								<h:outputText value="#{lista.caixeta}" />
-							</h:column>					
-							<h:column>
+							</t:column>					
+							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['pasta.data.abertura']}" />
 								</f:facet>
 								<h:outputText value="#{lista.dataAbertura}" />
-							</h:column>	
-							<h:column>
+							</t:column>	
+							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['geral.recolhimento']}" />
 								</f:facet>
 								<h:outputText value="#{lista.previsaoRecolhimento}" />
-							</h:column>	
-							<h:column>
+							</t:column>	
+							<t:column defaultSorted="false" sortable="true">
 								<f:facet name="header">
 									<h:outputText value="#{msgs['geral.expurgo']}" />
 								</f:facet>
 								<h:outputText value="#{lista.previsaoExpurgo}" />
-							</h:column>
+							</t:column>
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="#{msgs['geral.botao.alterar']}" />
@@ -248,12 +286,11 @@
 								</h:commandLink>
 							</h:column>															
 														
-						</h:dataTable></td>
+						</t:dataTable></td>
 					</tr>
-				
-					<tr>
+				    <tr>
 						<td align="right">
-						<t:dataScroller id="Paginador"
+						<t:dataScroller id="PaginadorRodape"
 							for="itens" fastStep="10" pageCountVar="pageCount"
 							pageIndexVar="pageIndex" styleClass="paginacao" paginator="true"
 							paginatorMaxPages="5" paginatorTableClass="paginator"
@@ -287,12 +324,6 @@
 			</h:form>
 
 			<br />
-			<h:form>				
-				<h:commandButton value="#{msgs['geral.botao.imprimir']}" styleClass="botaoIntuitivo"
-					action="#{localizarPastaBean.imprimirLocalizar}" />
-				<h:commandButton value="#{msgs['geral.botao.imprimir.txt']}" styleClass="botaoIntuitivo"
-					action="#{localizarPastaBean.imprimirTxt}" />
-			</h:form>
 
 		</ui:define>
 	</ui:composition>

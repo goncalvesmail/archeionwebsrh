@@ -32,7 +32,7 @@
 				<table class="tabelasemlinha" align="center" cellpadding="2"
 					cellspacing="2">
 					<tr>
-						<td>
+						<td colspan="3" align="center">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['empresa.nome']}:" for="emp" />
 						
 							<a4j:region id="localRegion">						
@@ -70,14 +70,69 @@
 								action="#{pastaBean.findByEmpresaLocal}" /><br/>
 						</td>
 					</tr>
+					<tr>
+						<td align="right" width="50%">
+							<h:outputLabel styleClass="label" value="#{msgs['pasta.texto.caixeta']}:" for="caixeta" />
+						</td>
+						
+						<td align="left" >
+							<h:inputText id="caixeta" styleClass="campo" value="#{pastaBean.pasta.caixeta}"/>							
+						</td>
+						
+						<td>
+							<h:commandButton value="#{msgs['geral.botao.pesquisar.por.caixeta']}" styleClass="botaoIntuitivo" action="#{pastaBean.findByCaixeta}" />
+						</td>						
+					</tr>	
 				</table>
 			</h:form>
 			
 			<h:outputText value="#{msgs['pasta.lista.vazia']}" styleClass="label" rendered="#{empty pastaBean.listaPasta}"/>
+			<br />
+			<h:form>
+				<h:commandButton value="#{msgs['geral.botao.incluir']}" styleClass="botaoIntuitivo"
+					action="#{pastaBean.goToForm}" />
+				<h:commandButton value="#{msgs['geral.botao.imprimir']}" styleClass="botaoIntuitivo"
+					action="#{pastaBean.imprimir}" />					
+				<h:commandButton value="#{msgs['geral.botao.imprimir.txt']}" styleClass="botaoIntuitivo"
+					action="#{pastaBean.imprimirTxt}" />					
+			</h:form>
 			
 			<h:form>
 				<table class="tabelasemlinha" align="center" cellpadding="2"
 					cellspacing="2" >
+					<tr>
+						<td align="right">
+						<t:dataScroller id="Paginador"
+							for="itens" fastStep="20" pageCountVar="pageCount"
+							pageIndexVar="pageIndex" styleClass="paginacao" paginator="true"
+							paginatorMaxPages="5" paginatorTableClass="paginator"
+							paginatorActiveColumnStyle="font-weight:bold;" immediate="true"
+							rendered="#{not empty pastaBean.listaPasta}">
+							<f:facet name="first">
+								<h:outputText
+									value="#{msgs['geral.pesquisa.paginacao.primeira']} "
+									title="#{msgs['geral.pesquisa.paginacao.primeira.alt']} " />
+							</f:facet>
+							<f:facet name="last">
+								<h:outputText value="#{msgs['geral.pesquisa.paginacao.ultima']} "
+									title="#{msgs['geral.pesquisa.paginacao.ultima.alt']} " />
+							</f:facet>
+							<f:facet name="previous">
+								<h:outputText
+									value="#{msgs['geral.pesquisa.paginacao.anterior']} " />
+							</f:facet>
+							<f:facet name="next">
+								<h:outputText
+									value="#{msgs['geral.pesquisa.paginacao.proxima']} " />
+							</f:facet>
+							<f:facet name="fastforward">
+							</f:facet>
+							<f:facet name="fastrewind">
+							</f:facet>
+						</t:dataScroller>
+						</td>
+					</tr>
+					
 					<tr>
 						<td>
 						<t:dataTable id="itens" rows="20"
@@ -155,7 +210,7 @@
 				
 					<tr>
 						<td align="right">
-						<t:dataScroller id="Paginador"
+						<t:dataScroller id="PaginadorRodape"
 							for="itens" fastStep="20" pageCountVar="pageCount"
 							pageIndexVar="pageIndex" styleClass="paginacao" paginator="true"
 							paginatorMaxPages="5" paginatorTableClass="paginator"
@@ -189,14 +244,7 @@
 			</h:form>
 
 			<br />
-			<h:form>
-				<h:commandButton value="#{msgs['geral.botao.incluir']}" styleClass="botaoIntuitivo"
-					action="#{pastaBean.goToForm}" />
-<h:commandButton value="#{msgs['geral.botao.imprimir']}" styleClass="botaoIntuitivo"
-					action="#{pastaBean.imprimir}" />					
-<h:commandButton value="#{msgs['geral.botao.imprimir.txt']}" styleClass="botaoIntuitivo"
-					action="#{pastaBean.imprimirTxt}" />					
-			</h:form>
+			
 
 		</ui:define>
 	</ui:composition>
