@@ -85,7 +85,7 @@ public class PastaMBean extends ArcheionBean {
 	
 	private String nomeEventoContagem;
 	private boolean visualizar = false;
-	private String origemAlteracao = "";
+	private String origemAlteracao = "listaPasta";
 	
 	public PastaMBean() {
 		pasta = new Pasta();
@@ -473,16 +473,37 @@ public class PastaMBean extends ArcheionBean {
 	
 	public String findAll() {
 		try {
+			
+			if(origemAlteracao.equals("listaPasta")){
+				visualizar=false;
+				pasta = new Pasta();
+				pasta.setSituacao(SituacaoExpurgo.TODOS);
+				preencherCombos();
+				listaPasta = pastaBO.findAll();
+				return "listaPasta";
+			} else {
+				//return "formularioLocalizarPasta";
+				return localizarPastaBean.localizarPasta();
+			}
+			
+			
+		} catch (AccessDeniedException aex) {
+			return Constants.ACCESS_DENIED;
+		}
+		
+	}
+	public String findAllMenu() {
+		try {
 			visualizar=false;
 			pasta = new Pasta();
 			pasta.setSituacao(SituacaoExpurgo.TODOS);
 			preencherCombos();
-			
 			listaPasta = pastaBO.findAll();
+			return "listaPasta";
 		} catch (AccessDeniedException aex) {
 			return Constants.ACCESS_DENIED;
 		}
-		return "listaPasta";
+		
 	}
 
 	private void preencherCombos() {
