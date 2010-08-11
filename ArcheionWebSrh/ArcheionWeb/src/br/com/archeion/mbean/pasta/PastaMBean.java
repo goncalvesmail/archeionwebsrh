@@ -11,8 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.DataModel;
 import javax.faces.model.SelectItem;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
@@ -28,6 +30,7 @@ import util.Relatorio;
 import br.com.archeion.exception.BusinessException;
 import br.com.archeion.exception.CadastroDuplicadoException;
 import br.com.archeion.jsf.Constants;
+import br.com.archeion.jsf.PagedCollectionModel;
 import br.com.archeion.jsf.Util;
 import br.com.archeion.mbean.ArcheionBean;
 import br.com.archeion.mbean.AuthenticationController;
@@ -86,6 +89,10 @@ public class PastaMBean extends ArcheionBean {
 	private String nomeEventoContagem;
 	private boolean visualizar = false;
 	private String origemAlteracao = "listaPasta";
+	
+	private DataModel dataModel;	
+	private int pageSize = 25;	
+	private HtmlDataTable dataTable;
 	
 	public PastaMBean() {
 		pasta = new Pasta();
@@ -479,7 +486,10 @@ public class PastaMBean extends ArcheionBean {
 				pasta = new Pasta();
 				pasta.setSituacao(SituacaoExpurgo.TODOS);
 				preencherCombos();
-				listaPasta = pastaBO.findAll();
+				
+				//listaPasta = pastaBO.findAll();
+				dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
+				
 				return "listaPasta";
 			} else {
 				//return "formularioLocalizarPasta";
@@ -498,7 +508,10 @@ public class PastaMBean extends ArcheionBean {
 			pasta = new Pasta();
 			pasta.setSituacao(SituacaoExpurgo.TODOS);
 			preencherCombos();
-			listaPasta = pastaBO.findAll();
+			
+			//listaPasta = pastaBO.findAll();
+			dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
+			
 			return "listaPasta";
 		} catch (AccessDeniedException aex) {
 			return Constants.ACCESS_DENIED;
@@ -907,6 +920,30 @@ public class PastaMBean extends ArcheionBean {
 	public void setAuthenticationController(
 			AuthenticationController authenticationController) {
 		this.authenticationController = authenticationController;
+	}
+
+	public DataModel getDataModel() {
+		return dataModel;
+	}
+
+	public void setDataModel(DataModel dataModel) {
+		this.dataModel = dataModel;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public HtmlDataTable getDataTable() {
+		return dataTable;
+	}
+
+	public void setDataTable(HtmlDataTable dataTable) {
+		this.dataTable = dataTable;
 	}
 	
 	

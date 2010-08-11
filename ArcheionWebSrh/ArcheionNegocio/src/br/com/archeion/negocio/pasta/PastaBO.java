@@ -16,8 +16,9 @@ import br.com.archeion.modelo.empresa.Empresa;
 import br.com.archeion.modelo.local.Local;
 import br.com.archeion.modelo.pasta.Pasta;
 import br.com.archeion.util.Log;
+import br.com.archeion.util.PaginationSupport;
 
-public interface PastaBO {
+public interface PastaBO extends PaginationSupport<Pasta, Pasta> {
 	
 	@Secured({ "ROLE_BUSCAR_PASTA" })
 	List<Pasta> consultaPermanenteRecolhimentoIntervalo(Empresa empresa, Local local, Date inicio, Date fim);

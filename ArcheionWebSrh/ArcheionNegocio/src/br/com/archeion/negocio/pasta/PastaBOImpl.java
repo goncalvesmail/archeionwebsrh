@@ -85,6 +85,11 @@ public class PastaBOImpl implements PastaBO {
 		return pastaDAO.findByEmpresaLocalSituacao(emp,local,situacao);
 	}
 
+	public List<Pasta> findByEmpresaLocalSituacao(int emp, int local, SituacaoExpurgo situacao,
+			int start, int quantity) {
+		return pastaDAO.findByEmpresaLocalSituacao(emp,local,situacao,start,quantity);
+	}	
+	
 	public void remove(Pasta pasta) throws BusinessException {
 		
 		//Verificar Documento
@@ -204,6 +209,24 @@ public class PastaBOImpl implements PastaBO {
 
 	public EmprestimoPastaDAO getEmprestimoPastaDAO() {
 		return emprestimoPastaDAO;
+	}
+	
+	public int count(Pasta searchParameters) {		
+		int idEmpresa = searchParameters.getLocal().getEmpresa().getId().intValue();
+		int idLocal = searchParameters.getLocal().getId().intValue();
+		SituacaoExpurgo situacao = searchParameters.getSituacao();
+		
+		return findByEmpresaLocalSituacao(idEmpresa,idLocal,situacao).size();
+	}
+
+	public List<Pasta> search(Pasta searchParameters, int startIndex,
+			int pageSize) {
+		
+		int idEmpresa = searchParameters.getLocal().getEmpresa().getId().intValue();
+		int idLocal = searchParameters.getLocal().getId().intValue();
+		SituacaoExpurgo situacao = searchParameters.getSituacao();
+		
+		return findByEmpresaLocalSituacao(idEmpresa,idLocal,situacao,startIndex,pageSize);
 	}
 
 }

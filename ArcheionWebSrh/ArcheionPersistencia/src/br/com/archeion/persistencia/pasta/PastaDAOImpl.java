@@ -4,6 +4,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
+import org.springframework.orm.jpa.JpaCallback;
+
 import br.com.archeion.modelo.SituacaoExpurgo;
 import br.com.archeion.modelo.empresa.Empresa;
 import br.com.archeion.modelo.local.Local;
@@ -82,6 +88,69 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 		return list;
 	}	
 
+
+	@SuppressWarnings("unchecked")
+	public List<Pasta> findByEmpresaLocalSituacao(final int emp, final int local, final SituacaoExpurgo situacao, 
+			final int start, final int quantity) {
+		HashMap<String, Object> parametros = new HashMap<String, Object>();
+
+		final StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u ");
+
+		boolean where = false;
+		if(emp > 0) {
+			parametros.put("emp", emp);
+			sql.append(" WHERE u.local.empresa.id = :emp ");
+			where = true;
+		}			
+
+		if(local > 0) {
+			parametros.put("local", local);
+			if ( where ) {
+				sql.append(" and u.local.id = :local ");
+			}
+			else {
+				sql.append(" WHERE u.local.id = :local ");
+				where = true;
+			}
+		}	
+		
+		if ( situacao!=null && situacao.getId()!=SituacaoExpurgo.TODOS.getId()) {
+			parametros.put("situacao", situacao);
+			if ( where ) {
+				sql.append(" and u.situacao = :situacao ");
+			}
+			else {
+				sql.append(" WHERE u.situacao = :situacao ");
+				where = true;
+			}
+		}
+				
+		List<Pasta> list = getJpaTemplate().executeFind(
+		           new JpaCallback() {
+		                public Object doInJpa(EntityManager em) throws PersistenceException {
+		                        Query query = em.createQuery(sql.toString());
+		                        if(emp > 0) {
+		                        	query.setParameter("emp", emp);
+		                        }
+		                        if(local > 0) {
+		                        	query.setParameter("local", local);
+		                        }
+		                        if ( situacao!=null && situacao.getId()!=SituacaoExpurgo.TODOS.getId()) {
+		                        	query.setParameter("situacao", situacao);
+		                        }
+		                        query.setFirstResult(start);
+		                        query.setMaxResults(quantity);
+		                        List results = query.getResultList();
+		                        return results;
+		                }
+		         }
+		   );
+		
+
+		return list;
+	}		
+
+	
 	@SuppressWarnings("unchecked")
 	public Pasta findByTitulo(String titulo){
 		StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u WHERE u.titulo = :titulo");
