@@ -58,6 +58,10 @@ public class PastaBOImpl implements PastaBO {
 		return pastaDAO.findByCaixeta(caixeta);
 	}
 
+	public List<Pasta> findByCaixeta(String caixeta,int start, int quantity){
+		return pastaDAO.findByCaixeta(caixeta,start,quantity);
+	}
+
 	public Pasta merge(Pasta pasta) throws BusinessException,
 			CadastroDuplicadoException {
 		
@@ -212,21 +216,33 @@ public class PastaBOImpl implements PastaBO {
 	}
 	
 	public int count(Pasta searchParameters) {		
-		int idEmpresa = searchParameters.getLocal().getEmpresa().getId().intValue();
-		int idLocal = searchParameters.getLocal().getId().intValue();
-		SituacaoExpurgo situacao = searchParameters.getSituacao();
 		
-		return findByEmpresaLocalSituacao(idEmpresa,idLocal,situacao).size();
+		if ( searchParameters.getCaixeta()==null ) {		
+			int idEmpresa = searchParameters.getLocal().getEmpresa().getId().intValue();
+			int idLocal = searchParameters.getLocal().getId().intValue();
+			SituacaoExpurgo situacao = searchParameters.getSituacao();
+			
+			return findByEmpresaLocalSituacao(idEmpresa,idLocal,situacao).size();
+		}
+		else {		
+			return findByCaixeta(searchParameters.getCaixeta()).size();
+		}
+		
 	}
 
 	public List<Pasta> search(Pasta searchParameters, int startIndex,
 			int pageSize) {
 		
-		int idEmpresa = searchParameters.getLocal().getEmpresa().getId().intValue();
-		int idLocal = searchParameters.getLocal().getId().intValue();
-		SituacaoExpurgo situacao = searchParameters.getSituacao();
-		
-		return findByEmpresaLocalSituacao(idEmpresa,idLocal,situacao,startIndex,pageSize);
+		if ( searchParameters.getCaixeta()==null ) {		
+			int idEmpresa = searchParameters.getLocal().getEmpresa().getId().intValue();
+			int idLocal = searchParameters.getLocal().getId().intValue();
+			SituacaoExpurgo situacao = searchParameters.getSituacao();
+			
+			return findByEmpresaLocalSituacao(idEmpresa,idLocal,situacao,startIndex,pageSize);
+		}
+		else {
+			return findByCaixeta(searchParameters.getCaixeta(),startIndex,pageSize);
+		}
 	}
 
 }

@@ -26,5 +26,6 @@ public interface PastaDAO extends GenericDAO<Pasta, Long> {
 	List<Pasta> consultaPermanenteRecolhimentoIntervalo(Empresa empresa, Local local, Date inicio, Date fim);
 	List<Pasta> findByLocalItemDocumental(long item, long local);
 	List<Pasta> findByCaixeta(String caixeta);
+	List<Pasta> findByCaixeta(final String caixeta, final int start, final int quantity);
 	
 }

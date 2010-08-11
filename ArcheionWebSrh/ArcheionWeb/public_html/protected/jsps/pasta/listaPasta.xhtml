@@ -87,7 +87,7 @@
 				</table>
 			</h:form>
 			
-			<h:outputText value="#{msgs['pasta.lista.vazia']}" styleClass="label" rendered="#{empty pastaBean.listaPasta}"/>
+			<h:outputText value="#{msgs['pasta.lista.vazia']}" styleClass="label" rendered="#{empty pastaBean.dataModel}"/>
 			<br />
 			<h:form>
 				<h:commandButton value="#{msgs['geral.botao.incluir']}" styleClass="botaoIntuitivo"
@@ -141,7 +141,6 @@
 								align="center" cellpadding="0" cellspacing="0" styleClass="tabela tabelaCss"
 								headerClass="tabela_header" rowClasses="odd, even"
 								columnClasses="col,col,col,col,col,col,col,col"
-								binding="#{pastaBean.dataTable}"
 								style="width: 100%; cellspacing:2;">
 		
 							<t:column>

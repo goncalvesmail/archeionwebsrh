@@ -178,6 +178,30 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Pasta> findByCaixeta(final String caixeta, final int start, final int quantity) {
+		final StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u WHERE u.caixeta like :caixeta");
+		HashMap<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("caixeta", caixeta);
+		
+		
+		List<Pasta> list = getJpaTemplate().executeFind(
+		           new JpaCallback() {
+		                public Object doInJpa(EntityManager em) throws PersistenceException {
+		                        Query query = em.createQuery(sql.toString());
+		                        query.setParameter("caixeta", caixeta);
+		                        
+		                        query.setFirstResult(start);
+		                        query.setMaxResults(quantity);
+		                        List results = query.getResultList();
+		                        return results;
+		                }
+		         }
+		   );
+		
+		return list;
+	}	
+	
+	@SuppressWarnings("unchecked")
 	public Pasta findByTituloLocalEmpresa(String titulo,String nomeLocal, String nomeEmpresa){
 		StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u, Local l, Empresa e WHERE u.titulo = :titulo ");
 		sql.append(" and u.local.id = l.id ");

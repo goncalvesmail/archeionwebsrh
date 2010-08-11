@@ -1,8 +1,6 @@
 package br.com.archeion.mbean.pasta;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
@@ -24,8 +21,6 @@ import net.sf.jasperreports.engine.JRException;
 
 import org.acegisecurity.AccessDeniedException;
 
-import util.Operadores;
-import util.OperadoresBoleanos;
 import util.Relatorio;
 import br.com.archeion.exception.BusinessException;
 import br.com.archeion.exception.CadastroDuplicadoException;
@@ -50,13 +45,14 @@ import br.com.archeion.negocio.ttd.TTDBO;
 
 public class PastaMBean extends ArcheionBean {
 	
-	private List<Pasta> listaPasta;
-	private List<Pasta> listaPastaTarget;
+		
 	private List<SelectItem> listaEmpresa;
 	private List<SelectItem> listaLocal;
 	private List<SelectItem> listaItemDocumental;
 	private List<SelectItem> listaSituacao;	
 	
+	/* private List<Pasta> listaPasta;
+	private List<Pasta> listaPastaTarget;
 	private List<SelectItem> listaChaves;
 	private List<SelectItem> listaOperadores;
 	private List<SelectItem> listaOperadoresBoleanos;
@@ -70,7 +66,7 @@ public class PastaMBean extends ArcheionBean {
 	private String valor2;
 	private String valor3;
 	private int operadorBoleano1;
-	private int operadorBoleano2;
+	private int operadorBoleano2;*/
 	
 	private Pasta pasta;
 	
@@ -92,12 +88,11 @@ public class PastaMBean extends ArcheionBean {
 	
 	private DataModel dataModel;	
 	private int pageSize = 25;	
-	private HtmlDataTable dataTable;
 	
 	public PastaMBean() {
 		pasta = new Pasta();
-		listaPasta = new ArrayList<Pasta>();
-		listaPastaTarget = new ArrayList<Pasta>();
+		//listaPasta = new ArrayList<Pasta>();
+		//listaPastaTarget = new ArrayList<Pasta>();
 	}
 	
 	public String goToVisualizar() {
@@ -386,8 +381,9 @@ public class PastaMBean extends ArcheionBean {
 	
 	public String findByEmpresaLocal() {		
 		try {
-			listaPasta = pastaBO.findByEmpresaLocalSituacao(pasta.getLocal().getEmpresa().getId().intValue(), 
-				pasta.getLocal().getId().intValue(), pasta.getSituacao());
+			//listaPasta = pastaBO.findByEmpresaLocalSituacao(pasta.getLocal().getEmpresa().getId().intValue(), pasta.getLocal().getId().intValue(), pasta.getSituacao());
+			pasta.setCaixeta(null);
+			dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
 		}
 		catch (AccessDeniedException aex) {
 			return Constants.ACCESS_DENIED;
@@ -398,7 +394,10 @@ public class PastaMBean extends ArcheionBean {
 	
 	public String findByCaixeta() {		
 		try {
-			listaPasta = pastaBO.findByCaixeta(pasta.getCaixeta());
+			
+			//listaPasta = pastaBO.findByCaixeta(pasta.getCaixeta());
+			dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
+			
 		} catch (AccessDeniedException aex) {
 			return Constants.ACCESS_DENIED;
 		} 
@@ -418,9 +417,14 @@ public class PastaMBean extends ArcheionBean {
 			"/ArcheionImprimirPasta.jasper";
 			HashMap<String, Object> param = new HashMap<String, Object>();
 			ParametrosReport ids = new ParametrosReport();
+			
+			int count = pastaBO.count(pasta);
+			List<Pasta> listaPasta = pastaBO.search(pasta, 0, count);
+			
 			for(Pasta p: listaPasta) {
 				ids.add(p.getId());
 			}
+			
 			param.put("ids", ids.toString());
 			param.put("user", authenticationController.getUsuario().getNome());
 
@@ -481,14 +485,18 @@ public class PastaMBean extends ArcheionBean {
 	public String findAll() {
 		try {
 			
-			if(origemAlteracao.equals("listaPasta")){
-				visualizar=false;
-				pasta = new Pasta();
-				pasta.setSituacao(SituacaoExpurgo.TODOS);
+			if(origemAlteracao==null || origemAlteracao.equals("listaPasta")){
+				
+				//Nao precisa fazer nada, a tela já esta montada...
+				
+				/*visualizar=false;				
 				preencherCombos();
 				
-				//listaPasta = pastaBO.findAll();
-				dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
+				pasta = new Pasta();
+				pasta.setSituacao(SituacaoExpurgo.TODOS);*/
+				
+				//listaPasta = pastaBO.findAll();				
+				//dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
 				
 				return "listaPasta";
 			} else {
@@ -509,8 +517,9 @@ public class PastaMBean extends ArcheionBean {
 			pasta.setSituacao(SituacaoExpurgo.TODOS);
 			preencherCombos();
 			
-			//listaPasta = pastaBO.findAll();
+			//listaPasta = pastaBO.findAll();			
 			dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
+			dataModel.setRowIndex(0);
 			
 			return "listaPasta";
 		} catch (AccessDeniedException aex) {
@@ -578,7 +587,7 @@ public class PastaMBean extends ArcheionBean {
 		return "formularioPasta";
 	}
 	
-	public String listEtiquetaPasta() {
+	/*public String listEtiquetaPasta() {
 		pasta = new Pasta();		
 		listaPasta = new ArrayList<Pasta>();
 		listaPastaTarget = new ArrayList<Pasta>();
@@ -606,7 +615,7 @@ public class PastaMBean extends ArcheionBean {
 	
 	private void consultarPasta() {
 		pasta = new Pasta();		
-		listaPasta = new ArrayList<Pasta>();
+		List<Pasta> listaPasta = new ArrayList<Pasta>();
 		listaPastaTarget = new ArrayList<Pasta>();
 		listaChaves = new ArrayList<SelectItem>();
 		listaOperadores = new ArrayList<SelectItem>();
@@ -679,7 +688,7 @@ public class PastaMBean extends ArcheionBean {
 
 	public void setListaPasta(List<Pasta> listaPasta) {
 		this.listaPasta = listaPasta;
-	}
+	}*/
 
 	public Pasta getPasta() {
 		return pasta;
@@ -777,7 +786,7 @@ public class PastaMBean extends ArcheionBean {
 		this.visualizar = visualizar;
 	}
 
-	public List<SelectItem> getListaChaves() {
+	/*public List<SelectItem> getListaChaves() {
 		return listaChaves;
 	}
 
@@ -895,7 +904,7 @@ public class PastaMBean extends ArcheionBean {
 
 	public void setListaPastaTarget(List<Pasta> listaPastaTarget) {
 		this.listaPastaTarget = listaPastaTarget;
-	}
+	}*/
 
 	public List<SelectItem> getListaSituacao() {
 		return listaSituacao;
@@ -938,13 +947,7 @@ public class PastaMBean extends ArcheionBean {
 		this.pageSize = pageSize;
 	}
 
-	public HtmlDataTable getDataTable() {
-		return dataTable;
-	}
 
-	public void setDataTable(HtmlDataTable dataTable) {
-		this.dataTable = dataTable;
-	}
 	
 	
 }

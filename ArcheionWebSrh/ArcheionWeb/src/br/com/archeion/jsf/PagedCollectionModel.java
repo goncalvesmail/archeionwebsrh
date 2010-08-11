@@ -79,7 +79,7 @@ public class PagedCollectionModel<E, S> extends DataModel implements
 	/**
 	 * Mantém os dados em cache quando se navega em páginas.
 	 */
-	private boolean keepCache;
+	private boolean keepCache = false;
 
 	public boolean isKeepCache() {
 		return keepCache;
