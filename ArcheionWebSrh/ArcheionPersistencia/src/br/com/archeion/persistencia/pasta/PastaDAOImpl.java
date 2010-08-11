@@ -13,6 +13,7 @@ import org.springframework.orm.jpa.JpaCallback;
 import br.com.archeion.modelo.SituacaoExpurgo;
 import br.com.archeion.modelo.empresa.Empresa;
 import br.com.archeion.modelo.local.Local;
+import br.com.archeion.modelo.pasta.ParametroConsulta;
 import br.com.archeion.modelo.pasta.Pasta;
 import br.com.archeion.persistencia.impl.JpaGenericDAO;
 
@@ -88,6 +89,45 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 		return list;
 	}	
 
+	
+	public Long findByEmpresaLocalSituacaoSize(int emp, int local, SituacaoExpurgo situacao) {
+		HashMap<String, Object> parametros = new HashMap<String, Object>();
+
+		StringBuilder sql = new StringBuilder("SELECT count(u) FROM Pasta u ");
+
+		boolean where = false;
+		if(emp > 0) {
+			parametros.put("emp", emp);
+			sql.append(" WHERE u.local.empresa.id = :emp ");
+			where = true;
+		}			
+
+		if(local > 0) {
+			parametros.put("local", local);
+			if ( where ) {
+				sql.append(" and u.local.id = :local ");
+			}
+			else {
+				sql.append(" WHERE u.local.id = :local ");
+				where = true;
+			}
+		}	
+		
+		if ( situacao!=null && situacao.getId()!=SituacaoExpurgo.TODOS.getId()) {
+			parametros.put("situacao", situacao);
+			if ( where ) {
+				sql.append(" and u.situacao = :situacao ");
+			}
+			else {
+				sql.append(" WHERE u.situacao = :situacao ");
+				where = true;
+			}
+		}
+		
+		
+		return (Long)getJpaTemplate().findByNamedParams(sql.toString(),
+				parametros).get(0);
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Pasta> findByEmpresaLocalSituacao(final int emp, final int local, final SituacaoExpurgo situacao, 
@@ -177,6 +217,15 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 				parametros);
 	}
 	
+	public Long findByCaixetaSize(String caixeta) {
+		StringBuilder sql = new StringBuilder("SELECT count(u) FROM Pasta u WHERE u.caixeta like :caixeta");
+		HashMap<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("caixeta", caixeta);
+		
+		return (Long)getJpaTemplate().findByNamedParams(sql.toString(),
+				parametros).get(0);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Pasta> findByCaixeta(final String caixeta, final int start, final int quantity) {
 		final StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u WHERE u.caixeta like :caixeta");
@@ -235,6 +284,90 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 
 		return getJpaTemplate().findByNamedParams(sql.toString(),
 				parametros);
+	}
+	
+	public Long consultaEtiquetaPastaSize(ParametroConsulta param) {
+		StringBuilder sql = new StringBuilder("SELECT count(u) FROM Pasta u ");
+		HashMap<String, Object> parametros = new HashMap<String, Object>();
+		
+		String where = param.getParametrosConsulta();
+		final SituacaoExpurgo situacao = param.getSituacao();	
+		
+		String consultaSituacao = new String();
+		if ( situacao!= null && situacao.getId()!=SituacaoExpurgo.TODOS.getId() ) {
+			consultaSituacao = "u.situacao = :situacao";
+			parametros.put("situacao", situacao);
+		}
+		
+		if(where.length() > 2){
+			sql.append(" WHERE ");
+			sql.append(where);
+			
+			if ( !consultaSituacao.equals("") ) {
+				sql.append(" AND ");
+				sql.append( consultaSituacao );
+			}
+							
+		}
+		else if ( !consultaSituacao.equals("") ) {
+			sql.append(" WHERE ");
+			sql.append( consultaSituacao );
+		}
+		
+		
+		return (Long)getJpaTemplate().findByNamedParams(sql.toString(),
+				parametros).get(0);
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	public List<Pasta> consultaEtiquetaPasta(final ParametroConsulta param, final int start, final int quantity) {
+		final StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u ");
+		
+		String where = param.getParametrosConsulta();
+		final SituacaoExpurgo situacao = param.getSituacao();	
+		
+		String consultaSituacao = new String();
+		if ( situacao!= null && situacao.getId()!=SituacaoExpurgo.TODOS.getId() ) {
+			consultaSituacao = "u.situacao = :situacao";
+		}
+		
+		
+		if(where.length() > 2){
+			sql.append(" WHERE ");
+			sql.append(where);
+			
+			if ( !consultaSituacao.equals("") ) {
+				sql.append(" AND ");
+				sql.append( consultaSituacao );
+			}
+							
+		}
+		else if ( !consultaSituacao.equals("") ) {
+			sql.append(" WHERE ");
+			sql.append( consultaSituacao );
+		}
+		
+		sql.append(" order by u.titulo ");
+		
+		List<Pasta> list = getJpaTemplate().executeFind(
+		           new JpaCallback() {
+		                public Object doInJpa(EntityManager em) throws PersistenceException {
+		                        Query query = em.createQuery(sql.toString());
+		                        if ( situacao!= null && situacao.getId()!=SituacaoExpurgo.TODOS.getId() ){
+		                        	query.setParameter("situacao", situacao);
+		                        }
+		                        query.setFirstResult(start);
+		                        query.setMaxResults(quantity);
+		                        List results = query.getResultList();
+		                        
+		                        return results;
+		                }
+		         }
+		   );
+		
+
+		return list;
 	}
 
 	@SuppressWarnings("unchecked")
