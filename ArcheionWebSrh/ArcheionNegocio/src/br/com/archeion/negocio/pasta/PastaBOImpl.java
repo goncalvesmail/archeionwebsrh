@@ -222,10 +222,10 @@ public class PastaBOImpl implements PastaBO {
 			int idLocal = searchParameters.getLocal().getId().intValue();
 			SituacaoExpurgo situacao = searchParameters.getSituacao();
 			
-			return findByEmpresaLocalSituacao(idEmpresa,idLocal,situacao).size();
+			return pastaDAO.findByEmpresaLocalSituacaoSize(idEmpresa,idLocal,situacao).intValue();
 		}
 		else {		
-			return findByCaixeta(searchParameters.getCaixeta()).size();
+			return pastaDAO.findByCaixetaSize(searchParameters.getCaixeta()).intValue();
 		}
 		
 	}
