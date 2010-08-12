@@ -123,8 +123,7 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 				where = true;
 			}
 		}
-		
-		
+				
 		return (Long)getJpaTemplate().findByNamedParams(sql.toString(),
 				parametros).get(0);
 	}
@@ -164,7 +163,7 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 				where = true;
 			}
 		}
-				
+		sql.append(" order by u.titulo ");		
 		List<Pasta> list = getJpaTemplate().executeFind(
 		           new JpaCallback() {
 		                public Object doInJpa(EntityManager em) throws PersistenceException {
@@ -209,7 +208,7 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 
 	@SuppressWarnings("unchecked")
 	public List<Pasta> findByCaixeta(String caixeta) {
-		StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u WHERE u.caixeta like :caixeta");
+		StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u WHERE u.caixeta like :caixeta order by u.titulo ");
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("caixeta", caixeta);
 		
@@ -228,7 +227,7 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 	
 	@SuppressWarnings("unchecked")
 	public List<Pasta> findByCaixeta(final String caixeta, final int start, final int quantity) {
-		final StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u WHERE u.caixeta like :caixeta");
+		final StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u WHERE u.caixeta like :caixeta order by u.titulo ");
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("caixeta", caixeta);
 		

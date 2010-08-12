@@ -244,9 +244,9 @@ public class LocalizarPastaMBean extends ArcheionBean {
 			if ( this.operador1==Operadores.CONTEM.getId() ) sb.append("%");			
 			
 			if(conv != null && conv.equals("date")){
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				try {
-					sb.append(new SimpleDateFormat(conv).format(sdf.parse(this.valor1)));
+					sb.append(sdf.format(sdf.parse(this.valor1)));
 				} catch (ParseException e) {
 					addMessage(FacesMessage.SEVERITY_INFO, 
 							"error.business.dataInvalida",ArcheionBean.PERSIST_FAILURE);
