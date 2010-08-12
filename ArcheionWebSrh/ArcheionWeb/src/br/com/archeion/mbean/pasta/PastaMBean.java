@@ -89,10 +89,6 @@ public class PastaMBean extends ArcheionBean {
 	private DataModel dataModel;	
 	private int pageSize = 25;	
 	
-	private void setTamanhoPaginaPadrao(){
-		pageSize = 25;
-	}
-	
 	public PastaMBean() {
 		pasta = new Pasta();
 		//listaPasta = new ArrayList<Pasta>();
@@ -388,7 +384,6 @@ public class PastaMBean extends ArcheionBean {
 		try {
 			//listaPasta = pastaBO.findByEmpresaLocalSituacao(pasta.getLocal().getEmpresa().getId().intValue(), pasta.getLocal().getId().intValue(), pasta.getSituacao());
 			pasta.setBuscaPorCaixeta(false);
-			setTamanhoPaginaPadrao();
 			dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
 		}
 		catch (AccessDeniedException aex) {
@@ -403,7 +398,6 @@ public class PastaMBean extends ArcheionBean {
 			
 			//listaPasta = pastaBO.findByCaixeta(pasta.getCaixeta());
 			pasta.setBuscaPorCaixeta(true);
-			setTamanhoPaginaPadrao();
 			dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
 			
 		} catch (AccessDeniedException aex) {
@@ -526,7 +520,6 @@ public class PastaMBean extends ArcheionBean {
 			preencherCombos();
 			
 			//listaPasta = pastaBO.findAll();
-			setTamanhoPaginaPadrao();
 			dataModel = new PagedCollectionModel<Pasta,Pasta>(pageSize, pastaBO, pasta);
 			dataModel.setRowIndex(0);
 			
