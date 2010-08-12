@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.archeion.modelo.AbstractTO;
 import br.com.archeion.modelo.SituacaoExpurgo;
@@ -108,6 +109,9 @@ public class Pasta extends AbstractTO implements Serializable {
 	
 	@Column(name = "CS_SITUACAO_PASTA")
 	private SituacaoExpurgo situacao;
+	
+	@Transient
+	private boolean buscaPorCaixeta;
 
 	public Long getId() {
 		return id;
@@ -302,6 +306,14 @@ public class Pasta extends AbstractTO implements Serializable {
 
 	public void setNumeroProtocolo(String numeroProtocolo) {
 		this.numeroProtocolo = numeroProtocolo;
+	}
+
+	public boolean isBuscaPorCaixeta() {
+		return buscaPorCaixeta;
+	}
+
+	public void setBuscaPorCaixeta(boolean buscaPorCaixeta) {
+		this.buscaPorCaixeta = buscaPorCaixeta;
 	}
 	
 }
