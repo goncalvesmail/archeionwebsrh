@@ -233,7 +233,7 @@ public class PastaBOImpl implements PastaBO {
 	public List<Pasta> search(Pasta searchParameters, int startIndex,
 			int pageSize) {
 		
-		if ( searchParameters.getCaixeta()==null ) {		
+		if ( !searchParameters.isBuscaPorCaixeta() ) {		
 			int idEmpresa = searchParameters.getLocal().getEmpresa().getId().intValue();
 			int idLocal = searchParameters.getLocal().getId().intValue();
 			SituacaoExpurgo situacao = searchParameters.getSituacao();
