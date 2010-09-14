@@ -19,7 +19,6 @@ import net.sf.jasperreports.engine.JRException;
 import org.acegisecurity.AccessDeniedException;
 
 import util.Relatorio;
-
 import br.com.archeion.exception.BusinessException;
 import br.com.archeion.exception.CadastroDuplicadoException;
 import br.com.archeion.jsf.Constants;
@@ -29,11 +28,13 @@ import br.com.archeion.mbean.AuthenticationController;
 import br.com.archeion.mbean.ExceptionManagedBean;
 import br.com.archeion.modelo.empresa.Empresa;
 import br.com.archeion.modelo.local.Local;
+import br.com.archeion.modelo.pasta.Emprestimo;
 import br.com.archeion.modelo.pasta.EmprestimoPasta;
 import br.com.archeion.modelo.pasta.Pasta;
 import br.com.archeion.modelo.usuario.Usuario;
 import br.com.archeion.negocio.empresa.EmpresaBO;
 import br.com.archeion.negocio.local.LocalBO;
+import br.com.archeion.negocio.pasta.EmprestimoBO;
 import br.com.archeion.negocio.pasta.EmprestimoPastaBO;
 import br.com.archeion.negocio.pasta.PastaBO;
 import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
@@ -41,7 +42,9 @@ import br.com.archeion.negocio.usuario.UsuarioBO;
 
 public class EmprestimoPastaMBean extends ArcheionBean {
 
-	private EmprestimoPasta emprestimo;
+	private Emprestimo emprestimo;
+	private List<EmprestimoPasta> emprestimoPasta;
+	private List<Pasta> pastas;
 	private List<SelectItem> listaPasta;
 	private List<SelectItem> listaResponsavel;
 	private List<SelectItem> listaSolicitante;
@@ -61,11 +64,13 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
 	private EmprestimoPastaBO emprestimoPastaBO = (EmprestimoPastaBO) Util.getSpringBean("emprestimoPastaBO");
+	private EmprestimoBO emprestimoBO = (EmprestimoBO) Util.getSpringBean("emprestimoBO");
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
 	private AuthenticationController authenticationController = (AuthenticationController) Util.getManagedBean("authenticationController");
 
 	public EmprestimoPastaMBean() {
-		emprestimo = new EmprestimoPasta();
+		emprestimoPasta = new ArrayList<EmprestimoPasta>();
+		emprestimo = new Emprestimo();
 		pastaFiltro = new Pasta();
 	}
 	
@@ -232,14 +237,27 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	}
 
 	public void incluirMBean() throws AccessDeniedException, CadastroDuplicadoException, BusinessException {
+		List <EmprestimoPasta> ep = new ArrayList<EmprestimoPasta>();
 		emprestimo.setId(null);
+				
+		//TODO PEGAR A LISTA DE PASTAS E CRIAR N EMPRESTIMOS_PASTAS E ADICIONAR NO EMPRESTIMO
+		//1. Iterar em listaPasta e pegar as pastas selecionadas
+		//2. Para cada pastas criar um EMPRESTIMO_PASTA
+		//3. Adicionar cada EMPRESTIMO_PASTA em "emprestimoPasta"
+		//4. Popular "emprestimo" e setar a lista "emprestimoPasta"  
+		//5. Persist no emprestimo vai cascadear em Empresitmo_pasta
 		
-		Pasta pasta = pastaBO.findById(emprestimo.getPasta().getId());		
+		/*Pasta pasta = pastaBO.findById(emprestimoPasta.getPasta().getId());		
 		if ( pasta==null || pasta.getId()==null || pasta.getId()<=0 ) {
 			throw new BusinessException("emprestimo.pasta.erro.pasta");
-		}		
-		emprestimo.setPasta(pasta);
+		}*/
+		for(Pasta p: pastas) {
+			ep.add(new EmprestimoPasta(p));
+		}
+		emprestimo.setEmprestimoPasta(ep);
 		
+		//Iterar a lista emprestimoPasta e persistir (ou deixar que o empresitmo faz cascade)
+		//emprestimoPastaBO.persist(emprestimoPasta);
 		
 		if ( emprestimo.getSolicitante().getId()==-1 ) {
 			emprestimo.setSolicitante(null);
@@ -249,13 +267,12 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			Usuario solicitante = usuarioBO.findById(emprestimo.getSolicitante().getId());
 			emprestimo.setSolicitante(solicitante);
 		}
-		
-		emprestimoPastaBO.persist(emprestimo);
+		emprestimoBO.persist(emprestimo);
 		addMessage(FacesMessage.SEVERITY_INFO,"geral.inclusao.sucesso",ArcheionBean.PERSIST_SUCESS);
 	}
 
 	public String goToAlterar() {
-		try {
+		/*try {
 			Long id = Long.valueOf(Util.getParameter("_id"));			
 			emprestimo = emprestimoPastaBO.findById(id);
 
@@ -285,12 +302,12 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			ExceptionManagedBean excBean = (ExceptionManagedBean) Util.getManagedBean("exceptionManagedBean");
 			excBean.setExc(e);
 			return Constants.ERROR_HANDLER;
-		}
+		}*/
 		return "formularioAlterarEmprestimoPasta";
 	}	
 
 	public String alterar() {
-		try {	
+		/*try {	
 
 			Pasta pasta = pastaBO.findById(emprestimo.getPasta().getId());
 			if ( pasta==null || pasta.getId()==null || pasta.getId()<=0 ) {
@@ -323,22 +340,22 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			ExceptionManagedBean excBean = (ExceptionManagedBean) Util.getManagedBean("exceptionManagedBean");
 			excBean.setExc(e);
 			return Constants.ERROR_HANDLER;
-		}
+		}*/
 		return findAll();
 	}	
 	
 	public String goToDevolver() {
-		Long id = Long.valueOf(Util.getParameter("_id"));
+		/*Long id = Long.valueOf(Util.getParameter("_id"));
 		emprestimo.setId( id );
-		emprestimo = emprestimoPastaBO.findById(id);
+		emprestimo = emprestimoBO.findById(id);
 		
-		emprestimo.setDataDevolucao(emprestimo.getPrevisaoDevolucao());
+		emprestimo.setDataDevolucao(emprestimo.getPrevisaoDevolucao());*/
 		
 		return "formularioDevolverPasta";
 	}
 	
 	public String devolver() {
-		try {			
+		/*try {			
 			emprestimoPastaBO.merge(emprestimo);
 			
 			addMessage(FacesMessage.SEVERITY_INFO, "emprestimo.caixa.msg.devolucao",ArcheionBean.PERSIST_SUCESS);
@@ -347,13 +364,13 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			addMessage(FacesMessage.SEVERITY_INFO, "error.business.cadastro.duplicado",ArcheionBean.PERSIST_FAILURE);
 		} catch (BusinessException e) {
 			addMessage(FacesMessage.SEVERITY_INFO, e.getMessageCode(),ArcheionBean.PERSIST_FAILURE);
-		}
+		}*/
 		
 		return findAll();
 	}
 
 	public String remover() {
-		try {
+		/*try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
 			emprestimo.setId( id );
 			emprestimo = emprestimoPastaBO.findById(id);
@@ -369,7 +386,7 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			ExceptionManagedBean excBean = (ExceptionManagedBean) Util.getManagedBean("exceptionManagedBean");
 			excBean.setExc(e);
 			return Constants.ERROR_HANDLER;
-		}
+		}*/
 		return findAll();
 	}	
 
@@ -463,7 +480,7 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	
 	public String goToForm() {
 
-		emprestimo = new EmprestimoPasta();
+		emprestimo = new Emprestimo();
 		preencherCombos();
 		
 		return "formularioEmprestimoPasta";
@@ -471,7 +488,7 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	
 	public String imprimirProtocoloEmprestimo() {
 		FacesContext context = getContext();
-		try {
+		/*try {
 			
 			Long id = Long.valueOf(Util.getParameter("_id"));			
 			emprestimo = emprestimoPastaBO.findById(id);
@@ -503,13 +520,13 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			e.printStackTrace();
 		} catch (AccessDeniedException aex) {
 			return Constants.ACCESS_DENIED;
-		}
+		}*/
 		return findAll();
 	}
 	
 	public String imprimirProtocoloDevolucao() {
 		FacesContext context = getContext();
-		try {
+		/*try {
 			
 			Long id = Long.valueOf(Util.getParameter("_id"));			
 			emprestimo = emprestimoPastaBO.findById(id);
@@ -541,16 +558,12 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			e.printStackTrace();
 		} catch (AccessDeniedException aex) {
 			return Constants.ACCESS_DENIED;
-		}
+		}*/
 		return findAll();
 	}
 
-	public EmprestimoPasta getEmprestimo() {
+	public Emprestimo getEmprestimo() {
 		return emprestimo;
-	}
-
-	public void setEmprestimo(EmprestimoPasta emprestimo) {
-		this.emprestimo = emprestimo;
 	}
 
 	public List<SelectItem> getListaCaixa() {
@@ -675,5 +688,9 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 
 	public void setLocalBO(LocalBO localBO) {
 		this.localBO = localBO;
+	}
+
+	public void setEmprestimo(Emprestimo emprestimo) {
+		this.emprestimo = emprestimo;
 	}	
 }

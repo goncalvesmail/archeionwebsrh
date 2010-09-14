@@ -219,7 +219,7 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 	public Long findByCaixetaSize(String caixeta) {
 		StringBuilder sql = new StringBuilder("SELECT count(u) FROM Pasta u WHERE u.caixeta like :caixeta");
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("caixeta", caixeta);
+		parametros.put("caixeta", caixeta+"%");
 		
 		return (Long)getJpaTemplate().findByNamedParams(sql.toString(),
 				parametros).get(0);
@@ -228,15 +228,12 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 	@SuppressWarnings("unchecked")
 	public List<Pasta> findByCaixeta(final String caixeta, final int start, final int quantity) {
 		final StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u WHERE u.caixeta like :caixeta order by u.titulo ");
-		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("caixeta", caixeta);
-		
-		
+				
 		List<Pasta> list = getJpaTemplate().executeFind(
 		           new JpaCallback() {
 		                public Object doInJpa(EntityManager em) throws PersistenceException {
 		                        Query query = em.createQuery(sql.toString());
-		                        query.setParameter("caixeta", caixeta);
+		                        query.setParameter("caixeta", caixeta+"%");
 		                        
 		                        query.setFirstResult(start);
 		                        query.setMaxResults(quantity);

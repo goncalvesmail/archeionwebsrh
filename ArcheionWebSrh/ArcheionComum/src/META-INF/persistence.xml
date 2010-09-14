@@ -25,6 +25,7 @@
 		<class>br.com.archeion.modelo.caixa.Caixa</class>
 		<class>br.com.archeion.modelo.caixa.EmprestimoCaixa</class>
 		<class>br.com.archeion.modelo.pasta.EmprestimoPasta</class>
+		<class>br.com.archeion.modelo.pasta.Emprestimo</class>
 	
 		<properties>
 			<property name="toplink.jdbc.driver" value="org.postgresql.Driver"/> 
