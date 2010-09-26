@@ -78,6 +78,12 @@
 			</to-view-id>
 		</navigation-case>	
 		<navigation-case>
+			<from-outcome>formularioEmprestimoPastaPorCaixeta</from-outcome>
+			<to-view-id>
+				/protected/jsps/emprestimoPasta/formularioEmprestimoPastaPorCaixeta.jsf
+			</to-view-id>
+		</navigation-case>	
+		<navigation-case>
 			<from-outcome>listaEmprestimoPasta</from-outcome>
 			<to-view-id>
 				/protected/jsps/emprestimoPasta/listaEmprestimoPasta.jsf
