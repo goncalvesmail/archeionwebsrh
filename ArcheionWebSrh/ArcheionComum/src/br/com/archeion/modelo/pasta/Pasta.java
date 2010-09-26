@@ -112,6 +112,9 @@ public class Pasta extends AbstractTO implements Serializable {
 	
 	@Transient
 	private boolean buscaPorCaixeta;
+	
+	@Transient
+	private int selecionado;
 
 	public Long getId() {
 		return id;
@@ -314,6 +317,14 @@ public class Pasta extends AbstractTO implements Serializable {
 
 	public void setBuscaPorCaixeta(boolean buscaPorCaixeta) {
 		this.buscaPorCaixeta = buscaPorCaixeta;
+	}
+
+	public int getSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(int selecionado) {
+		this.selecionado = selecionado;
 	}
 	
 }
