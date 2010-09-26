@@ -237,7 +237,13 @@ public class LocalizarPastaMBean extends ArcheionBean {
 			if(conv == null){
 				sb.append("UPPER("+ChavesPasta.getDataBaseValue(this.chave1)+")");
 			} else {
-				sb.append(ChavesPasta.getDataBaseValue(this.chave1));
+				if (conv.equals("date")) {
+					//sb.append("to_char(' ");					
+					sb.append(ChavesPasta.getDataBaseValue(this.chave1));
+					//sb.append(" ','DD/MM/YYYY') ");
+				}else{
+					sb.append(ChavesPasta.getDataBaseValue(this.chave1));
+				}
 			}
 			sb.append(Operadores.getDataBaseValue(this.operador1));
 			sb.append("'");			
@@ -315,6 +321,7 @@ public class LocalizarPastaMBean extends ArcheionBean {
 			}
 		}
 
+		System.out.println(sb.toString());
 		
 		if ( !sb.toString().equals("") ) {
 			listaPasta = pastaBO.consultaEtiquetaPasta(sb.toString());	
