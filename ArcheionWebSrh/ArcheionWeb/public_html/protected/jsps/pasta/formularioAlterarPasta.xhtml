@@ -159,6 +159,7 @@ td,input {
 						<td align="left" >
 							<h:inputText id="caixeta" 
 								styleClass="campo" value="#{pastaBean.pasta.caixeta}" 
+								required="true"
 								requiredMessage="#{msgs['error.business.requiredField']}" 
 								converterMessage="#{msgs['error.business.numericField']}"
 								disabled="#{pastaBean.visualizar}"/>

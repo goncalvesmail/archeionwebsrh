@@ -1,5 +1,6 @@
 package br.com.archeion.persistencia.pasta;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -459,10 +460,11 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 	@SuppressWarnings("unchecked")
 	public List<Pasta> findByEmpresaLocalEmprestimo(Long emp, Long local) {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-
+		List<Pasta> list = new ArrayList<Pasta>();
 		StringBuilder sql = new StringBuilder("SELECT u FROM Pasta u ");
 
 		boolean where = false;
+		if (emp != null){
 		if(emp > 0) {
 			parametros.put("emp", emp);
 			sql.append(" WHERE u.local.empresa.id = :emp ");
@@ -490,8 +492,9 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 			sql.append(" SELECT e.pasta.id from EmprestimoPasta e WHERE e.dataDevolucao is null ) ");
 		}
 		
-		List<Pasta> list = getJpaTemplate().findByNamedParams(sql.toString(),
+		list = getJpaTemplate().findByNamedParams(sql.toString(),
 				parametros);
+		}
 		return list;
 	}
 	

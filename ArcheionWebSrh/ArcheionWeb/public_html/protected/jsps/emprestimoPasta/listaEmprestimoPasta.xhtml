@@ -116,10 +116,27 @@
 			<h:outputText value="#{msgs['emprestimo.pasta.lista.vazia']}" rendered="#{empty emprestimoPastaBean.listaEmprestimoPasta}" styleClass="label"/>			
 			<br />
 			<h:form>
-				<h:commandButton value="#{msgs['geral.botao.incluir']}" styleClass="botaoIntuitivo"
-					action="#{emprestimoPastaBean.goToForm}" />
-				<h:commandButton value="#{msgs['geral.botao.imprimir.txt']}" styleClass="botaoIntuitivo"
-					action="#{emprestimoPastaBean.imprimirTxt}" />	
+				<table align="center">
+				<tr>
+					<td>
+						<h:commandButton value="#{msgs['emprestimo.incluir']}" styleClass="botaoIntuitivo"
+							action="#{emprestimoPastaBean.goToForm}" />
+					</td>
+					<td>
+						<h:commandButton value="#{msgs['geral.botao.imprimir.txt']}" styleClass="botaoIntuitivo"
+							action="#{emprestimoPastaBean.imprimirTxt}" />
+					</td>	
+				</tr>
+				<tr>
+					<td>
+						<h:inputText id="titulo" styleClass="campo" value="#{emprestimoPastaBean.caixetaPraEmprestar}" />
+					</td>
+					<td>
+						<h:commandButton value="#{msgs['emprestimo.pasta.caixeta']}" styleClass="botaoIntuitivo"
+							action="#{emprestimoPastaBean.goToEmprestarCaixeta}" />
+					</td>
+				</tr>
+				</table>
 			</h:form>
 			<h:form>
 				<table class="tabelasemlinha" align="center" cellpadding="2"
