@@ -16,10 +16,8 @@
 	<!-- DAOs -->
 	<bean id="pastaDAO" class="br.com.archeion.persistencia.pasta.PastaDAOImpl" autowire="byName"/>
 	<bean id="emprestimoPastaDAO" class="br.com.archeion.persistencia.pasta.EmprestimoPastaDAOImpl" autowire="byName"/>
-	<bean id="emprestimoDAO" class="br.com.archeion.persistencia.pasta.EmprestimoDAOImpl" autowire="byName"/>
-		
+			
 	<!-- BOs -->
 	<bean id="pastaBO" class="br.com.archeion.negocio.pasta.PastaBOImpl" autowire="byName"/>
 	<bean id="emprestimoPastaBO" class="br.com.archeion.negocio.pasta.EmprestimoPastaBOImpl" autowire="byName"/>
-	<bean id="emprestimoBO" class="br.com.archeion.negocio.pasta.EmprestimoBOImpl" autowire="byName"/>
 </beans>
