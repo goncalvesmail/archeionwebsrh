@@ -13,11 +13,10 @@ import br.com.archeion.persistencia.pasta.EmprestimoPastaDAO;
 
 
 public class EmprestimoPastaBOImpl implements EmprestimoPastaBO {
-
 	private EmprestimoPastaDAO emprestimoPastaDAO;
 
 	public EmprestimoPasta persist(EmprestimoPasta emprestimoCaixa) throws CadastroDuplicadoException, BusinessException {
-		//validar(emprestimoCaixa);
+		validar(emprestimoCaixa);
 		return emprestimoPastaDAO.persist(emprestimoCaixa);
 	}
 
@@ -42,7 +41,7 @@ public class EmprestimoPastaBOImpl implements EmprestimoPastaBO {
 	}
 
 	public EmprestimoPasta merge(EmprestimoPasta emprestimoCaixa) throws BusinessException, CadastroDuplicadoException {
-		//validar(emprestimoCaixa);
+		validar(emprestimoCaixa);
 		return emprestimoPastaDAO.merge(emprestimoCaixa);
 	}
 
@@ -54,5 +53,14 @@ public class EmprestimoPastaBOImpl implements EmprestimoPastaBO {
 		this.emprestimoPastaDAO = emprestimoDAO;
 	}
 	
+	public void validar(EmprestimoPasta emprestimo) throws BusinessException  {
+		if ( emprestimo.getDataEmprestimo().after(new Date()) ) {
+			throw new BusinessException("emprestimo.pasta.erro.dataSaida.invalida");
+		}
+		if ( emprestimo.getDataEmprestimo().after(emprestimo.getPrevisaoDevolucao()) ) {
+			throw new BusinessException("emprestimo.pasta.erro.previsao.invalida");
+			
+		}
+	}
 	
 }
