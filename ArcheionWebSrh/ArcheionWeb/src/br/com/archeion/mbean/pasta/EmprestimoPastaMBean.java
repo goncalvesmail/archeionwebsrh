@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -19,7 +21,6 @@ import net.sf.jasperreports.engine.JRException;
 import org.acegisecurity.AccessDeniedException;
 
 import util.Relatorio;
-
 import br.com.archeion.exception.BusinessException;
 import br.com.archeion.exception.CadastroDuplicadoException;
 import br.com.archeion.jsf.Constants;
@@ -51,6 +52,8 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	private List<EmprestimoPasta> listaEmprestimoPasta;
 
 	private List<Pasta> listaEmprestarPastaPorCaixeta;
+	private Map mapPastas;
+	private Pasta pastaEmprestar;
 
 	private Date dataFiltro;
 	private Usuario usuarioFiltro;
@@ -319,21 +322,19 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	}
 	
 	public String incluirPorCaixeta() {
-		boolean achou = false;
+	
 		try {
-			for(Pasta p: listaEmprestarPastaPorCaixeta){
-				if(p.getSelecionado() == 1){
-					achou = true;
-					emprestimo.setPasta(p);
-					break;
-				}
-			}
-			if(!achou){
+			
+			
+			if(pastaEmprestar==null || pastaEmprestar.getId()==null || pastaEmprestar.getId()==0){
 				addMessage(FacesMessage.SEVERITY_INFO,
 						"error.business.nenhum.radio.selecionado",
 						ArcheionBean.PERSIST_FAILURE);
 				return "formularioEmprestimoPastaPorCaixeta";
 			}
+			
+			emprestimo.setPasta(pastaEmprestar);
+			
 			incluirMBean();
 		} catch (AccessDeniedException aex) {
 			return Constants.ACCESS_DENIED;
@@ -401,16 +402,35 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		addMessage(FacesMessage.SEVERITY_INFO, "geral.inclusao.sucesso",
 				ArcheionBean.PERSIST_SUCESS);
 	}
-
+	
 	public String goToEmprestarCaixeta() {
 		empresaSelcionada = new Empresa();
+		pastaEmprestar = new Pasta();
+		emprestimo = new EmprestimoPasta();
 		preencherCombos();
+		
 		//iniciarPreenchimentoCombos();
+		
 		if (caixetaPraEmprestar != null && !caixetaPraEmprestar.equals("")) {
-			listaEmprestarPastaPorCaixeta = pastaBO
-					.findByCaixeta(caixetaPraEmprestar);
-			if (listaEmprestarPastaPorCaixeta != null
-					&& listaEmprestarPastaPorCaixeta.size() > 0) {
+			listaEmprestarPastaPorCaixeta = pastaBO.findByCaixeta(caixetaPraEmprestar);
+						
+			if (listaEmprestarPastaPorCaixeta != null && listaEmprestarPastaPorCaixeta.size() > 0) {
+				
+				mapPastas = new Hashtable<Long, String>();
+				for(Pasta p:listaEmprestarPastaPorCaixeta) {
+					Long id = p.getId();
+					
+					StringBuffer text = new StringBuffer();
+					text.append("Título: ");
+					text.append(p.getTitulo());
+					text.append(" Protocolo: ");
+					text.append(p.getNumeroProtocolo());
+					text.append(" Local: "); 
+					text.append(p.getLocal().getNome());
+					
+					mapPastas.put(text,id);
+				}
+				
 				return "formularioEmprestimoPastaPorCaixeta";
 			} else {
 				addMessage(FacesMessage.SEVERITY_INFO,
@@ -568,6 +588,7 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	public String findAll() {
 		try {
 
+			emprestimo = new EmprestimoPasta();
 			listaEmpresa = new ArrayList<SelectItem>();
 			listaLocal = new ArrayList<SelectItem>();
 
@@ -898,4 +919,21 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	public void setIndex(int index) {
 		this.index = index;
 	}
+
+	public Map getMapPastas() {
+		return mapPastas;
+	}
+
+	public void setMapPastas(Map mapPastas) {
+		this.mapPastas = mapPastas;
+	}
+
+	public Pasta getPastaEmprestar() {
+		return pastaEmprestar;
+	}
+
+	public void setPastaEmprestar(Pasta pastaEmprestar) {
+		this.pastaEmprestar = pastaEmprestar;
+	}
+
 }

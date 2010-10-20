@@ -72,15 +72,11 @@
 						</td>
 					</tr>
 					<tr>
-						<td align="right" width="50%">
+						<td align="center"  colspan="3">
 							<h:outputLabel styleClass="label" value="#{msgs['caixa.titulo.caixa']}:" for="caixeta" />
-						</td>
 						
-						<td align="left" >
 							<h:inputText id="caixeta" styleClass="campo" value="#{pastaBean.pasta.caixeta}"/>							
-						</td>
 						
-						<td>
 							<h:commandButton value="#{msgs['geral.botao.pesquisar.por.caixeta']}" styleClass="botaoIntuitivo" action="#{pastaBean.findByCaixeta}" />
 						</td>						
 					</tr>	

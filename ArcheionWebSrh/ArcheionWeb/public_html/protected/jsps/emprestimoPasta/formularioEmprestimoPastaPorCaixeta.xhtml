@@ -37,54 +37,6 @@ td,input {
 			<h:form id="form">
 			
 				<table width="100%">
- 					<tr>
-						<td colspan="2" >
-							<rich:dataTable rows="0" id="table" rowKeyVar="index"
-							value="#{emprestimoPastaBean.listaEmprestarPastaPorCaixeta}" var="lista"
-							rendered="#{not empty emprestimoPastaBean.listaEmprestimoPasta}" align="center"
-							cellpadding="0" cellspacing="0" styleClass="tabela tabelaCss"
-							headerClass="tabela_header" rowClasses="odd, even"
-							columnClasses="col,col,col,col,col,col,col,col"
-							style="width: 100%; cellspacing:2;">
-							<rich:column>
-								<f:facet name="header">S</f:facet>
-																		
-								<h:selectOneRadio value="#{lista.selecionado}" onchange="atualiza#{index}();">  
-									<f:selectItem itemValue="1" itemLabel="" />  
-								</h:selectOneRadio>  
-    
-								<!-- bean.Marcar: seta numa variavel o valor da lista.get(index) -->  
-								<a4j:jsFunction name="atualiza#{index}" action="#{emprestimoPastaBean.marcar}" reRender="table">  
-									<f:setPropertyActionListener value="#{index}" target="#{emprestimoPastaBean.index}" />  
-								</a4j:jsFunction>
-							</rich:column>
-							<rich:column>
-								<f:facet name="header">
-									<h:outputText value="#{msgs['caixa.texto.local']}" />
-								</f:facet>
-								<h:outputText value="#{lista.local.nome}" />
-							</rich:column>
-							<rich:column>
-								<f:facet name="header">
-									<h:outputText value="#{msgs['emprestimo.pasta.solicitada']}" />
-								</f:facet>
-								<h:outputText value="#{lista.titulo}" />
-							</rich:column>	
-							<rich:column>
-								<f:facet name="header">
-									<h:outputText value="#{msgs['geral.descricao']}" />
-								</f:facet>
-								<h:outputText value="#{lista.descricao}" />
-							</rich:column>
-							<rich:column>
-								<f:facet name="header">
-									<h:outputText value="#{msgs['pasta.numero.protocolo']}" />
-								</f:facet>
-								<h:outputText value="#{lista.numeroProtocolo}" />
-							</rich:column>				
-						</rich:dataTable></td>
-					</tr>							
-									
 					<tr>
 						<td align="right">
 							<h:outputLabel styleClass="labelObrigatorio" 
@@ -184,6 +136,25 @@ td,input {
 							</table>						
 						</td>
 					</tr>						
+
+					<tr>
+						<td colspan="2" align="center">						
+							<table width="40%">
+							<tr>
+								<td align="left">								
+									<fieldset>
+									<legend><span class="label">#{msgs['emprestimo.pasta.listaPasta']}</span></legend>
+										
+										<h:selectOneRadio  value="#{emprestimoPastaBean.pastaEmprestar.id}" layout="pageDirection" styleClass="label" style="text-align: left">
+										  <f:selectItems value="#{emprestimoPastaBean.mapPastas}"  styleClass="label" />
+										</h:selectOneRadio>
+										
+									</fieldset>
+								</td>
+							</tr>
+							</table>						
+						</td>
+					</tr>	
 
 
 					<tr>

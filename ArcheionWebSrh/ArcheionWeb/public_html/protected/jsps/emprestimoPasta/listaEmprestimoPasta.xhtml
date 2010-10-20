@@ -29,6 +29,10 @@
 			</table>
 
 			<h:form>
+			
+				<fieldset>
+				<legend><span class="label">#{msgs['emprestimo.pasta.pesquisa']}</span></legend>
+										
 				<table class="tabelasemlinha" align="center">
 					<tr>
 						<td>
@@ -60,7 +64,7 @@
 								action="#{emprestimoPastaBean.pesquisar}" />	
 						</td>							
 															
-					</tr>
+					</tr>					
 					<tr>
 						<td>
 							<a4j:region id="localRegion">						
@@ -75,7 +79,7 @@
 						</td>
 						<td>
 							<a4j:outputPanel ajaxRendered="true" id="outLocal"> 
-								<h:selectOneMenu id="local" styleClass="campo"
+								<h:selectOneMenu id="local" styleClass="campo" 
 									value="#{emprestimoPastaBean.pastaFiltro.local.id}">  
 									<f:selectItem itemValue="-1" itemLabel="#{msgs['geral.combo.vazio']}"/>
 									<f:selectItems value="#{emprestimoPastaBean.listaLocal}" />  
@@ -87,7 +91,7 @@
 				                </f:facet>
 				            </a4j:status>						
 						</td>
-						<td align="left">
+						<td align="left" nowrap="nowrap">
 							<t:inputCalendar id="dataFiltro"
 								renderAsPopup="true"
 								popupTodayString="#{msgs['geral.texto.data']}"
@@ -111,10 +115,36 @@
 						</td>									
 					</tr>					
 				</table>
+				</fieldset>
 			</h:form>
+
+			
+			
+			<fieldset>
+			<legend><span class="label">#{msgs['emprestimo.pasta.rapido']}</span></legend>
+			
+				<h:form>
+					<table class="tabelasemlinha" align="center">
+						<tr>
+							<td>
+								<h:outputText value="#{msgs['emprestimo.pasta.caixeta']}" />:
+							</td>		
+							<td>
+								<h:inputText id="titulo" styleClass="campo" value="#{emprestimoPastaBean.caixetaPraEmprestar}" />
+							</td>
+							<td>
+								<h:commandButton value="#{msgs['emprestimo.pasta.caixetaEmprestar']}" styleClass="botaoIntuitivo"
+									action="#{emprestimoPastaBean.goToEmprestarCaixeta}" />
+							</td>
+						</tr>
+					</table>
+				</h:form>
+				
+			</fieldset>			
+			
 			<br/>
-			<h:outputText value="#{msgs['emprestimo.pasta.lista.vazia']}" rendered="#{empty emprestimoPastaBean.listaEmprestimoPasta}" styleClass="label"/>			
 			<br />
+			
 			<h:form>
 				<table align="center">
 				<tr>
@@ -127,17 +157,13 @@
 							action="#{emprestimoPastaBean.imprimirTxt}" />
 					</td>	
 				</tr>
-				<tr>
-					<td>
-						<h:inputText id="titulo" styleClass="campo" value="#{emprestimoPastaBean.caixetaPraEmprestar}" />
-					</td>
-					<td>
-						<h:commandButton value="#{msgs['emprestimo.pasta.caixeta']}" styleClass="botaoIntuitivo"
-							action="#{emprestimoPastaBean.goToEmprestarCaixeta}" />
-					</td>
-				</tr>
 				</table>
 			</h:form>
+			
+			<br/>
+			<h:outputText value="#{msgs['emprestimo.pasta.lista.vazia']}" rendered="#{empty emprestimoPastaBean.listaEmprestimoPasta}" styleClass="label"/>			
+						
+			
 			<h:form>
 				<table class="tabelasemlinha" align="center" cellpadding="2"
 					cellspacing="2" >
