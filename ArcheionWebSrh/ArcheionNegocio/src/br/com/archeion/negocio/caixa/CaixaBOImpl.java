@@ -28,7 +28,6 @@ public class CaixaBOImpl implements CaixaBO {
 	}
 	
 	public Caixa persist(Caixa caixa) throws CadastroDuplicadoException, BusinessException {
-		validaCaixa(caixa);
 		
 		caixa = caixaDAO.persist(caixa);
 
@@ -80,7 +79,6 @@ public class CaixaBOImpl implements CaixaBO {
 	}
 	
 	public Caixa merge(Caixa caixa) throws BusinessException, CadastroDuplicadoException {
-		validaCaixa(caixa);
 		return caixaDAO.merge(caixa);
 	}
 
@@ -120,11 +118,6 @@ public class CaixaBOImpl implements CaixaBO {
 		}
 		return null;
 	}	
-	
-	private void validaCaixa(Caixa caixa) throws CadastroDuplicadoException, BusinessException{
-		
-		
-	}
 
 	public void setEmprestimoCaixaDAO(EmprestimoCaixaDAO emprestimoCaixaDAO) {
 		this.emprestimoCaixaDAO = emprestimoCaixaDAO;
