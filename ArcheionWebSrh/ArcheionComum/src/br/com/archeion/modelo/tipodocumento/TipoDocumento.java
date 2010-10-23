@@ -11,17 +11,28 @@ import javax.persistence.Table;
 
 import br.com.archeion.modelo.AbstractTO;
 
+/**
+ * Classe responsavel por informar o tipo de um documento
+ * @author SInforme
+ *
+ */
 @Entity
 @Table(name = "TB_TIPO_DOCUMENTO")
 public class TipoDocumento extends AbstractTO implements Serializable {
 
 	private static final long serialVersionUID = 3211626617200806596L;
 
+	/**
+	 * Identificador único
+	 */
 	@Id
 	@Column(name = "ID_TIPO_DOCUMENTO")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	/**
+	 * Descrição do tipo de documento
+	 */
 	@Column(name = "NM_TIPO_DOCUMENTO")
 	private String nome;
 

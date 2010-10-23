@@ -1,5 +1,9 @@
 package br.com.archeion.modelo;
 
+/**
+ * Tipos que um arquivo pode assumir 
+ * @author SInforme
+ */
 public enum TipoArquivo {
 	TODOS(4, "Todos"),
 	NENHUM(3, "Nenhum"),

@@ -11,17 +11,27 @@ import javax.persistence.Table;
 
 import br.com.archeion.modelo.AbstractTO;
 
+/**
+ * Classe que representa um evento de contagem
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_EVENTO_CONTAGEM")
 public class EventoContagem extends AbstractTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_EVENTO_CONTAGEM")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	/**
+	 * Descrição do evento de contagem
+	 */
 	@Column(name = "NM_EVENTO_CONTAGEM")
 	private String nome;
 

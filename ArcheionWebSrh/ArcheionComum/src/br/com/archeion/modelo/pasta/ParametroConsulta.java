@@ -2,9 +2,20 @@ package br.com.archeion.modelo.pasta;
 
 import br.com.archeion.modelo.SituacaoExpurgo;
 
+/**
+ * Classe para os parametros das consultas
+ * @author SInforme
+ */
 public class ParametroConsulta {
 
+	/**
+	 * Nome do parametro de consulta
+	 */
 	private String parametrosConsulta;
+	
+	/**
+	 * Situação
+	 */
 	private SituacaoExpurgo situacao;
 	
 	public String getParametrosConsulta() {

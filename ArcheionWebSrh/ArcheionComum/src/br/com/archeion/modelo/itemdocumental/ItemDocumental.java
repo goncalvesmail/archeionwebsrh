@@ -11,17 +11,27 @@ import javax.persistence.Table;
 
 import br.com.archeion.modelo.AbstractTO;
 
+/**
+ * Classe que representa um item documental 
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_ITEM_DOCUMENTAL")
 public class ItemDocumental  extends AbstractTO implements Serializable {
 
 	private static final long serialVersionUID = -8278113058379489232L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_ITEM_DOCUMENTAL")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	/**
+	 * Nome do item documental
+	 */
 	@Column(name = "NM_ITEM_DOCUMENTAL")
 	private String nome;
 

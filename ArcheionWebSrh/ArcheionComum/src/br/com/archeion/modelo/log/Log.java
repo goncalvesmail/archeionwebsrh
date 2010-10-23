@@ -17,24 +17,40 @@ import javax.persistence.TemporalType;
 import br.com.archeion.modelo.AbstractTO;
 import br.com.archeion.modelo.usuario.Usuario;
 
+/**
+ * Classe responsavel por salvar os logs
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_LOG")
 public class Log extends AbstractTO implements Serializable  {
 
 	private static final long serialVersionUID = -2714408210698820985L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_LOG")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	/**
+	 * Usuário responsável pela ação logada
+	 */
 	@ManyToOne(optional=false) 
     @JoinColumn(name="ID_USUARIO", nullable=false)
 	private Usuario usuario;
 	
+	/**
+	 * Ação logada
+	 */
 	@Column(name = "TX_ACAO")
 	private String acao;
 	
+	/**
+	 * Data do log
+	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DT_DATA")
 	private Date data;

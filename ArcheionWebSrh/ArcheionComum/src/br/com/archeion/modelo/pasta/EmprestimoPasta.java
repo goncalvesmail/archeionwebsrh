@@ -19,39 +19,67 @@ import br.com.archeion.modelo.AbstractTO;
 import br.com.archeion.modelo.pasta.Pasta;
 import br.com.archeion.modelo.usuario.Usuario;
 
+/**
+ * Classe reponsável por criar empréstimos de pasta
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_EMPRESTIMO_PASTA")
 public class EmprestimoPasta extends AbstractTO implements Serializable {
 	private static final long serialVersionUID = -4695059059889589442L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_EMPRESTIMO_PASTA")
 	@GeneratedValue(strategy=GenerationType.AUTO)	
 	private Long id;
 	
+	/**
+	 * Usuário responsável pelo empréstimo
+	 */
 	@ManyToOne(optional=false) 
     @JoinColumn(referencedColumnName="ID_USUARIO",name = "ID_USUARIO_RESPONSAVEL", nullable=false)
 	private Usuario responsavel;
 	
+	/**
+	 * Usuário que solicitou o empréstimo
+	 */
 	@ManyToOne(optional=false) 
     @JoinColumn(referencedColumnName="ID_USUARIO",name = "ID_USUARIO_SOLICITANTE", nullable=true)
 	private Usuario solicitante;
 	
+	/**
+	 * Usuário que solicitou mas não é cadastrado no sistema
+	 */
 	@Column(name = "TX_SOLICITANTE_EXTERNO")
 	private String solicitanteExterno;
 	
+	/**
+	 * Pasta que estar sendo emprestada
+	 */
 	@ManyToOne(cascade={CascadeType.REFRESH})
 	@JoinColumn(name="ID_PASTA")  
 	private Pasta pasta;
 	
+	/**
+	 * Data do empréstimo
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_EMPRESTIMO")
 	private Date dataEmprestimo;
 	
+	/**
+	 * Data de previsão de devolução
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_PREVISAO_DEVOLUCAO")
 	private Date previsaoDevolucao;
 	
+	/**
+	 * Data da devolução
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_DEVOLUCAO")
 	private Date dataDevolucao;

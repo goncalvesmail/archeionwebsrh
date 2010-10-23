@@ -22,45 +22,79 @@ import br.com.archeion.modelo.local.Local;
 import br.com.archeion.modelo.pasta.Pasta;
 import br.com.archeion.modelo.tipodocumento.TipoDocumento;
 
+/**
+ * Classe que representa um documento
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_DOCUMENTO")
 public class Documento extends AbstractTO implements Serializable {
 
 	private static final long serialVersionUID = 2747447920361742385L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_DOCUMENTO")
 	@GeneratedValue(strategy=GenerationType.AUTO)	
 	private Long id;
 	
+	/**
+	 * Local do documento
+	 */
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH)  
 	@JoinColumn(name="ID_LOCAL")  
 	private Local local;
 	
+	/**
+	 * Origem do documento
+	 */
 	@Column(name="CS_ORIGEM")
 	private Origem origem;
 	
+	/**
+	 * Data documento
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name="DT_DATA")
 	private Date data;
 	
+	/**
+	 * Tipo de documento
+	 */
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH)  
 	@JoinColumn(name="ID_TIPO_DOCUMENTO")  
 	private TipoDocumento tipoDocumento;
 	
+	/**
+	 * Pasta ao qual o documento pertence
+	 */
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH)  
 	@JoinColumn(name="ID_PASTA")  
 	private Pasta pasta;
 	
+	/**
+	 * Referencia do documento
+	 */
 	@Column(name="TX_REFERENCIA")
 	private String referencia;
 	
+	/**
+	 * Remetente do documento
+	 */
 	@Column(name="TX_REMETENTE")
 	private String remetente;
 	
+	/**
+	 * O destinatário do documento
+	 */
 	@Column(name="TX_DESTINATARIO")
 	private String destinatario;
 	
+	/**
+	 * Observações livres sobre o documento
+	 */
 	@Column(name = "TX_OBSERVACAO")
 	private String observacao;
 

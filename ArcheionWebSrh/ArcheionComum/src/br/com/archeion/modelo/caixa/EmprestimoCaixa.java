@@ -18,40 +18,68 @@ import javax.persistence.TemporalType;
 import br.com.archeion.modelo.AbstractTO;
 import br.com.archeion.modelo.usuario.Usuario;
 
+/**
+ * Classe que realiza o empréstimos de caixa
+ * @author Sinforme
+ */
 @Entity
 @Table(name = "TB_EMPRESTIMO_CAIXA")
 public class EmprestimoCaixa extends AbstractTO implements Serializable {
 
 	private static final long serialVersionUID = -4695059059889589442L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_EMPRESTIMO_CAIXA")
 	@GeneratedValue(strategy=GenerationType.AUTO)	
 	private Long id;
 	
+	/**
+	 * Usuário responsável pelo empréstimo
+	 */
 	@ManyToOne(optional=false) 
     @JoinColumn(referencedColumnName="ID_USUARIO",name = "ID_USUARIO_RESPONSAVEL", nullable=false)
 	private Usuario responsavel;
 	
+	/**
+	 * Usuário que solicitou o empréstimo 
+	 */
 	@ManyToOne(optional=false) 
     @JoinColumn(referencedColumnName="ID_USUARIO",name = "ID_USUARIO_SOLICITANTE", nullable=true)
 	private Usuario solicitante;
 	
+	/**
+	 * Usuário que solicita e não é cadastrado
+	 */
 	@Column(name = "TX_SOLICITANTE_EXTERNO")
 	private String solicitanteExterno;
 	
+	/**
+	 * A caixa que esta sendo desmontada
+	 */
 	@ManyToOne(cascade={CascadeType.REFRESH})
 	@JoinColumn(name="ID_CAIXA")  
 	private Caixa caixa;
 	
+	/**
+	 * A data do empréstimo
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_EMPRESTIMO")
 	private Date dataEmprestimo;
 	
+	/**
+	 * Previsão para devolução
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_PREVISAO_DEVOLUCAO")
 	private Date previsaoDevolucao;
 	
+	/**
+	 * Data da devolução
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_DEVOLUCAO")
 	private Date dataDevolucao;

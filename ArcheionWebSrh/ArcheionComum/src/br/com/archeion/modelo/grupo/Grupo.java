@@ -22,6 +22,10 @@ import br.com.archeion.modelo.AbstractTO;
 import br.com.archeion.modelo.funcionalidade.Funcionalidade;
 import br.com.archeion.modelo.usuario.Usuario;
 
+/**
+ * Classe que representa os grupos do usuário
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_GRUPOS")
 public class Grupo extends AbstractTO implements Serializable
@@ -29,17 +33,29 @@ public class Grupo extends AbstractTO implements Serializable
 
 	private static final long serialVersionUID = 638288521660781058L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_GRUPO")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	/**
+	 * Nome do grupo
+	 */
 	@Column(name = "NM_GRUPO")
 	private String nome;
 
+	/**
+	 * Os usuários que fazem parte do grupo
+	 */
 	@ManyToMany(mappedBy = "grupos")
 	private List<Usuario> usuarios;
 	
+	/**
+	 * Permissões do grupo
+	 */
 	@ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
     @JoinTable(
         name="TB_FUNCIONALIDADES_GRUPOS",

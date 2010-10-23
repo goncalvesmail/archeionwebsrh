@@ -11,6 +11,10 @@ import javax.persistence.Table;
 
 import br.com.archeion.modelo.AbstractTO;
 
+/**
+ * Classe que representa o endereço de caixa
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_ENDERECO_CAIXA")
 public class EnderecoCaixa extends AbstractTO implements Serializable {
@@ -18,17 +22,29 @@ public class EnderecoCaixa extends AbstractTO implements Serializable {
 	
 	private static final long serialVersionUID = -6913083829560050525L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_ENDERECO_CAIXA")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	/**
+	 * Vão da caixa
+	 */
 	@Column(name = "VAO_ENDERECO_CAIXA")
 	private String vao;
 	
+	/**
+	 * Vão inicial
+	 */
 	@Column(name = "NU_INICIAL")
 	private Integer vaoInicial;
 
+	/**
+	 * Vão final
+	 */
 	@Column(name = "NU_FINAL")
 	private Integer vaoFinal;
 

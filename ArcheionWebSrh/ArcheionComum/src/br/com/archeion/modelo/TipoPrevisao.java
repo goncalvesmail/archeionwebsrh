@@ -1,5 +1,9 @@
 package br.com.archeion.modelo;
 
+/**
+ * Tipos possíveis de previsão
+ * @author SInforme
+ */
 public enum TipoPrevisao {
 	PERMANENTE(1, "Recolhimento (AC -> AP)"),
 	INTERMEDIARIO(2, "Transferencia (AC -> AI)");

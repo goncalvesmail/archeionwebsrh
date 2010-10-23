@@ -26,47 +26,80 @@ import br.com.archeion.modelo.enderecocaixa.EnderecoCaixa;
 import br.com.archeion.modelo.local.Local;
 import br.com.archeion.modelo.pasta.Pasta;
 
+/**
+ * Classe que representa as Caixas
+ * @author Sinforme
+ */
 @Entity
 @Table(name = "TB_CAIXA")
 public class Caixa extends AbstractTO implements Serializable {
 
 	private static final long serialVersionUID = 7950257502750314821L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_CAIXA")
 	@GeneratedValue(strategy=GenerationType.AUTO)	
 	private Long id;
 	
+	/**
+	 * Local da caixa
+	 */
 	@ManyToOne(cascade={CascadeType.REFRESH})
 	@JoinColumn(name="ID_LOCAL")  
 	private Local local;
 	
+	/**
+	 * Endereço da caixa na estante
+	 */
 	@ManyToOne (cascade={CascadeType.REFRESH},optional=true)
 	@JoinColumn(name="ID_ENDERECO_CAIXA")  
 	private EnderecoCaixa vao;
 	
+	/**
+	 * Numero do vão na estante
+	 */
 	@Column(name = "NU_VAO_ENDERECO_CAIXA")
 	private Integer numeroVao;
 
+	/**
+	 * Tipo de arquivos da caixa
+	 */
 	@Column(name = "CS_TIPO_ARQUIVO")
 	private TipoArquivo tipo;
 	
+	/**
+	 * Pastas que ficam dentro da caixa
+	 */
     @OneToMany(mappedBy="caixa", fetch=FetchType.EAGER, cascade={CascadeType.REFRESH})
     private List<Pasta> pastas;
 
+    /**
+     * Data de criação da caixa
+     */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_CRIACAO")
 	private Date dataCriacao;
 	
+	/**
+	 * Data de expurgo da caixa
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_EXPURGO")
 	private Date dataExpurgo;
 	
+	/**
+	 * Data de previsão de expurgo da caixa
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_PREVISAO_EXPURGO")
 	private Date dataPrevisaoExpurgo;
 	
-	
+	/**
+	 * Situação da caixa
+	 */
 	@Column(name = "CS_SITUACAO")
 	private SituacaoExpurgo situacao;
     
@@ -77,7 +110,11 @@ public class Caixa extends AbstractTO implements Serializable {
 		dataCriacao = new Date();
 		situacao = SituacaoExpurgo.ATIVA;
 	}
-	
+
+	/**
+	 * Monta um título para a caixa
+	 * @return título da pasta
+	 */
     public String getTitulo() {
     	if ( vao!=null ) return vao.getVao()+"-"+numeroVao;
     	else return situacao.getDescricao();

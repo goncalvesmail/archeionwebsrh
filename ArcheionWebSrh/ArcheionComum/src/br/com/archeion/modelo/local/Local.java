@@ -15,6 +15,10 @@ import javax.persistence.Table;
 import br.com.archeion.modelo.AbstractTO;
 import br.com.archeion.modelo.empresa.Empresa;
 
+/**
+ * Classe que representa o local
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_LOCAL")
 public class Local extends AbstractTO implements Serializable {
@@ -25,17 +29,29 @@ public class Local extends AbstractTO implements Serializable {
 		this.empresa = new Empresa();
 	}
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_LOCAL")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	/**
+	 * Nome do local
+	 */
 	@Column(name = "NM_LOCAL")
 	private String nome;
 	
+	/**
+	 * Ultimo documento do local
+	 */
 	@Column(name = "NU_ULTIMO_DOCUMENTO")
 	private Long ultimoDocumento;
 
+	/**
+	 * Empresa o qual o Local pertence
+	 */
 	@ManyToOne(fetch=FetchType.EAGER)  
 	@JoinColumn(name="ID_EMPRESA")  
 	private Empresa empresa;

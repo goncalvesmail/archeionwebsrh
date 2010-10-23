@@ -16,33 +16,57 @@ import javax.persistence.Table;
 
 import br.com.archeion.modelo.AbstractTO;
 
+/**
+ * Classe que reprensta uma Empresa
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_EMPRESA")
 public class Empresa extends AbstractTO implements Serializable {
 
 	private static final long serialVersionUID = 2396089667502557901L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_EMPRESA")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	/**
+	 * Nome da Empresa
+	 */
 	@Column(name = "NM_EMPRESA")
 	private String nome;
 	
+	/**
+	 * Razao Social da empresa
+	 */
 	@Column(name = "NM_RAZAO_SOCIAL")
 	private String razaoSocial;
 	
+	/**
+	 * Sigla da empresa
+	 */
 	@Column(name = "SG_EMPRESA")
 	private String sigla;
 	
+	/**
+	 * Empresa pai na hierarquia
+	 */
 	@Column(name = "ID_EMPRESA_PAI", nullable = true)
 	private Long idPai;
 	
+	/**
+	 * Indica se a empresa é visivel
+	 */
 	@Column(name = "CS_VISIVEL", nullable = false)
 	private Integer visivel = 0;
 
-	
+	/**
+	 * Lista das empresas filhas
+	 */
 	@OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name="TB_EMPRESA",

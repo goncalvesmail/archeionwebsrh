@@ -10,21 +10,34 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.com.archeion.modelo.AbstractTO;
-
+/**
+ * Classe que representa as permissoes que um determinado podem ter
+ * @author SInforme
+ *
+ */
 @Entity
 @Table(name = "TB_FUNCIONALIDADES")
 public class Funcionalidade extends AbstractTO implements Serializable {
 	
 	private static final long serialVersionUID = -453239442912892417L;
 
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_FUNCIONALIDADE")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	/**
+	 * Nome da funcionalidade
+	 */
 	@Column(name = "NM_FUNCIONALIDADE")
 	private String nome;
 	
+	/**
+	 * Descrição sobre a funcionalidade
+	 */
 	@Column(name = "DESC_FUNCIONALIDADE")
 	private String descricao;
 

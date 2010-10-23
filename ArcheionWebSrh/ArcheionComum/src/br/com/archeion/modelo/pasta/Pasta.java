@@ -23,6 +23,10 @@ import br.com.archeion.modelo.caixa.Caixa;
 import br.com.archeion.modelo.itemdocumental.ItemDocumental;
 import br.com.archeion.modelo.local.Local;
 
+/**
+ * Classe que representa uma Pasta
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_PASTA")
 public class Pasta extends AbstractTO implements Serializable {
@@ -34,85 +38,154 @@ public class Pasta extends AbstractTO implements Serializable {
 		this.itemDocumental = new ItemDocumental();
 		this.situacao = SituacaoExpurgo.ATIVA;
 	}
-	
+
+	/**
+	 * Identificação única
+	 */
 	@Id
 	@Column(name = "ID_PASTA")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	/**
+	 * Local da pasta
+	 */
 	@ManyToOne(fetch=FetchType.EAGER)  
 	@JoinColumn(name="ID_LOCAL")
 	private Local local;
 	
+	/**
+	 * Item documental contido na pasta
+	 */
 	@ManyToOne(fetch=FetchType.EAGER)  
 	@JoinColumn(name="ID_ITEM_DOCUMENTAL")
 	private ItemDocumental itemDocumental;
 	
+	/**
+	 * Título da pasta
+	 */
 	@Column(name = "NM_TITULO")
 	private String titulo;
 	
+	/**
+	 * Descrição da pasta
+	 */
 	@Column(name = "NM_DESCRICAO")
 	private String descricao;
 	
+	/**
+	 * Número de protocolo que identifica a pasta
+	 */
 	@Column(name = "NM_NUMERO_PROTOCOLO")
 	private String numeroProtocolo;
 	
+	/**
+	 * Caixeta onde fica a pasta
+	 */
 	@Column(name = "NM_CAIXETA")
 	private String caixeta;
 	
+	/**
+	 * Data de abertura da pasta
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_ABERTURA")
 	private Date dataAbertura;
 	
+	/**
+	 * Data de referencia da pasta
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_REFERENCIA")
 	private Date dataReferencia;
 	
+	/**
+	 * Data limite inicial para buscas
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_DATA_LIMITE_INICIAL")
 	private Date limiteDataInicial;
 	
+	/**
+	 * Data limite final para buscas
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_DATA_LIMITE_FINAL")
 	private Date limiteDataFinal;
 	
+	/**
+	 * Número limite inicial para buscas
+	 */
 	@Column(name = "NU_NUMERO_LIMITE_INICIAL")
 	private Integer limiteNumeroInicial;
 	
+	/**
+	 * Número limite final para buscas
+	 */
 	@Column(name = "NU_NUMERO_LIMITE_FINAL")
 	private Integer limiteNumeroFinal;
 	
+	/**
+	 * Nome limite inicial para buscas
+	 */
 	@Column(name = "NM_NOME_LIMITE_INICIAL")
 	private String limiteNomeInicial;
 	
+	/**
+	 * Nome limite final para buscas
+	 */
 	@Column(name = "NM_NOME_LIMITE_FINAL")
 	private String limiteNomeFinal;
 	
+	/**
+	 * Observações sobre a pasta
+	 */
 	@Column(name = "TX_OBSERVACAO")
 	private String observacao;
 	
+	/**
+	 * Data de previsão de recolhimento da pasta
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_PREVISAO_RECOLHIMENTO")
 	private Date previsaoRecolhimento;
 	
+	/**
+	 * Data de previsão de expurgo
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_PREVISAO_EXPURGO")
 	private Date previsaoExpurgo;
 	
+	/**
+	 * Caixa da pasta
+	 */
 	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.REFRESH})
 	@JoinColumn(name="ID_CAIXA")
 	private Caixa caixa;
 	
+	/**
+	 * Data de Expurgo
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DT_EXPURGO")
 	private Date dataExpurgo;	
 	
+	/**
+	 * Situação da pasta
+	 */
 	@Column(name = "CS_SITUACAO_PASTA")
 	private SituacaoExpurgo situacao;
 	
+	/**
+	 * campo temporario utilizado para realizar as bucas nas pastas
+	 */
 	@Transient
 	private boolean buscaPorCaixeta;
 	
+	/**
+	 * campo temporário utilizado pra dizer se a pasta foi selecionada
+	 */
 	@Transient
 	private int selecionado;
 

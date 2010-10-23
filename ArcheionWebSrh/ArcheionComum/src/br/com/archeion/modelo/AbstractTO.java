@@ -5,7 +5,10 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-
+/**
+ * Todos os TOs vão herdar dessa classe.
+ * @author SInforme
+ */
 @MappedSuperclass
 public abstract class AbstractTO implements TransferObject {
 
