@@ -26,7 +26,6 @@ import br.com.archeion.modelo.grupo.Grupo;
  * Usuários do Sistema
  * 
  */
-
 @Entity
 @Table(name = "TB_USUARIOS")
 public class Usuario extends AbstractTO implements UserDetails {

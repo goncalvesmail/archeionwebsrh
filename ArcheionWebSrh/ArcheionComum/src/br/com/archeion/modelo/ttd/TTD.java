@@ -17,47 +17,85 @@ import br.com.archeion.modelo.eventocontagem.EventoContagem;
 import br.com.archeion.modelo.itemdocumental.ItemDocumental;
 import br.com.archeion.modelo.local.Local;
 
+/**
+ * Classe responsável pelas TTDs do sistema
+ * @author SInforme
+ */
 @Entity
 @Table(name = "TB_TTD")
 public class TTD extends AbstractTO implements Serializable {
 
 	private static final long serialVersionUID = -6336802995979593989L;
 
+	/**
+	 * Identificador único
+	 */
 	@Id
 	@Column(name = "ID_TTD")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	/**
+	 * Local da TTD
+	 */
 	@ManyToOne(fetch=FetchType.EAGER)  
 	@JoinColumn(name="ID_LOCAL")
 	private Local local;
 	
+	/**
+	 * Item documental da TTD
+	 */
 	@ManyToOne(fetch=FetchType.EAGER)  
 	@JoinColumn(name="ID_ITEM_DOCUMENTAL")
 	private ItemDocumental itemDocumental;
 	
+	/**
+	 * Evento de contagem pra informar a partir de quando foi disparada
+	 * a contagem da TTD
+	 */
 	@ManyToOne(fetch=FetchType.EAGER)  
 	@JoinColumn(name="ID_EVENTO_CONTAGEM")
 	private EventoContagem eventoContagem;
 	
+	/**
+	 * Tempo da pasta no arquivo corrente
+	 */
 	@Column(name = "NM_TEMPO_ARQ_CORRENTE")
 	private Integer tempoArquivoCorrente;
 	
+	/**
+	 * Tempo da pasta no arquivo intermediario
+	 */
 	@Column(name = "CS_ARQ_INTERMEDIARIO")
 	private Integer arquivoIntermediario;
 	
+	/**
+	 * Informa se a pasta é permanente
+	 */
 	@Column(name = "CS_ARQ_PERMANENTE")
 	private Integer arquivoPermanente;
 	
+	/**
+	 * Informa se a pasta foi microfilmada
+	 */
 	@Column(name = "CS_MICROFILMAGEM")
 	private Integer microfilmagem = 0;
 	
+	/**
+	 * Informa se a pasta foi digitalizada
+	 */
 	@Column(name = "CS_DIGITALIZACAO")
 	private Integer digitalizacao = 0;
 	
+	/**
+	 * Observação livre sobre a pasta
+	 */
 	@Column(name = "TX_OBSERVACAO")
 	private String observacao;
 	
+	/**
+	 * Tempo no arquivo intermediario
+	 */
 	@Column(name = "NM_TEMPO_ARQ_INTERMEDIARIO")
 	private Integer tempoArquivoIntermediario;
 	
