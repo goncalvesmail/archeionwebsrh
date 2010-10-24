@@ -14,12 +14,17 @@ import br.com.archeion.modelo.usuario.Usuario;
 import br.com.archeion.util.Log;
 
 /**
- * Interface que irá representar todas as funcionalidades da entidade Usuário
+ * Classe reponsável pelo métodos de negócio relacionados à manutenção de Usuários.
  * 
+ * @author SInforme
  */
-
 public interface UsuarioBO {
 
+	/**
+	 * Inclui um novo Usuário
+	 * @param usuario Usuário a ser incluido
+	 * @return Usuário sincronizado com o banco
+	 */
 	@Transactional
 	@Log(descricao="Inclusão")
 	public Usuario salvar(Usuario usuario);
@@ -40,8 +45,8 @@ public interface UsuarioBO {
 	/**
 	 * Retorna o Usuário com o login informado.
 	 * 
-	 * @param usuario Usuário
-	 * @return Usuario
+	 * @param usuario Usuário com login
+	 * @return Usuario com o referido login
 	 */
 	@Secured({ "ROLE_BUSCAR_USUARIO" })
 	List<Usuario> findByLogin(Usuario usuario);
@@ -111,9 +116,19 @@ public interface UsuarioBO {
 	@Log(descricao="Exclusão")
 	void remove(final Usuario usuario) throws BusinessException;
 	
+	/**
+	 * Gera o relatório de Usuário
+	 * @param parameters Parametros para geração do relatório
+	 * @param localRelatorio Local para geração do relatório
+	 * @return Relatório de Usuário
+	 */
 	@Secured( { "ROLE_IMPRIMIR_USUARIO" })
 	Relatorio getRelatorio(HashMap<String, Object> parameters, String localRelatorio);
 
+	/**
+	 * Busca a lista dos Usuários que possuem permissão de alugar
+	 * @return Lista dos Usuários com permissão de alugar
+	 */
 	List<Usuario> findAllAluga();
 }
 

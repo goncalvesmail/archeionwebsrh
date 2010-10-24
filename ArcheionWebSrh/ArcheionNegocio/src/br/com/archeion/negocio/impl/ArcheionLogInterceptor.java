@@ -16,10 +16,25 @@ import br.com.archeion.modelo.log.Log;
 import br.com.archeion.modelo.usuario.Usuario;
 import br.com.archeion.negocio.log.LogBusiness;
 
+/**
+ * Interceptador para geração de Log do sistema
+ * 
+ * @author SInforme
+ *
+ */
 public class ArcheionLogInterceptor implements MethodInterceptor {
+	
+	/**
+	 * Log do sistema
+	 */
 	private Logger log = Logger.getLogger(ArcheionLogInterceptor.class);
+	
+	/**
+	 * BO para manutenção de Log
+	 */
 	private LogBusiness logBO;
 
+	
 	public Object invoke(MethodInvocation method) throws Throwable {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
