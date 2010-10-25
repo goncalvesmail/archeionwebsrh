@@ -45,35 +45,113 @@ import br.com.archeion.negocio.tipodocumento.TipoDocumentoBO;
 
 public class DocumentoMBean extends ArcheionBean {
 
+	/**
+	 * Representa o documento
+	 */
 	private Documento documento;
+	/**
+	 * Lista de documentos
+	 */
 	private List<Documento> listaDocumento;
+	/**
+	 * Lista de locais
+	 */
 	private List<SelectItem> listaLocal;
+	/**
+	 * Lista de empresas
+	 */
 	private List<SelectItem> listaEmpresa;
+	/**
+	 * Lista de tipo de documentos
+	 */
 	private List<SelectItem> listaTipoDocumento;
+	/**
+	 * Lista de origens
+	 */
 	private List<SelectItem> listaOrigem;
+	/**
+	 * Lista de pastas
+	 */
 	private List<SelectItem> listaPasta;
-	
+	/**
+	 * Combo de chaves de busca
+	 */
 	private List<SelectItem> listaChaves;
+	/**
+	 * Combo de operadores de busca
+	 */
 	private List<SelectItem> listaOperadores;
+	/**
+	 * Lista de operadores boleanos para as buscas
+	 */
 	private List<SelectItem> listaOperadoresBoleanos;
+	/**
+	 * chave de busca
+	 */
 	private int chave1;
+	/**
+	 * chave de busca
+	 */
 	private int chave2;
+	/**
+	 * chave de busca
+	 */
 	private int chave3;
+	/**
+	 * operador de busca
+	 */
 	private int operador1;
+	/**
+	 * operador de busca
+	 */
 	private int operador2;
+	/**
+	 * operador de busca
+	 */
 	private int operador3;
+	/**
+	 * valor de busca
+	 */
 	private String valor1;
+	/**
+	 * valor de busca
+	 */
 	private String valor2;
+	/**
+	 * valor de busca
+	 */
 	private String valor3;
+	/**
+	 * operador boleano de busca
+	 */
 	private int operadorBoleano1;
+	/**
+	 * operador boleano de busca
+	 */
 	private int operadorBoleano2;
-	
+	/**
+	 * BO de locais
+	 */
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
+	/***
+	 * BO de pasta
+	 */
 	private PastaBO pastaBO = (PastaBO) Util.getSpringBean("pastaBO");
+	/**
+	 * BO de empresa
+	 */
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
+	/**
+	 * BO de tipo de documento
+	 */
 	private TipoDocumentoBO tipoDocumentoBO = (TipoDocumentoBO) Util.getSpringBean("tipoDocumentoBO");
+	/**
+	 * BO de documento
+	 */
 	private DocumentoBO documentoBO = (DocumentoBO) Util.getSpringBean("documentoBO");
-	
+	/**
+	 * visualizar
+	 */
 	private boolean visualizar = false;
 	
 	public DocumentoMBean() {
@@ -83,7 +161,9 @@ public class DocumentoMBean extends ArcheionBean {
 		listaEmpresa = new ArrayList<SelectItem>();
 		listaPasta = new ArrayList<SelectItem>();
 	}
-	
+	/**
+	 * Gerar referencia para documento
+	 */
 	public void gerarReferencia() {
 		Local local = localBO.findById(documento.getLocal().getId());
 		Long ultimoDoc = local.getUltimoDocumento();
@@ -91,7 +171,10 @@ public class DocumentoMBean extends ArcheionBean {
 		documento.setReferencia(new GregorianCalendar().get(Calendar.YEAR)+"/"+ultimoDoc);
 	}
 
-	
+	/**
+	 * realiza validações
+	 * @return
+	 */
 	public boolean validate() {
 		boolean erro=false;
 		if ( documento.getDestinatario()==null
@@ -124,7 +207,10 @@ public class DocumentoMBean extends ArcheionBean {
 		}
 		return erro;
 	}
-	
+	/**
+	 * Incluir
+	 * @return Lista inicial
+	 */
 	public String incluir() {
 		try {		
 			
@@ -147,6 +233,10 @@ public class DocumentoMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Incluir
+	 * @return Lista inicial
+	 */
 	public String incluirMais() {
 		try {
 			if (validate()) {
@@ -167,6 +257,12 @@ public class DocumentoMBean extends ArcheionBean {
 		return goToForm();
 	}
 
+	/**
+	 * Incluir
+	 * @throws AccessDeniedException
+	 * @throws BusinessException
+	 * @throws CadastroDuplicadoException
+	 */
 	public void incluirMBean() throws AccessDeniedException, BusinessException, CadastroDuplicadoException {	
 		documento.setId(null);
 		
@@ -204,7 +300,10 @@ public class DocumentoMBean extends ArcheionBean {
 		
 		return "formularioLocalizarDocumento";
 	}
-	
+	/**
+	 * Localizar documentos
+	 * @return
+	 */
 	public String localizarDocumento() {
 		documento = new Documento();		
 		listaDocumento = new ArrayList<Documento>();
@@ -270,7 +369,10 @@ public class DocumentoMBean extends ArcheionBean {
 		listaDocumento = documentoBO.consultarDocumento(sb.toString());
 		return "formularioLocalizarDocumento";
 	}
-	
+	/**
+	 * Localiza todos os documentos
+	 * @return
+	 */
 	public String localizarTodosDocumentos() {
 		listaDocumento = documentoBO.findAll();
 		return "formularioLocalizarDocumento";
@@ -292,6 +394,10 @@ public class DocumentoMBean extends ArcheionBean {
 		return "formularioAlterarDocumento";
 	}	
 
+	/**
+	 * Alterar documentos
+	 * @return
+	 */
 	public String alterar() {
 		try {			
 			
@@ -322,6 +428,10 @@ public class DocumentoMBean extends ArcheionBean {
 		return findAll();
 	}	
 
+	/**
+	 * Remover documentos
+	 * @return
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -340,6 +450,10 @@ public class DocumentoMBean extends ArcheionBean {
 		return findAll();
 	}	
 
+	/**
+	 * Buscar todos
+	 * @return
+	 */
 	public String findAll() {
 		try {
 			visualizar=false;
@@ -350,7 +464,10 @@ public class DocumentoMBean extends ArcheionBean {
 		}
 		return "listaDocumento";
 	}
-	
+	/**
+	 * Chamado quando se muda a combo de empresas
+	 * @param event
+	 */
 	public void valueChanged(ValueChangeEvent event) {
 		Long empId = (Long)event.getNewValue();
 		Empresa empresa = new Empresa();
@@ -360,7 +477,10 @@ public class DocumentoMBean extends ArcheionBean {
 		
 		preencherCombos();
 	}
-	
+	/**
+	 * Chamado quando se muda a combo de locais
+	 * @param event
+	 */
 	public void valueChangedLocal(ValueChangeEvent event) {
 		Long localId = (Long)event.getNewValue();
 		Local local = new Local();
@@ -371,6 +491,9 @@ public class DocumentoMBean extends ArcheionBean {
 		preencherCombos();
 	}
 
+	/**
+	 * Inicializar combos
+	 */
 	public void preencherCombos() {
 		
 		List<Empresa> empresas = empresaBO.findAll();		
@@ -445,6 +568,10 @@ public class DocumentoMBean extends ArcheionBean {
 		return "formularioDocumento";
 	}
 
+	/**
+	 * Imprimir relação de documentos
+	 * @return
+	 */
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {

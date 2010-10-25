@@ -23,21 +23,58 @@ import br.com.archeion.negocio.pasta.PastaBO;
 
 public class GraficoTemporalidadeMBean extends ArcheionBean {
 
+	/**
+	 * pasta selecionada
+	 */
 	private Pasta pasta;
+	/**
+	 * data de inicio da pesquisa
+	 */
 	private Date inicio;
+	/**
+	 * data de fim da pesquisa
+	 */
 	private Date fim;
-	private List<Pasta> listaPasta;	
+	/**
+	 * Lista de pastas
+	 */
+	private List<Pasta> listaPasta;
+	/**
+	 * Tipo de previsão
+	 */
 	private TipoPrevisao previsao;
+	/**
+	 * se é diario
+	 */
 	private boolean diario = false;
-	
+	/**
+	 * Lista de empresas
+	 */
 	private List<SelectItem> listaEmpresa;
+	/**
+	 * Lista de locais
+	 */
 	private List<SelectItem> listaLocal;
+	/**
+	 * Lista de previsão
+	 */
 	private List<SelectItem> listaPrevisao;
-	
+	/**
+	 * BO de pasta
+	 */
 	private PastaBO pastaBO = (PastaBO) Util.getSpringBean("pastaBO");
+	/**
+	 * BO de empresa
+	 */
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
+	/**
+	 * BO de local
+	 */
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
-	
+	/**
+	 * Inicializa e chama pagina do grafico
+	 * @return
+	 */
 	public String goToGrafico() {
 		pasta = new Pasta();
 		inicio = new Date();
@@ -53,11 +90,17 @@ public class GraficoTemporalidadeMBean extends ArcheionBean {
 		
 		return "graficoTemporalidade";
 	}
-	
+	/**
+	 * Pesquisa do grafico
+	 * @return
+	 */
 	public String pesquisar() {
 		return "graficoTemporalidade";
 	}
-	
+	/**
+	 * Chamado quando uma empresa é selecionada na combo
+	 * @param event
+	 */
 	public void valueChangedLista(ValueChangeEvent event) {
 
 		Long empId = (Long)event.getNewValue();
@@ -68,7 +111,9 @@ public class GraficoTemporalidadeMBean extends ArcheionBean {
 		
 		preencherCombos();	
 	}
-	
+	/**
+	 * Inicializa as combos
+	 */
 	private void preencherCombos() {
 		listaEmpresa = new ArrayList<SelectItem>();
 		listaLocal = new ArrayList<SelectItem>();
@@ -95,7 +140,10 @@ public class GraficoTemporalidadeMBean extends ArcheionBean {
 			pasta.setLocal(locais.get(0));
 		}
 	}
-	
+	/**
+	 * Chamada para montar o gráfico
+	 * @return
+	 */
 	@SuppressWarnings("deprecation")
 	public DefaultCategoryDataset getCategoryDataset() {
 

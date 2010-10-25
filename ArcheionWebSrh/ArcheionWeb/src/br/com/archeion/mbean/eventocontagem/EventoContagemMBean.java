@@ -26,17 +26,33 @@ import br.com.archeion.negocio.eventocontagem.EventoContagemBO;
 import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 
 public class EventoContagemMBean extends ArcheionBean {
-	
+	/**
+	 * Evento de contagem
+	 */
 	private EventoContagem eventoContagem;
+	/**
+	 * Lista de eventos de contagem
+	 */
 	private List<EventoContagem> listEventoContagem;
-	
+	/**
+	 * BO de evento de contagem
+	 */
 	private EventoContagemBO eventoContagemBO = (EventoContagemBO) Util.getSpringBean("eventoContagemBO");
+	/**
+	 * BO de relatorio txt
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
 	
+	/**
+	 * construtor
+	 */
 	public EventoContagemMBean() {
 		this.eventoContagem = new EventoContagem();
 	}
-	
+	/**
+	 * Incluir evento de contagem
+	 * @return para a tela principal
+	 */
 	public String incluir() {
 		try {
 			this.incluirMBean();
@@ -52,7 +68,10 @@ public class EventoContagemMBean extends ArcheionBean {
 		}			
 		return findAll();
 	}
-	
+	/**
+	 * Incluir varios eventos de contagem
+	 * @return continua na pagina de incluir
+	 */
 	public String incluirMais() {
 		try {
 			this.incluirMBean();
@@ -68,7 +87,11 @@ public class EventoContagemMBean extends ArcheionBean {
 		}			
 		return goToForm();
 	}
-	
+	/**
+	 * Incluir evento de contagem
+	 * @throws AccessDeniedException
+	 * @throws CadastroDuplicadoException
+	 */
 	public void incluirMBean() throws AccessDeniedException, CadastroDuplicadoException {
 		eventoContagem.setId(null);
 		eventoContagemBO.persist(eventoContagem);
@@ -76,6 +99,10 @@ public class EventoContagemMBean extends ArcheionBean {
 		addMessage(FacesMessage.SEVERITY_INFO,"geral.inclusao.sucesso",ArcheionBean.PERSIST_SUCESS);
 	}
 
+	/**
+	 * Inicializa e vai para pagina de altera
+	 * @return pagina de alterar
+	 */
 	public String goToAlterar() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));			
@@ -89,7 +116,10 @@ public class EventoContagemMBean extends ArcheionBean {
 		}
 		return "formularioAlterarEventoContagem";
 	}	
-	
+	/**
+	 * Alterar evento de contagem
+	 * @return
+	 */
 	public String alterar() {
 		try {			
 			eventoContagem = eventoContagemBO.merge(eventoContagem);
@@ -107,7 +137,10 @@ public class EventoContagemMBean extends ArcheionBean {
 		}
 		return findAll();
 	}	
-	
+	/**
+	 * Remover evento de contagem
+	 * @return pagina principal
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -128,7 +161,10 @@ public class EventoContagemMBean extends ArcheionBean {
 		}
 		return findAll();
 	}	
-	
+	/**
+	 * Imprimir relatorio de evento de contagem
+	 * @return
+	 */
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {
@@ -158,7 +194,10 @@ public class EventoContagemMBean extends ArcheionBean {
 
 		return findAll();
 	}
-	
+	/**
+	 * Imprimir txt de envento de contagem
+	 * @return
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -187,7 +226,10 @@ public class EventoContagemMBean extends ArcheionBean {
 		}
 		return findAll();
 	}
-	
+	/**
+	 * retornar todos
+	 * @return
+	 */
 	public String findAll() {
 		try {
 			listEventoContagem = eventoContagemBO.findAll();
@@ -197,7 +239,10 @@ public class EventoContagemMBean extends ArcheionBean {
 		} 
 		return "listaEventoContagem";
 	}
-	
+	/**
+	 * Inicializa e vai pra pagina principal de evento de contagem
+	 * @return
+	 */
 	public String goToForm() {
 		try {
 			eventoContagem = new EventoContagem();

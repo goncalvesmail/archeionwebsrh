@@ -32,19 +32,41 @@ import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 
 public class LocalMBean extends ArcheionBean {
 
+	/**
+	 * representa o local
+	 */
 	private Local local;
+	/**
+	 * Lista de empresas
+	 */
 	private List<SelectItem> listaEmpresa;
+	/**
+	 * Lista de locais
+	 */
 	private List<Local> listaLocal;
-
+	/**
+	 * BO de locais
+	 */
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
+	/**
+	 * BO de empresa
+	 */
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
+	/**
+	 * BO de relatorio txt
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
-
+	/**
+	 * construtor
+	 */
 	public LocalMBean() {
 		local = new Local();
 		listaEmpresa = new ArrayList<SelectItem>();
 	}
-
+	/**
+	 * Incluir um local
+	 * @return pagina com a lista de locais
+	 */
 	public String incluir() {
 		try {
 			incluirMBean();
@@ -61,6 +83,10 @@ public class LocalMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Incluir varios locais
+	 * @return continua na pagina de inseção
+	 */
 	public String incluirMais() {
 		try {
 			incluirMBean();
@@ -77,6 +103,11 @@ public class LocalMBean extends ArcheionBean {
 		return goToForm();
 	}
 
+	/**
+	 * Incluir o local
+	 * @throws AccessDeniedException
+	 * @throws CadastroDuplicadoException
+	 */
 	public void incluirMBean() throws AccessDeniedException, CadastroDuplicadoException {
 		local.setId(null);
 		Empresa empresa = empresaBO.findById(local.getEmpresa().getId());
@@ -86,6 +117,10 @@ public class LocalMBean extends ArcheionBean {
 		addMessage(FacesMessage.SEVERITY_INFO,"geral.inclusao.sucesso",ArcheionBean.PERSIST_SUCESS);
 	}
 
+	/**
+	 * Inicializa e vai pra pagina de alterar
+	 * @return
+	 */
 	public String goToAlterar() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));			
@@ -107,6 +142,10 @@ public class LocalMBean extends ArcheionBean {
 		return "formularioAlterarLocal";
 	}	
 
+	/**
+	 * Altera um local
+	 * @return
+	 */
 	public String alterar() {
 		try {			
 			local = localBO.merge(local);
@@ -124,7 +163,10 @@ public class LocalMBean extends ArcheionBean {
 		}
 		return findAll();
 	}	
-
+	/**
+	 * Remover um logal
+	 * @return para a pagina com a lista de locais
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -146,6 +188,10 @@ public class LocalMBean extends ArcheionBean {
 		return findAll();
 	}	
 
+	/**
+	 * Busca todos os locais
+	 * @return
+	 */
 	public String findAll() {
 		try {
 			listaLocal = localBO.findAll();
@@ -156,6 +202,10 @@ public class LocalMBean extends ArcheionBean {
 		return "listaLocal";
 	}
 
+	/**
+	 * Inicializa e vai para a lista de locais
+	 * @return
+	 */
 	public String goToForm() {
 		try { 
 			local = new Local();
@@ -173,6 +223,10 @@ public class LocalMBean extends ArcheionBean {
 		return "formularioLocal";
 	}
 
+	/**
+	 * Imprimir uma relação de locais
+	 * @return
+	 */
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {
@@ -201,7 +255,10 @@ public class LocalMBean extends ArcheionBean {
 		}
 		return findAll();
 	}
-	
+	/**
+	 * Imprimir txt de local
+	 * @return
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {

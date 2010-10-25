@@ -31,12 +31,26 @@ import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 
 public class EmpresaMBean extends ArcheionBean {
 
+	/**
+	 * Arvore de empresas
+	 */
 	private TreeNode rootNode = null;
-
+	/**
+	 * Representa a empresa
+	 */
 	private Empresa empresa;
+	/**
+	 * Lista de empresas
+	 */
 	private List<SelectItem> listaEmpresaPai;
 
+	/**
+	 * BO de empresa
+	 */
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
+	/**
+	 * Relatorios txt
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
 
 	public EmpresaMBean() {
@@ -44,6 +58,10 @@ public class EmpresaMBean extends ArcheionBean {
 		listaEmpresaPai = new ArrayList<SelectItem>();
 	}
 
+	/**
+	 * Incluir empresa
+	 * @return
+	 */
 	public String incluir() {
 		try {
 			incluirMBean();
@@ -61,6 +79,10 @@ public class EmpresaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Incluir mais de uma empresa
+	 * @return
+	 */
 	public String incluirMais() {
 		try {
 			incluirMBean();
@@ -78,6 +100,11 @@ public class EmpresaMBean extends ArcheionBean {
 		return this.goToForm();
 	}
 
+	/**
+	 * Incluir empresa
+	 * @throws AccessDeniedException
+	 * @throws CadastroDuplicadoException
+	 */
 	public void incluirMBean() throws AccessDeniedException, CadastroDuplicadoException {
 
 		empresa.setId(null);
@@ -88,6 +115,10 @@ public class EmpresaMBean extends ArcheionBean {
 
 	}
 
+	/**
+	 * Inicializa o alterar
+	 * @return
+	 */
 	public String goToAlterar() {
 		try {
 			String nome = Util.getParameter("_id");			
@@ -111,6 +142,10 @@ public class EmpresaMBean extends ArcheionBean {
 		return "formularioAlterarEmpresa";
 	}
 
+	/**
+	 * Alterar empresa
+	 * @return
+	 */
 	public String alterar() {
 		try {
 			
@@ -133,6 +168,10 @@ public class EmpresaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Remover empresa
+	 * @return
+	 */
 	public String remover() {
 		try {
 			Long id = empresa.getId();
@@ -155,6 +194,10 @@ public class EmpresaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Buscar todas as empresas
+	 * @return
+	 */
 	public String findAll() {
 		try {
 			loadTree(empresaBO.findRoots());
@@ -165,6 +208,10 @@ public class EmpresaMBean extends ArcheionBean {
 		return "listaEmpresa";
 	}
 
+	/**
+	 * Inicializa e mostra formulário de empresas
+	 * @return
+	 */
 	public String goToForm() {
 		try {
 			empresa = new Empresa();
@@ -182,7 +229,11 @@ public class EmpresaMBean extends ArcheionBean {
 		} 
 		return "formularioEmpresa";
 	}
-
+	
+	/**
+	 * Imprimir relação de empresas
+	 * @return
+	 */
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {
@@ -216,6 +267,10 @@ public class EmpresaMBean extends ArcheionBean {
 		return findAll();
 	}
 	
+	/**
+	 * Imprimir txt de empresas
+	 * @return
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -245,6 +300,10 @@ public class EmpresaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Carrega arvore de empresa
+	 * @param lista
+	 */
 	private void loadTree(List<Empresa> lista) {
 		if ( lista!=null && lista.size()>0 ) {
 			rootNode = new TreeNodeImpl();
@@ -256,6 +315,11 @@ public class EmpresaMBean extends ArcheionBean {
 		}
 	}
 
+	/**
+	 * Cria nós da arvore de empresas
+	 * @param node
+	 * @param lista
+	 */
 	private void addNodes(TreeNode node, List<Empresa> lista) {
 		int counter = 0;
 

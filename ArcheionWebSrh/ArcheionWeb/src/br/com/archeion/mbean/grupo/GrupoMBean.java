@@ -24,23 +24,47 @@ import br.com.archeion.negocio.grupo.GrupoBO;
 import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 
 public class GrupoMBean extends ArcheionBean {
-
+	/**
+	 * Grupo
+	 */
 	private Grupo grupo;
+	/**
+	 * Lista de grupos
+	 */
 	private List<Grupo> listaGrupo;
-
+	/**
+	 * Lista de possiveis ações
+	 */
 	private List<Funcionalidade> funcSource;
+	/**
+	 * Lista de possiveis ações destino
+	 */
 	private List<Funcionalidade> funcTarget;
-
+	/**
+	 * BO de grupo
+	 */
 	private GrupoBO grupoBO = (GrupoBO) Util.getSpringBean("grupoBO");
+	/**
+	 * BO de açoes
+	 */
 	private FuncionalidadeBO funcionalidadeBO = (FuncionalidadeBO) Util.getSpringBean("funcionalidadeBO");
+	/**
+	 * BO de relatorios txt
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
 
+	/**
+	 * construtor
+	 */
 	public GrupoMBean() {
 		grupo = new Grupo();
 		funcSource = new ArrayList<Funcionalidade>();
 		funcTarget = new ArrayList<Funcionalidade>();
 	}
-	
+	/**
+	 * Imprimir txt
+	 * @return
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -69,7 +93,10 @@ public class GrupoMBean extends ArcheionBean {
 		}
 		return findAll();
 	}
-	
+	/**
+	 * Inserir grupo
+	 * @return para a pagina principal de grupos
+	 */
 	public String incluir() {
 		try {
 			incluirMBean();	
@@ -85,7 +112,10 @@ public class GrupoMBean extends ArcheionBean {
 		}			
 		return findAll();
 	}
-	
+	/**
+	 * Inserir vários grupos
+	 * @return continua na pagina de inserir
+	 */
 	public String incluirMais() {
 		try {
 			incluirMBean();
@@ -102,7 +132,11 @@ public class GrupoMBean extends ArcheionBean {
 		}
 		return this.goToForm();
 	}
-	
+	/**
+	 * Inclui um grupo
+	 * @throws AccessDeniedException
+	 * @throws CadastroDuplicadoException
+	 */
 	public void incluirMBean() throws AccessDeniedException, CadastroDuplicadoException {
 		grupo.setId(null);
 		grupo.setFuncionalidades(funcTarget);
@@ -113,7 +147,10 @@ public class GrupoMBean extends ArcheionBean {
 
 	}
 
-
+	/**
+	 * Inicializa e chama a pagina de alterar grupo
+	 * @return
+	 */
 	public String goToAlterar() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));			
@@ -133,6 +170,10 @@ public class GrupoMBean extends ArcheionBean {
 		return "formularioAlterarGrupo";
 	}	
 
+	/**
+	 * Altera um grupo
+	 * @return
+	 */
 	public String alterar() {
 		try {			
 			grupo.setFuncionalidades(funcTarget);
@@ -152,6 +193,10 @@ public class GrupoMBean extends ArcheionBean {
 		return findAll();
 	}	
 
+	/**
+	 * Remover um grupo
+	 * @return
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -173,6 +218,10 @@ public class GrupoMBean extends ArcheionBean {
 		return findAll();
 	}	
 
+	/**
+	 * Buscar todos os grupos
+	 * @return
+	 */
 	public String findAll() {
 		try {
 			listaGrupo = grupoBO.findAll();
@@ -183,6 +232,10 @@ public class GrupoMBean extends ArcheionBean {
 		return "listaGrupo";
 	}
 
+	/**
+	 * Inicializa e vai pra pagina de grupos
+	 * @return
+	 */
 	public String goToForm() {
 		try {
 			grupo = new Grupo();

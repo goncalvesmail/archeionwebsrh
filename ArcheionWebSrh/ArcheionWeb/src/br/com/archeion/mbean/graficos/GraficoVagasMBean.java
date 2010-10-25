@@ -12,15 +12,26 @@ import br.com.archeion.negocio.caixa.CaixaBO;
 import br.com.archeion.negocio.enderecocaixa.EnderecoCaixaBO;
 
 public class GraficoVagasMBean extends ArcheionBean {
-	
+	/**
+	 * BO de endereço de caixa
+	 */
 	private EnderecoCaixaBO enderecoCaixaBO = (EnderecoCaixaBO) Util.getSpringBean("enderecoCaixaBO");
+	/**
+	 * BO de caixa
+	 */
 	private CaixaBO caixaBO = (CaixaBO) Util.getSpringBean("caixaBO");
 	
-	
+	/**
+	 * Chama o grafico
+	 * @return
+	 */
 	public String goToGrafico() {
 		return "graficoVaga";
 	}
-	
+	/**
+	 * Chamado para montar o grafico
+	 * @return
+	 */
 	public DefaultCategoryDataset getCategoryDataset() {
 		
 		DefaultCategoryDataset categoryDataSet;

@@ -35,28 +35,70 @@ import br.com.archeion.negocio.usuario.UsuarioBO;
 
 public class EmprestimoCaixaMBean extends ArcheionBean {
 
+	/**
+	 * Representa um emprestimo de caixa
+	 */
 	private EmprestimoCaixa emprestimo;
+	/**
+	 * Lista de caixas
+	 */
 	private List<SelectItem> listaCaixa;
+	/**
+	 * Lista de responsáveis
+	 */
 	private List<SelectItem> listaResponsavel;
+	/**
+	 * Lista de Solicitantes
+	 */
 	private List<SelectItem> listaSolicitante;
-
+	/**
+	 * Lista de emprestimos de caixa
+	 */
 	private List<EmprestimoCaixa> listaEmprestimoCaixa;
-	
+	/**
+	 * Uma caixa no filtro
+	 */
 	private Caixa caixaFiltro;
+	/**
+	 * Data para o filtro
+	 */
 	private Date dataFiltro;
+	/**
+	 * Usuário para o filtro
+	 */
 	private Usuario usuarioFiltro;
+	/**
+	 * Situação para o filtro
+	 */
 	private String situacaoFiltro;
+	/**
+	 * Indica se uma caixa foi emprestada
+	 */
 	private boolean emprestada = true;
-	
+	/**
+	 * BO de caixa
+	 */
 	private CaixaBO caixaBO = (CaixaBO) Util.getSpringBean("caixaBO");
+	/**
+	 * BO de usuário
+	 */
 	private UsuarioBO usuarioBO = (UsuarioBO) Util.getSpringBean("usuarioBO");
+	/**
+	 * BO de emprestimo caixa
+	 */
 	private EmprestimoCaixaBO emprestimoCaixaBO = (EmprestimoCaixaBO) Util.getSpringBean("emprestimoCaixaBO");
+	/**
+	 * BO de Relatorio txt
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
 
 	public EmprestimoCaixaMBean() {
 		emprestimo = new EmprestimoCaixa();
 	}
 
+	/**
+	 * Inicializa as combos
+	 */
 	private void preencherCombos() {
 		listaCaixa = new ArrayList<SelectItem>();
 		listaResponsavel = new ArrayList<SelectItem>();
@@ -79,6 +121,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		
 	}
 
+	/**
+	 * Incluir empréstimo
+	 * @return
+	 */
 	public String incluir() {
 		try {
 			incluirMBean();
@@ -98,6 +144,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Incluir empréstimo
+	 * @return
+	 */
 	public String incluirMais() {
 		try {
 			incluirMBean();
@@ -117,6 +167,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		return goToForm();
 	}
 
+	/**
+	 * Incluir empréstimo
+	 * @return
+	 */
 	public void incluirMBean() throws AccessDeniedException, CadastroDuplicadoException, BusinessException {
 		emprestimo.setId(null);
 		
@@ -164,6 +218,9 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		return "formularioAlterarEmprestimoCaixa";
 	}	
 
+	/**
+	 * Alterar empréstimo
+	 */
 	public String alterar() {
 		try {	
 
@@ -208,6 +265,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		return "formularioDevolverCaixa";
 	}
 	
+	/**
+	 * Devolver um emprestimo 
+	 * @return para a pagina de consulta de emprestimo
+	 */
 	public String devolver() {
 		try {			
 			emprestimoCaixaBO.merge(emprestimo);
@@ -223,6 +284,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Remover um emprestimo
+	 * @return
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -244,6 +309,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		return findAll();
 	}	
 
+	/**
+	 * Buscar todos
+	 * @return
+	 */
 	public String findAll() {
 		try {
 
@@ -273,6 +342,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		return "listaEmprestimoCaixa";
 	}
 
+	/**
+	 * Realiza uma pesquisa
+	 * @return
+	 */
 	public String pesquisar() {
 		try {
 			
@@ -313,7 +386,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		
 		return "formularioEmprestimoCaixa";
 	}
-	
+	/**
+	 * Imprimir txt
+	 * @return
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -347,7 +423,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		}
 		return findAll();
 	}
-	
+	/**
+	 * Imprimir protocolo de emprestimo
+	 * @return para a pagina principal do emprestimo
+	 */
 	public String imprimirProtocoloEmprestimo() {
 		FacesContext context = getContext();
 		try {
@@ -384,7 +463,10 @@ public class EmprestimoCaixaMBean extends ArcheionBean {
 		}
 		return findAll();
 	}
-	
+	/**
+	 * Protocolo de devolução do emprestimo
+	 * @return para a pagina principal do emprestimo
+	 */
 	public String imprimirProtocoloDevolucao() {
 		FacesContext context = getContext();
 		try {

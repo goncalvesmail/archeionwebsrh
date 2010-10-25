@@ -28,15 +28,32 @@ import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 
 public class ItemDocumentalMBean extends ArcheionBean {
 
+	/**
+	 * Representa um item documental
+	 */
 	private ItemDocumental itemDocumental;
+	/**
+	 * Lista de intens documentais
+	 */
 	private List<ItemDocumental> listaDocumental;
+	/**
+	 * Relatorio txt
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
+	/**
+	 * BO de item documental
+	 */
 	private ItemDocumentalBO itemDocumentalBO = (ItemDocumentalBO) Util.getSpringBean("itemDocumentalBO");
-	
+	/**
+	 * construtor
+	 */
 	public ItemDocumentalMBean() {
 		itemDocumental = new ItemDocumental();
 	}
-	
+	/**
+	 * Incluir um item documental
+	 * @return para pagina principal
+	 */
 	public String incluir() {
 		try {
 			this.incluirMBean();
@@ -52,7 +69,10 @@ public class ItemDocumentalMBean extends ArcheionBean {
 		}			
 		return findAll();
 	}
-	
+	/**
+	 * Incluir vários itens documentais
+	 * @return continua na pagina de insersão
+	 */
 	public String incluirMais() {
 		try {
 			this.incluirMBean();
@@ -68,7 +88,11 @@ public class ItemDocumentalMBean extends ArcheionBean {
 		}			
 		return goToForm();
 	}
-	
+	/**
+	 * Incluir um item documental
+	 * @throws AccessDeniedException
+	 * @throws CadastroDuplicadoException
+	 */
 	public void incluirMBean() throws AccessDeniedException, CadastroDuplicadoException {
 		itemDocumental.setId(null);
 		itemDocumentalBO.persist(itemDocumental);
@@ -76,6 +100,10 @@ public class ItemDocumentalMBean extends ArcheionBean {
 		addMessage(FacesMessage.SEVERITY_INFO,"geral.inclusao.sucesso",ArcheionBean.PERSIST_SUCESS);
 	}
 
+	/**
+	 * Inicializa e vai para pagina de alterar item documental
+	 * @return
+	 */
 	public String goToAlterar() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));			
@@ -89,7 +117,10 @@ public class ItemDocumentalMBean extends ArcheionBean {
 		}
 		return "formularioAlterarItemDocumental";
 	}	
-	
+	/**
+	 * Alterar um item documental
+	 * @return
+	 */
 	public String alterar() {
 		try {			
 			itemDocumental = itemDocumentalBO.merge(itemDocumental);
@@ -107,7 +138,10 @@ public class ItemDocumentalMBean extends ArcheionBean {
 		}
 		return findAll();
 	}	
-	
+	/**
+	 * Remover um item documental
+	 * @return pagina principal
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -128,7 +162,10 @@ public class ItemDocumentalMBean extends ArcheionBean {
 		}
 		return findAll();
 	}	
-	
+	/**
+	 * Imprimir relação de itens documentais
+	 * @return
+	 */
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {
@@ -157,7 +194,10 @@ public class ItemDocumentalMBean extends ArcheionBean {
 		} 
 		return findAll();
 	}
-	
+	/**
+	 * Imprimir txt
+	 * @return
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -186,7 +226,10 @@ public class ItemDocumentalMBean extends ArcheionBean {
 		}
 		return findAll();
 	}
-	
+	/**
+	 * Retorna todos os itens documentais
+	 * @return
+	 */
 	public String findAll() {
 		try {
 			listaDocumental = itemDocumentalBO.findAll();
@@ -196,7 +239,10 @@ public class ItemDocumentalMBean extends ArcheionBean {
 		} 
 		return "listaItemDocumental";
 	}
-	
+	/**
+	 * Inicializa e vai para a lista de itens documentais
+	 * @return
+	 */
 	public String goToForm() {
 		itemDocumental = new ItemDocumental();
 		return "formularioItemDocumental";

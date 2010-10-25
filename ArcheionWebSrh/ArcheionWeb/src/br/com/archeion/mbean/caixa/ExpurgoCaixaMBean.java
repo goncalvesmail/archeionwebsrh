@@ -21,11 +21,25 @@ import br.com.archeion.negocio.pasta.PastaBO;
 
 public class ExpurgoCaixaMBean extends ArcheionBean {
 
+	/**
+	 * Data do expurgo
+	 */
 	private Date dataExpurgo = new Date();
+	/**
+	 * Lita de caixa fonte
+	 */
 	private List<Caixa> funcSource;
+	/**
+	 * Lista de caixa objetivo
+	 */
 	private List<Caixa> funcTarget;
-	
+	/**
+	 * BO de caixa
+	 */
 	private CaixaBO caixaBO = (CaixaBO) Util.getSpringBean("caixaBO");
+	/**
+	 * BO de pastas
+	 */
 	private PastaBO pastaBO = (PastaBO) Util.getSpringBean("pastaBO");
 	
 	public ExpurgoCaixaMBean() {
@@ -44,7 +58,10 @@ public class ExpurgoCaixaMBean extends ArcheionBean {
 		} 
 		return "formularioExpurgoCaixa";
 	}
-	
+	/**
+	 * Expurga uma caixa
+	 * @return para tela de expurgo
+	 */
 	public String expurgar() {
 		try {
 			

@@ -48,33 +48,124 @@ import br.com.archeion.negocio.ttd.TTDBO;
 
 public class CaixaMBean extends ArcheionBean {
 
+	/**
+	 * Representa a caixa
+	 */
 	private Caixa caixa;
+	
+	/**
+	 * Lista de pastas
+	 */
 	private List<Pasta> listaPastas;
+	
+	/**
+	 * Lista de caixas
+	 */
 	private List<Caixa> listaCaixa;
+	
+	/**
+	 * Lista de empresas
+	 */
 	private List<SelectItem> listaEmpresa;
+	
+	/**
+	 * Lista de locais
+	 */
 	private List<SelectItem> listaLocal;
+	
+	/**
+	 * Lista de vãos
+	 */
 	private List<SelectItem> listaVao;
+	
+	/**
+	 * Lista de números dos vãos
+	 */
 	private List<SelectItem> listaNumeroVao;
-	private List<SelectItem> listaTipo;	
+	
+	/**
+	 * Lista de tipos
+	 */
+	private List<SelectItem> listaTipo;
+	
+	/**
+	 * Lista de situações
+	 */
 	private List<SelectItem> listaSituacao;	
 
+	/**
+	 * Representa a caixa selecionada
+	 */
 	private Caixa caixaSelecionada;
+	
+	/**
+	 * tipo de arquivo
+	 */
 	private int tipo;
+	
+	/**
+	 * Lista para seleção vai e volta
+	 */
 	private List<Caixa> listaCaixaSource;
+	
+	/**
+	 * Lista para seleção vai e volta
+	 */
 	private List<Caixa> listaCaixaTarget;
+	
+	/**
+	 * Lista para combo de caixa
+	 */
 	private List<SelectItem> listaCaixaCombo;
 
+	/**
+	 * BO de caixa
+	 */
 	private CaixaBO caixaBO = (CaixaBO) Util.getSpringBean("caixaBO");
+	
+	/**
+	 * BO de Pasta
+	 */
 	private PastaBO pastaBO = (PastaBO) Util.getSpringBean("pastaBO");
+	
+	/**
+	 * BO de Local
+	 */
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
+	
+	/**
+	 * BO de empresa
+	 */
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
+	
+	/**
+	 * BO de TTD
+	 */
 	private TTDBO ttdBO = (TTDBO) Util.getSpringBean("ttdBO");
+	
+	/**
+	 * BO de endereço caixa
+	 */
 	private EnderecoCaixaBO enderecoCaixaBO = (EnderecoCaixaBO) Util.getSpringBean("enderecoCaixaBO");
+	
+	/**
+	 * BO de relatorios
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
 
+	/**
+	 *  Itens selecionados
+	 */
 	private Map<Long, Boolean> selecionados;
+	
+	/**
+	 * visualizar
+	 */
 	private boolean visualizar = false;
 	
+	/**
+	 * Tamanho da lista de pastas
+	 */
 	private int listaPastaSize;
 
 	public CaixaMBean() {
@@ -84,6 +175,10 @@ public class CaixaMBean extends ArcheionBean {
 		selecionados = new HashMap<Long, Boolean>();
 	}
 
+	/**
+	 * Chamado quando a combo de empresas é utilizada  
+	 * @param event
+	 */
 	public void valueChangedEmpresa(ValueChangeEvent event) {
 		Long empId = (Long)event.getNewValue();
 		Empresa empresa = empresaBO.findById(empId);
@@ -107,6 +202,10 @@ public class CaixaMBean extends ArcheionBean {
 		
 	}
 
+	/**
+	 * Chamado quando a combo de local é utilizada
+	 * @param event
+	 */
 	public void valueChangedLocal(ValueChangeEvent event) {
 		Long localId = (Long)event.getNewValue();
 		Local local = localBO.findById(localId);
@@ -117,6 +216,10 @@ public class CaixaMBean extends ArcheionBean {
 		atualizaListaPasta();		
 	}
 
+	/**
+	 * Chamado quando a combo de Tipo é utilizada
+	 * @param event
+	 */
 	public void valueChangedTipo(ValueChangeEvent event) {
 		TipoArquivo tipo = (TipoArquivo)event.getNewValue();
 
@@ -152,6 +255,10 @@ public class CaixaMBean extends ArcheionBean {
 		}	
 	}
 
+	/**
+	 * Chamado quando a combo de vão é utilizada
+	 * @param event
+	 */
 	public void valueChangedVao(ValueChangeEvent event) {
 		Long vaoId = (Long)event.getNewValue();		
 		EnderecoCaixa endereco = enderecoCaixaBO.findById(vaoId);
@@ -174,6 +281,10 @@ public class CaixaMBean extends ArcheionBean {
 		}		
 	}
 
+	/**
+	 * Chamado quando a combo de vão é utilizada na alteração
+	 * @param event
+	 */
 	public void valueChangedVaoAlterar(ValueChangeEvent event) {
 		Long vaoId = (Long)event.getNewValue();		
 		EnderecoCaixa endereco = enderecoCaixaBO.findById(vaoId);
@@ -197,6 +308,9 @@ public class CaixaMBean extends ArcheionBean {
 	}
 
 
+	/**
+	 * Inicializa as combos 
+	 */
 	private void preencherCombos() {
 		listaEmpresa = new ArrayList<SelectItem>();
 		listaLocal = new ArrayList<SelectItem>();
@@ -281,6 +395,10 @@ public class CaixaMBean extends ArcheionBean {
 		return goToAlterar();
 	}
 
+	/**
+	 * Localiza por empresa
+	 * @return a pagina de resultados
+	 */
 	public String findByEmpresaLocal() {
 
 		try {
@@ -299,6 +417,9 @@ public class CaixaMBean extends ArcheionBean {
 		return "listaCaixa";
 	}
 
+	/**
+	 * Incluir caixa
+	 */
 	public String incluir() {
 		try {
 			incluirMBean();
@@ -315,6 +436,9 @@ public class CaixaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Incluir caixa
+	 */
 	public String incluirMais() {
 		try {
 			incluirMBean();
@@ -331,6 +455,9 @@ public class CaixaMBean extends ArcheionBean {
 		return goToForm();
 	}
 
+	/**
+	 * Incluir caixa
+	 */
 	public void incluirMBean() throws AccessDeniedException, CadastroDuplicadoException, BusinessException {
 		caixa.setId(null);
 
@@ -433,6 +560,9 @@ public class CaixaMBean extends ArcheionBean {
 		p.goToAlterar();
 	}
 
+	/**
+	 * Alterar caixa
+	 */
 	public String alterar() {
 		try {	
 
@@ -486,6 +616,9 @@ public class CaixaMBean extends ArcheionBean {
 		return findAll();
 	}	
 
+	/**
+	 * Remover caixa
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -517,6 +650,9 @@ public class CaixaMBean extends ArcheionBean {
 		return findAll();
 	}	
 
+	/**
+	 * Buscar todas as caixas
+	 */
 	public String findAll() {
 		try {
 			caixa = new Caixa();
@@ -577,6 +713,10 @@ public class CaixaMBean extends ArcheionBean {
 		return "formularioEtiquetaCaixa";
 	}
 
+	/**
+	 * Consulta etiquetas de caixa
+	 * @return o formulário com as etiquetas
+	 */
 	public String consultaEtiquetaCaixa() {
 		if(caixaSelecionada!=null && (caixaSelecionada.getId() == null || 
 				caixaSelecionada.getId() == -1)){
@@ -603,6 +743,10 @@ public class CaixaMBean extends ArcheionBean {
 		listaPastaSize = listaPastas.size();
 	}
 
+	/**
+	 * Imprimir relação de empresas
+	 * @return
+	 */
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {
@@ -649,6 +793,10 @@ public class CaixaMBean extends ArcheionBean {
 		return findAll();
 	}
 	
+	/**
+	 * Imprimir como txt
+	 * @return
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -684,6 +832,10 @@ public class CaixaMBean extends ArcheionBean {
 		return findAll();
 	}
 	
+	/**
+	 * Imprimir lista de caixas
+	 * @return
+	 */
 	public String imprimirLista() {
 		FacesContext context = getContext();
 		try {

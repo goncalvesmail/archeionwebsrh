@@ -27,16 +27,34 @@ import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 
 public class EnderecoCaixaMBean extends ArcheionBean {
 
+	/**
+	 * Representa um endereço de caixa
+	 */
 	private EnderecoCaixa enderecoCaixa;
+	/**
+	 * Lista de endereços de caixa
+	 */
 	private List<EnderecoCaixa> listaEnderecoCaixa;
 
+	/**
+	 * BO de endereço de caixa
+	 */
 	private EnderecoCaixaBO enderecoCaixaBO = (EnderecoCaixaBO) Util.getSpringBean("enderecoCaixaBO");
+	/**
+	 * BO de relatorios txt
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
-	
+	/**
+	 * Construtor
+	 */
 	public EnderecoCaixaMBean() {
 		enderecoCaixa = new EnderecoCaixa();
 	}
 
+	/**
+	 * Incluir endereço de caixa
+	 * @return para a pagina principal 
+	 */
 	public String incluir() {
 		try {
 			incluirMBean();
@@ -57,6 +75,10 @@ public class EnderecoCaixaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Incluir varios endereços de caixa
+	 * @return continua na pagina de inserir
+	 */
 	public String incluirMais() {
 		try {
 			incluirMBean();
@@ -77,6 +99,12 @@ public class EnderecoCaixaMBean extends ArcheionBean {
 		return this.goToForm();
 	}
 
+	/**
+	 * Inclui o endereço de caixa
+	 * @throws AccessDeniedException
+	 * @throws CadastroDuplicadoException
+	 * @throws BusinessException
+	 */
 	public void incluirMBean() throws AccessDeniedException,
 			CadastroDuplicadoException, BusinessException {
 		
@@ -87,6 +115,10 @@ public class EnderecoCaixaMBean extends ArcheionBean {
 
 	}
 
+	/**
+	 * Inicializa e vai para a pagina de alterar
+	 * @return pagina de alterar
+	 */
 	public String goToAlterar() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -102,6 +134,10 @@ public class EnderecoCaixaMBean extends ArcheionBean {
 		return "formularioAlterarEnderecoCaixa";
 	}
 
+	/**
+	 * Altera um endereço de caixa
+	 * @return para a pagina principal
+	 */
 	public String alterar() {
 		try {
 			enderecoCaixa = enderecoCaixaBO.merge(enderecoCaixa);
@@ -125,6 +161,10 @@ public class EnderecoCaixaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Remove endereço de caixa
+	 * @return para a pagina principal
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -148,6 +188,10 @@ public class EnderecoCaixaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Busca todos os endereços de caixa
+	 * @return lista com os endereços
+	 */
 	public String findAll() {
 		try {
 			listaEnderecoCaixa = enderecoCaixaBO.findAll();
@@ -158,6 +202,10 @@ public class EnderecoCaixaMBean extends ArcheionBean {
 		return "listaEnderecoCaixa";
 	}
 
+	/**
+	 * Inicializa e vai para primeira pagina
+	 * @return
+	 */
 	public String goToForm() {
 		try {
 			enderecoCaixa = new EnderecoCaixa();
@@ -168,6 +216,10 @@ public class EnderecoCaixaMBean extends ArcheionBean {
 		return "formularioEnderecoCaixa";
 	}
 
+	/**
+	 * Imprime relatório de endereços de caixa
+	 * @return
+	 */
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {
@@ -201,6 +253,10 @@ public class EnderecoCaixaMBean extends ArcheionBean {
 		return findAll();
 	}
 	
+	/**
+	 * Imprime txt de endereço de caixa
+	 * @return
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {

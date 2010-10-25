@@ -32,36 +32,84 @@ import br.com.archeion.negocio.documento.DocumentoBO;
 
 public class LocalizarDocumentoMBean extends ArcheionBean {
 
+	/**
+	 * Lista de chaves
+	 */
 	private List<SelectItem> listaChaves1;
+	/**
+	 * Lista de operadores
+	 */
 	private List<SelectItem> listaOperadores1;
 
+	/**
+	 * Lista de chaves
+	 */
 	private List<SelectItem> listaChaves2;
+	/**
+	 * Lista de operadores
+	 */
 	private List<SelectItem> listaOperadores2;
-
+	/**
+	 * Lista de chaves
+	 */
 	private List<SelectItem> listaChaves3;
+	/**
+	 * Lista de operadores
+	 */
 	private List<SelectItem> listaOperadores3;
-
+	/**
+	 * Lista de operadores boleanos
+	 */
 	private List<SelectItem> listaOperadoresBoleanos;
-
+	/**
+	 * Chave de busca
+	 */
 	private int chave1;
 	private int chave2;
 	private int chave3;
+	
+	/**
+	 * Operador de busca
+	 */
 	private int operador1;
 	private int operador2;
 	private int operador3;
+	
+	/**
+	 * Valores da busca
+	 */
 	private String valor1;
 	private String valor2;
 	private String valor3;
+	
+	/** 
+	 * Operadores boleanos
+	 */
 	private int operadorBoleano1;
 	private int operadorBoleano2;
 
+	/**
+	 * Chave de pesquisa
+	 */
 	private ChavePesquisaDocumento chavesPesquisa = new ChavePesquisaDocumento();
 
+	/**
+	 * Representa o documento
+	 */
 	private Documento documento;
+	/**
+	 * Lista de documentos
+	 */
 	private List<Documento> listaDocumento;
-
+	/**
+	 * BO de documentos
+	 */
 	private DocumentoBO documentoBO = (DocumentoBO) Util.getSpringBean("documentoBO");
 
+	/**
+	 * Inicializa pagina e chama o localizar
+	 * @return
+	 */
 	public String goToLocalizarDocumento() {
 		documento = new Documento();		
 		listaDocumento = new ArrayList<Documento>();
@@ -119,16 +167,28 @@ public class LocalizarDocumentoMBean extends ArcheionBean {
 		return "formularioLocalizarDocumento";
 	}
 
+	/**
+	 * Localizar documentos
+	 * @return
+	 */
 	public String localizarDocumento() {
 		this.consultarDocumento();
 		return "formularioLocalizarDocumento";
 	}
 
+	/**
+	 * Localizar todos os documentos
+	 * @return
+	 */
 	public String localizarTodosDocumento() {
 		listaDocumento = documentoBO.findAll();
 		return "formularioLocalizarDocumento";
 	}
 
+	/**
+	 * Chamado quando se muda a chave de busca
+	 * @param event
+	 */
 	public void changedChave1(ValueChangeEvent event) {
 		Integer id = (Integer)event.getNewValue();
 		ChaveDocumento chave = (ChaveDocumento)chavesPesquisa.getChaves(id);
@@ -144,6 +204,10 @@ public class LocalizarDocumentoMBean extends ArcheionBean {
 		}
 	}
 
+	/**
+	 * Chamado quando se muda a chave de busca
+	 * @param event
+	 */
 	public void changedChave2(ValueChangeEvent event) {
 		Integer id = (Integer)event.getNewValue();
 		ChaveDocumento chave = (ChaveDocumento)chavesPesquisa.getChaves(id);
@@ -158,7 +222,11 @@ public class LocalizarDocumentoMBean extends ArcheionBean {
 			listaOperadores2.add(new SelectItem(op.getId(),op.getLabel()));
 		}
 	}
-
+	
+	/**
+	 * Chamado quando se muda a chave de busca
+	 * @param event
+	 */
 	public void changedChave3(ValueChangeEvent event) {
 		Integer id = (Integer)event.getNewValue();
 		ChaveDocumento chave = (ChaveDocumento)chavesPesquisa.getChaves(id);
@@ -174,6 +242,9 @@ public class LocalizarDocumentoMBean extends ArcheionBean {
 		}
 	}
 
+	/**
+	 * Consultar documentos
+	 */
 	private void consultarDocumento() {
 		documento = new Documento();		
 		listaDocumento = new ArrayList<Documento>();
@@ -276,6 +347,10 @@ public class LocalizarDocumentoMBean extends ArcheionBean {
 	}
 
 
+	/**
+	 * Imprimir relação de pastas
+	 * @return
+	 */
 	public String imprimirLocalizar() {
 		FacesContext context = getContext();
 		try {

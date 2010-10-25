@@ -23,20 +23,55 @@ import br.com.archeion.negocio.ttd.TTDBO;
 
 public class GraficoDocumentoMBean extends ArcheionBean {
 
+	/**
+	 * Lista de ttd
+	 */
 	private List<TTD> listaTTD;
+	/***
+	 * Empresa
+	 */
 	private Empresa empresa;
+	/**
+	 * Local
+	 */
 	private Local local;
+	/**
+	 * Item documental
+	 */
 	private ItemDocumental item;
-		
+	/**
+	 * Lista de empresas
+	 */
 	private List<SelectItem> listaEmpresa;
+	/**
+	 * Lista de locais
+	 */
 	private List<SelectItem> listaLocal;
+	/**
+	 * Lista de tipo de documentos
+	 */
 	private List<SelectItem> listaTipoDocumento;
-
+	/**
+	 * BO de empresa
+	 */
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
+	/**
+	 * BO de local
+	 */
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
+	/**
+	 * BO de ttd
+	 */
 	private TTDBO ttdBO = (TTDBO) Util.getSpringBean("ttdBO");
+	/**
+	 * BO de tipo de documento
+	 */
 	private ItemDocumentalBO tipoDocumentoBO = (ItemDocumentalBO) Util.getSpringBean("itemDocumentalBO");
 
+	/**
+	 * Chama o grafico
+	 * @return
+	 */
 	public String goToGrafico() {
 		listaLocal = new ArrayList<SelectItem>();
 		listaTipoDocumento = new ArrayList<SelectItem>();
@@ -61,11 +96,17 @@ public class GraficoDocumentoMBean extends ArcheionBean {
 		return "graficoDocumento";
 	}
 	
-	
+	/**
+	 * vai para a pesquisa
+	 * @return
+	 */
 	public String pesquisar() {
 		return "graficoDocumento";
 	}
-	
+	/**
+	 * Chamado quando uma empresa é selecionada na combo
+	 * @param event
+	 */
 	public void valueChangedLista(ValueChangeEvent event) {
 
 		Long empId = (Long)event.getNewValue();
@@ -74,7 +115,9 @@ public class GraficoDocumentoMBean extends ArcheionBean {
 		
 		preencherCombos();	
 	}
-	
+	/**
+	 * Inicializa as combos
+	 */
 	private void preencherCombos() {
 		listaEmpresa = new ArrayList<SelectItem>();
 		listaLocal = new ArrayList<SelectItem>();
@@ -93,7 +136,10 @@ public class GraficoDocumentoMBean extends ArcheionBean {
 			local.setId(-1l);
 		}
 	}
-	
+	/**
+	 * Chamado para montar o grafico
+	 * @return
+	 */
 	public DefaultCategoryDataset getCategoryDataset() {
 
 		listaTTD = ttdBO.findByEmpresaLocalItemDocumental(empresa.getId().intValue(), 
