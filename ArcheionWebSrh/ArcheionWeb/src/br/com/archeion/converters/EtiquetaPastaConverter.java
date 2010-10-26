@@ -9,10 +9,21 @@ import br.com.archeion.jsf.Util;
 import br.com.archeion.modelo.pasta.Pasta;
 import br.com.archeion.negocio.pasta.PastaBO;
 
+/**
+ * Conversor para Etiqueta de Pasta
+ * @author SInforme
+ *
+ */
 public class EtiquetaPastaConverter implements Converter {
 
+	/**
+	 * BO de Pasta
+	 */
 	private PastaBO pastaBO = (PastaBO) Util.getSpringBean("pastaBO");
 	
+	/**
+	 * Transforma uma String da página em um Objeto
+	 */
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2)
 			throws ConverterException {
 		String result[] = arg2.split(".@.@.");
@@ -21,6 +32,9 @@ public class EtiquetaPastaConverter implements Converter {
 		return func;
 	}
 
+	/**
+	 * Transforma um Objeto em uma String para formação da página
+	 */
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2)
 			throws ConverterException {
 		Pasta p = (Pasta)arg2;

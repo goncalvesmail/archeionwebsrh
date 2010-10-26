@@ -36,35 +36,95 @@ import br.com.archeion.negocio.local.LocalBO;
 import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 import br.com.archeion.negocio.ttd.TTDBO;
 
+
+/**
+ * ManagedBean para tratar eventos de TTD (Tabela de Temporaridade de Documentos)
+ *  
+ * @author SInforme
+ *
+ */
 public class TTDMBean extends ArcheionBean {
 
+	/**
+	 * TTD para inserção/açteração
+	 */
 	private TTD ttd;
+	/**
+	 * Lista de TTD
+	 */
 	private List<TTD> listaTTD;
+	/**
+	 * BO de TTD
+	 */
 	private TTDBO ttdBO = (TTDBO) Util.getSpringBean("ttdBO");
+	/**
+	 * BO de Empresa
+	 */
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
+	/**
+	 * BO de Local
+	 */
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
+	/**
+	 * BO de Item Documental
+	 */
 	private ItemDocumentalBO itemDocumentalBO = (ItemDocumentalBO) Util.getSpringBean("itemDocumentalBO");
+	/**
+	 * BO de Evento de Contagem
+	 */
 	private EventoContagemBO eventoContagemBO = (EventoContagemBO) Util.getSpringBean("eventoContagemBO");
+	/**
+	 * BO de Relatório
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
 	
+	/**
+	 * Lista de Empresa
+	 */
 	private List<SelectItem> listaEmpresa;
+	/**
+	 * Lista de Local
+	 */
 	private List<SelectItem> listaLocal;
+	/**
+	 * Lista de Item Documental
+	 */
 	private List<SelectItem> listaItemDocumental;
+	/**
+	 * Lista de Evento de Contagem
+	 */
 	private List<SelectItem> listaEventoContagem;
 
+	/**
+	 * ID selecionado
+	 */
 	private int id;
+	/**
+	 * Indica se a tela é de visualização ou não
+	 */
 	private boolean visualizar = false;
 
+	/**
+	 * Construtor
+	 */
 	public TTDMBean() {
 		ttd = new TTD();
 		listaTTD = new ArrayList<TTD>();
 	}
 
+	/**
+	 * Redireciona para página de visualização de TTD
+	 * @return Redireciona para página de visualização de TTD
+	 */
 	public String goToVisualizar() {
 		visualizar=true;
 		return goToAlterar();
 	}
 	
+	/**
+	 * Incui uma nova TTD
+	 * @return REdireciona para tela de listagem de TTD
+	 */
 	public String incluir() {
 		try {
 			incluirMBean();
@@ -86,6 +146,10 @@ public class TTDMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Inclui uma nova TTD sem sair de tela de inclusão
+	 * @return Redireciona para tela de inclusão de TTD
+	 */
 	public String incluirMais() {
 		try {
 			incluirMBean();
@@ -106,6 +170,12 @@ public class TTDMBean extends ArcheionBean {
 		return this.goToForm();
 	}
 
+	/**
+	 * Método de négocio que realiza a inclusão da TTD
+	 * @throws AccessDeniedException
+	 * @throws CadastroDuplicadoException
+	 * @throws BusinessException
+	 */
 	public void incluirMBean() throws AccessDeniedException, 
 				CadastroDuplicadoException, BusinessException {
 
@@ -139,6 +209,10 @@ public class TTDMBean extends ArcheionBean {
 
 	}
 
+	/**
+	 * Redireciona para tela de alteração de TTD
+	 * @return Redireciona para tela de alteração de TTD
+	 */
 	public String goToAlterar() {
 		try {
 			
@@ -166,6 +240,10 @@ public class TTDMBean extends ArcheionBean {
 		return "formularioAlterarTTD";
 	}
 
+	/**
+	 * Altera uma TTD
+	 * @return Redireciona para tela de listagem de TTD
+	 */
 	public String alterar() {
 		try {
 			if(ttd.getTemporaliedadeSelecionada().equals("1")){
@@ -223,6 +301,10 @@ public class TTDMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Exlcui uma TTD
+	 * @return Redireciona para tela de listagem de TTD
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -246,6 +328,10 @@ public class TTDMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Busca todas as TTD e redireciona para tela de listagem de TTD
+	 * @return Redireciona para tela de listagem de TTD
+	 */
 	public String findAll() {
 		try {
 			visualizar=false;
@@ -269,6 +355,10 @@ public class TTDMBean extends ArcheionBean {
 		return "listaTTD";
 	}
 
+	/**
+	 * Busca TTD a filtrando por Empresa, e/ou Local, e/ou Item Documental
+	 * @return Redireciona para tela de listagem
+	 */
 	public String findByEmpresaLocalItemDocumental() {
 		try {			
 			listaTTD = ttdBO.findByEmpresaLocalItemDocumental(ttd.getLocal().getEmpresa().getId().intValue(),
@@ -292,6 +382,10 @@ public class TTDMBean extends ArcheionBean {
 		return "listaTTD";
 	}
 
+	/**
+	 * Redireciona para tela de inclusão de TTD
+	 * @return Redireciona para tela de inclusão de TTD
+	 */
 	public String goToForm() {
 		try {
 			this.preencherCombosAlterar();
@@ -302,6 +396,10 @@ public class TTDMBean extends ArcheionBean {
 		return "formularioTTD";
 	}
 
+	/**
+	 * Método aciona quando da alteração da combo de Empresa
+	 * @param event
+	 */
 	public void valueChanged(ValueChangeEvent event) {
 		Long empId = (Long)event.getNewValue();
 		Empresa empresa = new Empresa();
@@ -311,7 +409,10 @@ public class TTDMBean extends ArcheionBean {
 		
 		preencherCombosAlterar();
 	}
-	
+
+	/**
+	 * Preenche os combobox utilizados nas telas de TTD
+	 */
 	private void preencherCombosListar() {
 		listaEmpresa = new ArrayList<SelectItem>();
 		listaLocal = new ArrayList<SelectItem>();
@@ -340,6 +441,9 @@ public class TTDMBean extends ArcheionBean {
 
 	}
 
+	/**
+	 * Preenche os combobox utilizados nas telas de alteração TTD
+	 */
 	private void preencherCombosAlterar() {
 		listaEmpresa = new ArrayList<SelectItem>();
 		listaLocal = new ArrayList<SelectItem>();
@@ -368,6 +472,10 @@ public class TTDMBean extends ArcheionBean {
 		}
 	}
 
+	/**
+	 * Imprime relatório de TTD
+	 * @return Redireciona para tela de relatório de TTD
+	 */
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {
@@ -408,6 +516,11 @@ public class TTDMBean extends ArcheionBean {
 		return findAll();
 	}
 	
+
+	/**
+	 * Imprime relatório de TTD em TXT
+	 * @return Redireciona para tela de relatório de TTD em TXT
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -455,6 +568,8 @@ public class TTDMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	
+	//-- Gets e Sets
 	public TTD getTtd() {
 		return ttd;
 	}

@@ -19,7 +19,6 @@ public class ApplicationUtilBean {
 	}
 
 	public List<SelectItem> getListaOrgao() {
-		// TODO: Implementar pegando a lista correta de Orgãos
 		List<SelectItem> itens = new ArrayList<SelectItem>();
 
 		itens.add(new SelectItem(new Integer(1), "Orgao Teste 1"));
@@ -33,7 +32,6 @@ public class ApplicationUtilBean {
 		return itens;
 	}
 	public List<SelectItem> getListaBoolean() {
-		// TODO: Implementar pegando a lista correta de Orgãos
 		List<SelectItem> itens = new ArrayList<SelectItem>();
 
 		itens.add(new SelectItem(new Integer(0), "NÃO"));

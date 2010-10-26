@@ -21,23 +21,60 @@ import br.com.archeion.negocio.log.LogBusiness;
 import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 import br.com.archeion.negocio.usuario.UsuarioBO;
 
+/**
+ * ManagedBean para tratar eventos de Log
+ *  
+ * @author SInforme
+ *
+ */
 public class LogMBean extends ArcheionBean {
 
+	/**
+	 * Lista de Logs para exibição
+	 */
 	private List<Log> listaLog;
+	/**
+	 * Data inicial para filtragem
+	 */
 	private Date dataInicial;
+	/**
+	 * Data final para filtragem
+	 */
 	private Date dataFinal;
+	/**
+	 * Usuário para filtragem
+	 */
 	private Usuario usuario;
+	/**
+	 * Lista de Usuários
+	 */
 	private List<SelectItem> listaUsuario;
 	
+	/**
+	 * BO de Log
+	 */
 	private LogBusiness logBO = (LogBusiness) Util.getSpringBean("logBusiness");
+	/**
+	 * BO de Usuário
+	 */
 	private UsuarioBO usuarioBO = (UsuarioBO) Util.getSpringBean("usuarioBO");
+	/**
+	 * BO para geração de relatório
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
 	
+	/**
+	 * Construtor
+	 */
 	public LogMBean() {
 		listaLog = new ArrayList<Log>();
 		usuario = new Usuario();		
 	}	
 	
+	/**
+	 * Imprime o relatório de Log em TXT
+	 * @return Redirecionamento para impressa do relatoório
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -67,6 +104,10 @@ public class LogMBean extends ArcheionBean {
 		return"listaLog";
 	}	
 	
+	/**
+	 * Realiza a pesquisa inicial da página de Log
+	 * @return Redireciona para a pagina de listagem de Log
+	 */
 	public String pesquisar() {
 		try {
 			listaLog = logBO.findAll();
@@ -84,6 +125,10 @@ public class LogMBean extends ArcheionBean {
 		return "listaLog";
 	}
 	
+	/**
+	 * Realiza a pesquisa utilizando os filtros
+	 * @return Redireciona para a pagina de listagem de Log
+	 */
 	public String filtrar() {
 		try {
 			listaLog = logBO.findAll(usuario.getId().intValue(),dataInicial,dataFinal);
@@ -101,13 +146,17 @@ public class LogMBean extends ArcheionBean {
 		return "listaLog";
 	}
 	
+	/**
+	 * Busca todos Log e vai para a pagina de listagem
+	 * @return
+	 */
 	public String imprimir() {
-		//TODO
 		listaLog = logBO.findAll();
 		return "listaLog";
 	}
 	
-
+	//-- Gets e Sets
+	
 	public List<Log> getListaLog() {
 		return listaLog;
 	}

@@ -22,25 +22,63 @@ import br.com.archeion.negocio.empresa.EmpresaBO;
 import br.com.archeion.negocio.local.LocalBO;
 import br.com.archeion.negocio.pasta.PastaBO;
 
+/**
+ * ManagedBean para tratar eventos de Expurgo de Pasta
+ *  
+ * @author SInforme
+ *
+ */
 public class ExpurgoPastaMBean extends ArcheionBean {
 
+	/**
+	 * Data de Expurgo
+	 */
 	private Date dataExpurgo = new Date();
+	/**
+	 * Listagem fonte para seleção de pasta
+	 */
 	private List<Pasta> funcSource;
+	/**
+	 * Listagem destino para seleção de pasta
+	 */
 	private List<Pasta> funcTarget;
-	
+	/**
+	 * Pasta a ser expurgada
+	 */
 	private Pasta pasta;
+	/**
+	 * Lista de Empresas
+	 */
 	private List<SelectItem> listaEmpresa;
+	/**
+	 * Lista de Local
+	 */
 	private List<SelectItem> listaLocal;
-	
+	/**
+	 * BO de Pasta
+	 */
 	private PastaBO pastaBO = (PastaBO) Util.getSpringBean("pastaBO");
+	/**
+	 * BO de Empresa
+	 */
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
+	/**
+	 * BO de Local
+	 */
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
 	
+	/**
+	 * Construtor
+	 */
 	public ExpurgoPastaMBean() {
 		funcSource = new ArrayList<Pasta>();
 		funcTarget = new ArrayList<Pasta>();
 	}
 	
+	/**
+	 * Método chamado para atualizar os combos quando a Empresa é alterada
+	 * @param event
+	 */
 	public void valueChangedEmpresa(ValueChangeEvent event) {
 		Long empId = (Long)event.getNewValue();
 		Empresa empresa = new Empresa();
@@ -51,6 +89,10 @@ public class ExpurgoPastaMBean extends ArcheionBean {
 		preencherCombos();
 	}
 	
+	/**
+	 * Método chamado para atualizar os combos quando o Local é alterado
+	 * @param event
+	 */
 	public void valueChangedLocal(ValueChangeEvent event) {
 		Long localId = (Long)event.getNewValue();
 		Local local = localBO.findById(localId);
@@ -59,6 +101,9 @@ public class ExpurgoPastaMBean extends ArcheionBean {
 		preencherCombos();
 	}
 	
+	/**
+	 * Preenche os Combos 
+	 */
 	private void preencherCombos() {
 		listaEmpresa = new ArrayList<SelectItem>();
 		listaLocal = new ArrayList<SelectItem>();
@@ -88,6 +133,9 @@ public class ExpurgoPastaMBean extends ArcheionBean {
 		preencherPasta();
 	}
 	
+	/**
+	 * Preenche listagem de Pasta
+	 */
 	private void preencherPasta() {
 		if ( pasta.getLocal().getEmpresa().getId()!=null && pasta.getLocal().getId()!=null ) {
 			funcSource = pastaBO.findByEmpresaLocalExpurgo(pasta.getLocal().getEmpresa().getId().intValue(), 
@@ -95,6 +143,10 @@ public class ExpurgoPastaMBean extends ArcheionBean {
 		}
 	}
 
+	/**
+	 * Vai para página de inclusão
+	 * @return Redireciona para pagina de inclusão
+	 */
 	public String goToForm() {
 		try {
 			
@@ -110,6 +162,10 @@ public class ExpurgoPastaMBean extends ArcheionBean {
 		return "formularioExpurgoPasta";
 	}
 	
+	/**
+	 * Expurga a Pasta selecionada
+	 * @return Redireciona para página de inclusão
+	 */
 	public String expurgar() {
 		try {
 			
@@ -130,6 +186,8 @@ public class ExpurgoPastaMBean extends ArcheionBean {
 		}			
 		return goToForm();
 	}
+	
+	//-- Gets e Sets
 
 	public List<Pasta> getFuncSource() {
 		return funcSource;

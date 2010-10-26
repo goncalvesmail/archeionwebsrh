@@ -40,56 +40,128 @@ import br.com.archeion.negocio.pasta.PastaBO;
 import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 import br.com.archeion.negocio.usuario.UsuarioBO;
 
+/**
+ * ManagedBean para tratar eventos de Emprestimo de Pasta
+ *  
+ * @author SInforme
+ *
+ */
 public class EmprestimoPastaMBean extends ArcheionBean {
 
+	/**
+	 * Objeto de Emprestimo de Pasta para inclusão/alteração/exclusão
+	 */
 	private EmprestimoPasta emprestimo;
+	/**
+	 * Lista de pasta
+	 */
 	private List<SelectItem> listaPasta;
+	/**
+	 * Lista de Reponsavel
+	 */
 	private List<SelectItem> listaResponsavel;
+	/**
+	 * Lista de Solicitantes
+	 */
 	private List<SelectItem> listaSolicitante;
+	/**
+	 * Lista de Emrpesa
+	 */
 	private List<SelectItem> listaEmpresa;
+	/**
+	 * Lista de Local
+	 */
 	private List<SelectItem> listaLocal;
-
+	/**
+	 * Lista de Emprestimo de Pasta
+	 */
 	private List<EmprestimoPasta> listaEmprestimoPasta;
-
+	/**
+	 * Lista de Emprestimo de Pasta para emprestimo por Caixeta
+	 */
 	private List<Pasta> listaEmprestarPastaPorCaixeta;
+	/**
+	 * Map de Pastas para emprestimo por Caixeta
+	 */
 	private Map mapPastas;
+	/**
+	 * Pasta selecionada no Emprestimo por Caixeta
+	 */
 	private Pasta pastaEmprestar;
-
+	/**
+	 * Data para filtro
+	 */
 	private Date dataFiltro;
+	/**
+	 * Usuário para filtro
+	 */
 	private Usuario usuarioFiltro;
+	/**
+	 * Situação para filtro
+	 */
 	private String situacaoFiltro;
-	private Pasta pastaFiltro;	
+	/**
+	 * Pasta para Filtro
+	 */
+	private Pasta pastaFiltro;
+	/**
+	 * Indicador de emprestimo
+	 */
 	private boolean emprestada = true;
+	/**
+	 * Caixeta utilizada para filtragem do Emprestimo
+	 */
 	private String caixetaPraEmprestar;
-	private int index; //utilizado pelo radiobutton
+	/**
+	 * Empresa selecionada
+	 */
 	private Empresa empresaSelcionada;
 
+	/**
+	 * BO de Pasta
+	 */
 	private PastaBO pastaBO = (PastaBO) Util.getSpringBean("pastaBO");
+	/**
+	 * BO de Usuário
+	 */
 	private UsuarioBO usuarioBO = (UsuarioBO) Util.getSpringBean("usuarioBO");
+	/**
+	 * BO de Empresa
+	 */
 	private EmpresaBO empresaBO = (EmpresaBO) Util.getSpringBean("empresaBO");
+	/**
+	 * BO de Local
+	 */
 	private LocalBO localBO = (LocalBO) Util.getSpringBean("localBO");
+	/**
+	 * BO de Emprestimo de Pasta
+	 */
 	private EmprestimoPastaBO emprestimoPastaBO = (EmprestimoPastaBO) Util
 			.getSpringBean("emprestimoPastaBO");
+	/**
+	 * BO de Relatório
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util
 			.getSpringBean("relatorioTxtBO");
+	/**
+	 * BO de Controle de Autenticação
+	 */
 	private AuthenticationController authenticationController = (AuthenticationController) Util
 			.getManagedBean("authenticationController");
 
+	/**
+	 * Construtor
+	 */
 	public EmprestimoPastaMBean() {
 		emprestimo = new EmprestimoPasta();
 		pastaFiltro = new Pasta();
 		
 	}
-
-	public void marcar() {
-		// primeiro desmarca todos os radiobuttons
-		for (Pasta temp : listaEmprestarPastaPorCaixeta)
-			temp.setSelecionado(0);
-
-		// marcar o radio certo
-		listaEmprestarPastaPorCaixeta.get(index).setSelecionado(1);
-	}
-
+	
+	/**
+	 * Gera relatório no formato TXT
+	 * @return Redireciona para página de relatório
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -128,6 +200,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Método disparado quando o combo de Empresa é altera
+	 * @param event
+	 */
 	public void valueChangedLista(ValueChangeEvent event) {
 
 		Long empId = (Long) event.getNewValue();
@@ -141,6 +217,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		//preencherComboLocal();
 	}
 
+	/**
+	 * Método disparado quando o combo de Local é altero
+	 * @param event
+	 */
 	public void valueChangedLocal(ValueChangeEvent event) {
 		Long localId = (Long) event.getNewValue();
 		Local local = new Local();
@@ -153,6 +233,9 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		//preencherComboPasta();
 	}
 	
+	/**
+	 * Preenche os combos de filtragem
+	 */
 	private void preencherCombos() {
 		listaPasta = new ArrayList<SelectItem>();
 		listaResponsavel = new ArrayList<SelectItem>();
@@ -223,81 +306,11 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 			listaPasta.add(new SelectItem(p.getId(),auxPasta));
 		}
 	}
-
-	/*private void iniciarPreenchimentoCombos() {
-		listaPasta = new ArrayList<SelectItem>();
-		listaResponsavel = new ArrayList<SelectItem>();
-		listaSolicitante = new ArrayList<SelectItem>();
-		listaEmpresa = new ArrayList<SelectItem>();
-		listaLocal = new ArrayList<SelectItem>();
-
-		List<Empresa> empresas = empresaBO.findAll();
-		listaEmpresa.add(new SelectItem(0, "----------------"));
-		for (Empresa emp : empresas) {
-			listaEmpresa.add(new SelectItem(emp.getId(), emp.getNome()));
-		}
-
-		listaLocal.add(new SelectItem(0, "----------------"));
-		listaPasta.add(new SelectItem(0, "----------------"));
-
-		List<Usuario> responsaveis = usuarioBO.findAllAluga();
-		for (Usuario u : responsaveis) {
-			listaResponsavel.add(new SelectItem(u.getId(), u.getNome()));
-		}
-
-		List<Usuario> solicitantes = usuarioBO.findAll();
-		for (Usuario u : solicitantes) {
-			listaSolicitante.add(new SelectItem(u.getId(), u.getNome()));
-		}
-	}*/
-
-	/*private void preencherComboLocal() {
-		listaLocal.clear();
-		listaLocal.add(new SelectItem(0, "----------------"));
-		
-		 * if (pastaFiltro.getLocal().getEmpresa() != null &&
-		 * pastaFiltro.getLocal().getEmpresa().getId() != null &&
-		 * pastaFiltro.getLocal().getEmpresa().getId() != 0) {
-		 
-		if (empresaSelecionada > 0) {
-			List<Local> locais = localBO.findByEmpresa(pastaFiltro.getLocal()
-					.getEmpresa());
-
-			for (Local loc : locais) {
-				listaLocal.add(new SelectItem(loc.getId(), loc.getNome()));
-			}
-
-		}
-	}*/
-
-	/*private void preencherComboPasta() {
-		listaPasta.clear();
-		List<Pasta> pastas = null;
-		
-		 * if (pastaFiltro.getLocal().getId() != null &&
-		 * pastaFiltro.getLocal().getId().longValue() != 0) {
-		 
-		if (empresaSelecionada > 0 && localSelecionado > 0) {
-			pastas = pastaBO.findByEmpresaLocalEmprestimo(empresaSelecionada,
-					localSelecionado);
-		} else {
-			pastas = new ArrayList<Pasta>();
-		}
-		String auxPasta = "";
-		listaPasta.add(new SelectItem(0, "----------------"));
-		for (Pasta p : pastas) {
-			auxPasta = p.getTitulo();
-			if (p.getDescricao() != null) {
-				auxPasta += " - " + p.getDescricao();
-			}
-
-			if (p.getNumeroProtocolo() != null) {
-				auxPasta += " - " + p.getNumeroProtocolo();
-			}
-			listaPasta.add(new SelectItem(p.getId(), auxPasta));
-		}
-	}*/
-
+	
+	/**
+	 * Método chamado pela página para inclusão de Empréstimo
+	 * @return Pagina de listagem
+	 */
 	public String incluir() {
 		try {
 			incluirMBean();
@@ -321,6 +334,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return findAll();
 	}
 	
+	/**
+	 * Inclui um Empréstimo a partir da Caixeta
+	 * @return Listagem geral
+	 */
 	public String incluirPorCaixeta() {
 	
 		try {
@@ -356,6 +373,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Inclusão de Empréstimo e permanecer na página
+	 * @return Retorna para o formulario de inclusão
+	 */
 	public String incluirMais() {
 		try {
 			incluirMBean();
@@ -379,6 +400,12 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return goToForm();
 	}
 
+	/**
+	 * Inclusão do Emprestimo de Pasta
+	 * @throws AccessDeniedException
+	 * @throws CadastroDuplicadoException
+	 * @throws BusinessException
+	 */
 	public void incluirMBean() throws AccessDeniedException,
 			CadastroDuplicadoException, BusinessException {
 		emprestimo.setId(null);
@@ -403,6 +430,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 				ArcheionBean.PERSIST_SUCESS);
 	}
 	
+	/**
+	 * Redireciona para página de Empréstimo por Caixeta
+	 * @return Redireciona para página de Empréstimo por Caixeta
+	 */
 	public String goToEmprestarCaixeta() {
 		empresaSelcionada = new Empresa();
 		pastaEmprestar = new Pasta();
@@ -446,6 +477,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		}
 	}
 
+	/**
+	 * Redireciona para página de alteração de Empréstimo
+	 * @return Redireciona para página de alteração de Empréstimo
+	 */
 	public String goToAlterar() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -490,6 +525,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return "formularioAlterarEmprestimoPasta";
 	}
 
+	/**
+	 * Altera o Emprestimo de Pasta
+	 * @return Redireciona para página de listagem
+	 */
 	public String alterar() {
 		try {
 
@@ -532,6 +571,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Vai para página de devolução de Empréstimo
+	 * @return Redirecionamento para página de devolução
+	 */
 	public String goToDevolver() {
 		Long id = Long.valueOf(Util.getParameter("_id"));
 		emprestimo.setId(id);
@@ -542,6 +585,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return "formularioDevolverPasta";
 	}
 
+	/**
+	 * Efetua a devolução de pasta
+	 * @return Redireciona para pagina de listagem
+	 */
 	public String devolver() {
 		try {
 			emprestimoPastaBO.merge(emprestimo);
@@ -562,6 +609,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Exlcui um Emprestimo de Pasta
+	 * @return Retorna para listagem geral
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -585,6 +636,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Busca todos os Empréstimo de pasta
+	 * @return Redireciona para pagina de listagem 
+	 */
 	public String findAll() {
 		try {
 
@@ -643,6 +698,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return "listaEmprestimoPasta";
 	}
 
+	/**
+	 * Efetua a pesquisa de emprestimo de acordo com o filtros selecionados
+	 * @return Redireciona para pagina de listagem
+	 */
 	public String pesquisar() {
 		try {
 
@@ -675,6 +734,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return "listaEmprestimoPasta";
 	}
 
+	/**
+	 * Redireciona para formulário de inclusão
+	 * @return Redireciona para formulário de inclusão
+	 */
 	public String goToForm() {
 
 		emprestimo = new EmprestimoPasta();
@@ -684,6 +747,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return "formularioEmprestimoPasta";
 	}
 
+	/**
+	 * Imprime protocolo de emprestimo
+	 * @return Redireciona para protocolo de emprestimo
+	 */
 	public String imprimirProtocoloEmprestimo() {
 		FacesContext context = getContext();
 		try {
@@ -723,6 +790,10 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Imprime protocolo de devolução
+	 * @return Redireciona para protocolo de devolução
+	 */
 	public String imprimirProtocoloDevolucao() {
 		FacesContext context = getContext();
 		try {
@@ -762,6 +833,8 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	
+	//-- Gets e Sets
 	public EmprestimoPasta getEmprestimo() {
 		return emprestimo;
 	}
@@ -910,14 +983,6 @@ public class EmprestimoPastaMBean extends ArcheionBean {
 	public void setListaEmprestarPastaPorCaixeta(
 			List<Pasta> listaEmprestarPastaPorCaixeta) {
 		this.listaEmprestarPastaPorCaixeta = listaEmprestarPastaPorCaixeta;
-	}
-
-	public int getIndex() {
-		return index;
-	}
-
-	public void setIndex(int index) {
-		this.index = index;
 	}
 
 	public Map getMapPastas() {

@@ -30,40 +30,58 @@ import br.com.archeion.negocio.grupo.GrupoBO;
 import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 import br.com.archeion.negocio.usuario.UsuarioBO;
 
+/**
+ * ManagedBean para tratar eventos de Usuário
+ *  
+ * @author SInforme
+ *
+ */
 public class UsuarioMBean extends ArcheionBean {
 
+	/**
+	 * Usuário para inclusão/alteração
+	 */
 	private Usuario usuario;
+	/**
+	 * Lista de Usuários
+	 */
 	private List<Usuario> listaUsuarios;
 
+	/**
+	 * BO de Usuário
+	 */
 	private UsuarioBO usuarioBO = (UsuarioBO) Util.getSpringBean("usuarioBO");
+	/**
+	 * BO de Grupo
+	 */
 	private GrupoBO grupoBO = (GrupoBO) Util.getSpringBean("grupoBO");
+	/**
+	 * BO de Relatório
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
 	
+	/**
+	 * Listagem de Grupo, origem
+	 */
 	private List<Grupo> grupoSource;
+	/**
+	 * Listagem de Grupo, destino - selecionados
+	 */
 	private List<Grupo> grupoTarget;
 
-	public List<Grupo> getFuncSource() {
-		return grupoSource;
-	}
-
-	public void setFuncSource(List<Grupo> funcSource) {
-		this.grupoSource = funcSource;
-	}
-
-	public List<Grupo> getFuncTarget() {
-		return grupoTarget;
-	}
-
-	public void setFuncTarget(List<Grupo> funcTarget) {
-		this.grupoTarget = funcTarget;
-	}
-
+	/**
+	 * Construtor
+	 */
 	public UsuarioMBean() {
 		usuario = new Usuario();
 		grupoSource = new ArrayList<Grupo>();
 		grupoTarget = new ArrayList<Grupo>();
 	}
 
+	/**
+	 * Inclui um novo Usuário
+	 * @return Redireciona para tela de listagem de Usuário
+	 */
 	public String incluir() {
 		try {
 			incluirMBean();
@@ -85,6 +103,10 @@ public class UsuarioMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Inclui um novo Usuário e permanece na página
+	 * @return Redireciona para tela de inclusão de Usuários
+	 */
 	public String incluirMais() {
 		try {
 			incluirMBean();
@@ -107,6 +129,11 @@ public class UsuarioMBean extends ArcheionBean {
 		return this.goToForm();
 	}
 
+	/**
+	 * Efetua a inclusão do novo Usuário
+	 * @throws AccessDeniedException
+	 * @throws ArcheionException
+	 */
 	public void incluirMBean() throws AccessDeniedException, ArcheionException {
 		if(grupoTarget != null && !(grupoTarget.size() > 0)){
 			throw new ArcheionException();
@@ -121,6 +148,10 @@ public class UsuarioMBean extends ArcheionBean {
 		}
 	}
 
+	/**
+	 * Redireciona para tela de alteração de Usuários
+	 * @return Redireciona para tela de alteração de Usuários
+	 */
 	public String goToAlterar() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -140,6 +171,10 @@ public class UsuarioMBean extends ArcheionBean {
 		return "formularioAlterarUsuario";
 	}
 	
+	/**
+	 * Redireciona para tela de alteração de senha de Usuários
+	 * @return Redireciona para tela de alteração de senha de Usuários
+	 */
 	public String goToAlterarSenha(){
 		try {
 			usuario = (Usuario)((AuthenticationController) Util.getManagedBean("authenticationController")).getUsuario().clone();
@@ -154,6 +189,10 @@ public class UsuarioMBean extends ArcheionBean {
 		return "formularioAlterarUsuarioSenha";
 	}
 	
+	/**
+	 * Altera um Usuário
+	 * @return Redireciona para tela de listagem
+	 */
 	public String alterar() {
 		try {
 			usuario.setGrupos(grupoTarget);
@@ -175,6 +214,10 @@ public class UsuarioMBean extends ArcheionBean {
 		return findAll();
 	}
 	
+	/**
+	 * Efetua a alteração da senha do Usuário
+	 * @return Redireciona para tela inicial do sistema
+	 */
 	public String alterarSenha() {
 		try {
 			//usuario.setGrupos(grupoTarget);
@@ -199,6 +242,10 @@ public class UsuarioMBean extends ArcheionBean {
 		return "goToIndex";
 	}
 
+	/**
+	 * Remove um Usuário
+	 * @return Redireciona para tela de listagem
+	 */
 	public String remover() {
 		try {
 			Long id = Long.valueOf(Util.getParameter("_id"));
@@ -220,6 +267,10 @@ public class UsuarioMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	/**
+	 * Busca todos os usuários
+	 * @return Redireciona para tela de listagem de usuários
+	 */
 	public String findAll() {
 		try {
 			listaUsuarios = usuarioBO.findAll();
@@ -230,6 +281,10 @@ public class UsuarioMBean extends ArcheionBean {
 		return "listaUsuario";
 	}
 
+	/**
+	 * Redireciona para tela de alteração de usuários
+	 * @return Redireciona para tela de alteração de usuários
+	 */
 	public String goToForm() {
 		try {
 			usuario = new Usuario();
@@ -243,6 +298,10 @@ public class UsuarioMBean extends ArcheionBean {
 		return "formularioUsuario";
 	}
 
+	/**
+	 * Imprime relatório de usuários
+	 * @return Redireciona para tela de relatório
+	 */
 	public String imprimir() {
 		FacesContext context = getContext();
 		try {
@@ -276,6 +335,10 @@ public class UsuarioMBean extends ArcheionBean {
 		return findAll();
 	}
 	
+	/**
+	 * Imprime relatório de usuários em TXT
+	 * @return Redireciona para tela de relatório em TXT
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -307,6 +370,7 @@ public class UsuarioMBean extends ArcheionBean {
 		return findAll();
 	}
 
+	//-- Gets e Sets
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -336,5 +400,21 @@ public class UsuarioMBean extends ArcheionBean {
 		this.grupoTarget = grupoTarget;
 	}
 
+
+	public List<Grupo> getFuncSource() {
+		return grupoSource;
+	}
+
+	public void setFuncSource(List<Grupo> funcSource) {
+		this.grupoSource = funcSource;
+	}
+
+	public List<Grupo> getFuncTarget() {
+		return grupoTarget;
+	}
+
+	public void setFuncTarget(List<Grupo> funcTarget) {
+		this.grupoTarget = funcTarget;
+	}
 
 }

@@ -17,6 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+/**
+ * Classe utilitária
+ * @author SInforme
+ *
+ */
 public class Util {
 
 
@@ -25,7 +30,11 @@ public class Util {
 	 */
 	private static final Logger LOG = Logger.getLogger(Util.class);
 	
-	
+	/**
+	 * Busca um parametro no Request do Usuário
+	 * @param param Nome do Parametro
+	 * @return Valor obtido do Request
+	 */
 	public static String getParameter(String param) {
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -82,6 +91,12 @@ public class Util {
 		return mex.invoke(elContext, args);
 	}
 
+	/**
+	 * Busca um Bean registrado no Spring. Não é necessário na parte de négocio, pois está gerenciada.
+	 * Contudo, a parte Web não é gerenciada pelo Spring, tendo assim que busca diretamente.
+	 * @param beanName Nome cadastrado no Bean
+	 * @return Bean registrado no Spring
+	 */
 	public static Object getSpringBean(String beanName) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
@@ -91,7 +106,7 @@ public class Util {
 	}
 
 	/**
-	 * Até agora, é o método que é chamado no filter, servlet.
+	 * Método que é chamado no filter, servlet.
 	 * 
 	 * @param servletContext
 	 * @param request

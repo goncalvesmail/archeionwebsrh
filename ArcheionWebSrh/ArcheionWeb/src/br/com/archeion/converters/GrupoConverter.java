@@ -10,10 +10,21 @@ import br.com.archeion.jsf.Util;
 import br.com.archeion.modelo.grupo.Grupo;
 import br.com.archeion.negocio.grupo.GrupoBO;
 
+/**
+ * Conversor para Etiqueta de Grupo
+ * @author SInforme
+ *
+ */
 public class GrupoConverter implements Converter {
 	
+	/**
+	 * BO de Grupo
+	 */
 	private GrupoBO grupoBO = (GrupoBO) Util.getSpringBean("grupoBO");
 
+	/**
+	 * Transforma uma String da página em um Objeto
+	 */
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2)
 			throws ConverterException {
 		
@@ -22,6 +33,9 @@ public class GrupoConverter implements Converter {
 		return func;
 	}
 
+	/**
+	 * Transforma um Objeto em uma String para formação da página
+	 */
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2)
 			throws ConverterException {
 		Grupo func = (Grupo)arg2;

@@ -35,53 +35,149 @@ import br.com.archeion.modelo.pasta.Pasta;
 import br.com.archeion.negocio.pasta.PastaBO;
 import br.com.archeion.negocio.relatoriotxt.RelatorioTxtBO;
 
+/**
+ * ManagedBean para tratar eventos de Localização de Pasta
+ *  
+ * @author SInforme
+ *
+ */
 public class LocalizarPastaMBean extends ArcheionBean {
 
+	/**
+	 * Listagem para seleçao de Pasta
+	 */
 	private List<Pasta> listaPastaTarget;
 	
+	/**
+	 * Lista com as primeiras chaves de pesquisa
+	 */
 	private List<SelectItem> listaChaves1;
+	/**
+	 * Lista com os primeiros operadores
+	 */
 	private List<SelectItem> listaOperadores1;
-
+	
+	/**
+	 * Lista com as segundas chaves de pesquisa
+	 */
 	private List<SelectItem> listaChaves2;
+	/**
+	 * Lista com os segundos operadores
+	 */
 	private List<SelectItem> listaOperadores2;
-
+	
+	/**
+	 * Lista com as terceira chaves de pesquisa
+	 */
 	private List<SelectItem> listaChaves3;
+	/**
+	 * Lista com os terceiros operadores
+	 */
 	private List<SelectItem> listaOperadores3;
 
+	/**
+	 * Lista de operadores booleanos
+	 */
 	private List<SelectItem> listaOperadoresBoleanos;
+	/**
+	 * Lista de situações
+	 */
 	private List<SelectItem> listaSituacao;	
 
+	/**
+	 * Index da primeira chave selecionada
+	 */
 	private int chave1;
+	/**
+	 * Index da segunda chave selecionada
+	 */
 	private int chave2;
+	/**
+	 * Index da terceira chave selecionada
+	 */
 	private int chave3;
+	/**
+	 * Index do primeiro operador selecionado
+	 */
 	private int operador1;
+	/**
+	 * Index do segundo operador selecionado
+	 */
 	private int operador2;
+	/**
+	 * Index do terceiro operador selecionado
+	 */
 	private int operador3;
+	/**
+	 * Primeiro valor de pesquisa
+	 */
 	private String valor1;
+	/**
+	 * Segundo valor de pesquisa
+	 */
 	private String valor2;
+	/**
+	 * Terceiro valor de pesquisa
+	 */
 	private String valor3;
+	
+	/**
+	 * Index do primeiro operador booleano
+	 */
 	private int operadorBoleano1;
+	/**
+	 * Index do segundo operador booleano
+	 */
 	private int operadorBoleano2;
 
+	/**
+	 * Chaves de pesquisa para Pasta
+	 */
 	private ChavePesquisaPasta chavesPesquisa = new ChavePesquisaPasta();
 
+	/**
+	 * Pasta selecionada
+	 */
 	private Pasta pasta;
+	/**
+	 * Lista de Pasta pesquisada
+	 */
 	private List<Pasta> listaPasta;
 
+	/**
+	 * BO de Pasta
+	 */
 	private PastaBO pastaBO = (PastaBO) Util.getSpringBean("pastaBO");
+	/**
+	 * BO de relatorio
+	 */
 	private RelatorioTxtBO relatorioTxtBO = (RelatorioTxtBO) Util.getSpringBean("relatorioTxtBO");
+	/**
+	 * BO de Controle de acesso
+	 */
 	private AuthenticationController authenticationController = (AuthenticationController) Util.getManagedBean("authenticationController");
 
+	/**
+	 * Redireciona para pagina de localização
+	 * @return Redireciona para pagina de localização
+	 */
 	public String goToLocalizarPasta() {
 		preparaTelaConsulta();		
 		return "formularioLocalizarPasta";
 	}
 	
+	/**
+	 * Redireciona para pagina de impressao de etiqueta
+	 * @return Redireciona para pagina de Etiqueta
+	 */
 	public String goToEtiquetaPasta() {
 		preparaTelaConsulta();		
 		return "formularioPastaEtiqueta";
 	}
 
+	/**
+	 * Inicializa os valores para tela de consulta
+	 */
 	private void preparaTelaConsulta() {
 		pasta = new Pasta();	
 		pasta.setSituacao(SituacaoExpurgo.TODOS);
@@ -144,6 +240,10 @@ public class LocalizarPastaMBean extends ArcheionBean {
 		}
 	}	
 	
+	/**
+	 * Localiza etiquetas de Pasta
+	 * @return Redireciona para página de Etiquetas
+	 */
 	public String localizarEtiquetas() {
 		this.consultarPasta();
 		
@@ -161,6 +261,10 @@ public class LocalizarPastaMBean extends ArcheionBean {
 		return "formularioPastaEtiqueta";
 	}
 
+	/**
+	 * Executa a consulta de Pasta
+	 * @return Redireciona para página de localização de pasta
+	 */
 	public String localizarPasta() {
 		this.consultarPasta();
 		
@@ -177,11 +281,19 @@ public class LocalizarPastaMBean extends ArcheionBean {
 		return "formularioLocalizarPasta";
 	}
 
+	/**
+	 * Busca todas as Pasta
+	 * @return Redireciona para página de localização
+	 */
 	public String localizarTodasPasta() {
 		listaPasta = pastaBO.findAll();
 		return "formularioLocalizarPasta";
 	}
 
+	/**
+	 * Metodo acionado quando a primeira chave é alterada
+	 * @param event
+	 */
 	public void changedChave1(ValueChangeEvent event) {
 		Integer id = (Integer)event.getNewValue();
 		ChavesPasta chave = (ChavesPasta)chavesPesquisa.getChaves(id);
@@ -197,6 +309,11 @@ public class LocalizarPastaMBean extends ArcheionBean {
 		}
 	}
 
+
+	/**
+	 * Metodo acionado quando a segunda chave é alterada
+	 * @param event
+	 */
 	public void changedChave2(ValueChangeEvent event) {
 		Integer id = (Integer)event.getNewValue();
 		ChavesPasta chave = (ChavesPasta)chavesPesquisa.getChaves(id);
@@ -212,6 +329,10 @@ public class LocalizarPastaMBean extends ArcheionBean {
 		}
 	}
 
+	/**
+	 * Metodo acionado quando a terceira chave é alterada
+	 * @param event
+	 */
 	public void changedChave3(ValueChangeEvent event) {
 		Integer id = (Integer)event.getNewValue();
 		ChavesPasta chave = (ChavesPasta)chavesPesquisa.getChaves(id);
@@ -227,6 +348,9 @@ public class LocalizarPastaMBean extends ArcheionBean {
 		}
 	}
 
+	/**
+	 * Executa a consulta de Pasta
+	 */
 	private void consultarPasta() {
 		listaPasta = new ArrayList<Pasta>();
 		listaPastaTarget  = new ArrayList<Pasta>();
@@ -321,7 +445,7 @@ public class LocalizarPastaMBean extends ArcheionBean {
 			}
 		}
 
-		System.out.println(sb.toString());
+		//System.out.println(sb.toString());
 		
 		if ( !sb.toString().equals("") ) {
 			listaPasta = pastaBO.consultaEtiquetaPasta(sb.toString());	
@@ -330,7 +454,11 @@ public class LocalizarPastaMBean extends ArcheionBean {
 			listaPasta = pastaBO.findAll();
 		}	
 	}
-
+	
+	/**
+	 * Impressão do resultado da busca
+	 * @return Redireciona para página de impressão
+	 */
 	public String imprimirLocalizar() {
 		FacesContext context = getContext();
 		try {
@@ -372,6 +500,10 @@ public class LocalizarPastaMBean extends ArcheionBean {
 		return goToLocalizarPasta();
 	}
 	
+	/**
+	 * Impressão do resultado em TXT
+	 * @return Redireciona para página de impressão
+	 */
 	public String imprimirTxt() {
 		FacesContext context = getContext();
 		try {
@@ -415,6 +547,10 @@ public class LocalizarPastaMBean extends ArcheionBean {
 		return goToLocalizarPasta();
 	}
 	
+	/**
+	 * Impressão Etiquetas a partir das Caixas
+	 * @return Redirecina para página de Etiquetas
+	 */
 	public String imprimirEtiquetaPorCaixa() {
 		FacesContext context = getContext();
 		try {
@@ -459,7 +595,11 @@ public class LocalizarPastaMBean extends ArcheionBean {
 		}
 		return goToEtiquetaPasta();
 	}
-		
+	
+	/**
+	 * Impressão Etiquetas a partir das Caixetas
+	 * @return Redirecina para página de Etiquetas
+	 */
 	public String imprimirEtiquetaPorCaixeta() {
 		FacesContext context = getContext();
 		

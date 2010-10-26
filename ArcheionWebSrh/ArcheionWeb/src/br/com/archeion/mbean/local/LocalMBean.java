@@ -85,7 +85,7 @@ public class LocalMBean extends ArcheionBean {
 
 	/**
 	 * Incluir varios locais
-	 * @return continua na pagina de inseção
+	 * @return continua na pagina de inserção
 	 */
 	public String incluirMais() {
 		try {
