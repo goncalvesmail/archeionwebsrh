@@ -56,7 +56,7 @@ public class ArcheionLogInterceptor implements MethodInterceptor {
 				logBO =  (LogBusiness) Util.getSpringBean("logBusiness");
 				Log log = new Log();
 				Usuario user = (Usuario)auth.getPrincipal();				
-				log.setUsuario(user);
+				log.setUsuario(user.getNome());
 				log.setData(new Date());
 				
 				

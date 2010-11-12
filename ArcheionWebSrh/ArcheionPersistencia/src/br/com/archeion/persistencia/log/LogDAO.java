@@ -15,10 +15,10 @@ public interface LogDAO extends GenericDAO<Log, Long> {
 	
 	/**
 	 * Busca lista de Logs a partir de um Usuário e um período 
-	 * @param userId ID do Usuário
+	 * @param nome do Usuário
 	 * @param iniDate Data inicial
 	 * @param fimDate Data final
 	 * @return Lista de Logs que atendem os parametros informados
 	 */
-	public List<Log> findAll(int userId, Date iniDate, Date fimDate);
+	public List<Log> findAll(String user, Date iniDate, Date fimDate);
 }

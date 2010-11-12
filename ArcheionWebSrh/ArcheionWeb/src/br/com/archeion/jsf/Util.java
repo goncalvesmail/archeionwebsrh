@@ -1,5 +1,7 @@
 package br.com.archeion.jsf;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.MethodExpression;
@@ -38,6 +40,12 @@ public class Util {
 	public static String getParameter(String param) {
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
+		try {
+			req.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return req.getParameter(param);
 	}
 

@@ -49,7 +49,10 @@ public class LogMBean extends ArcheionBean {
 	 * Lista de Usuários
 	 */
 	private List<SelectItem> listaUsuario;
-	
+	/**
+	 * Usuario selecionado na combo
+	 */
+	private int usuarioSelecionado;
 	/**
 	 * BO de Log
 	 */
@@ -83,8 +86,8 @@ public class LogMBean extends ArcheionBean {
 			
 			ServletOutputStream responseStream;
 			responseStream = response.getOutputStream();
-			StringBuilder sb = new StringBuilder("select b.nm_usuario as usuario, a.dt_data as data, a.tx_acao as acao ");
-			sb.append("from tb_log a join tb_usuarios b on (a.id_usuario = b.id_usuario) ");
+			StringBuilder sb = new StringBuilder("select a.nm_usuario as usuario, a.dt_data as data, a.tx_acao as acao ");
+			sb.append("from tb_log a ");
 			sb.append("order by 2 desc, 1 asc ");
 						
 			relatorioTxtBO.geraRelatorioTxt(sb.toString(), responseStream);
@@ -131,7 +134,7 @@ public class LogMBean extends ArcheionBean {
 	 */
 	public String filtrar() {
 		try {
-			listaLog = logBO.findAll(usuario.getId().intValue(),dataInicial,dataFinal);
+			listaLog = logBO.findAll(usuario.getNome(),dataInicial,dataFinal);
 			
 			listaUsuario = new ArrayList<SelectItem>();
 			List<Usuario> usuarios = usuarioBO.findAll();
@@ -195,6 +198,14 @@ public class LogMBean extends ArcheionBean {
 
 	public void setListaUsuario(List<SelectItem> listaUsuario) {
 		this.listaUsuario = listaUsuario;
+	}
+
+	public int getUsuarioSelecionado() {
+		return usuarioSelecionado;
+	}
+
+	public void setUsuarioSelecionado(int usuarioSelecionado) {
+		this.usuarioSelecionado = usuarioSelecionado;
 	}
 	
 }

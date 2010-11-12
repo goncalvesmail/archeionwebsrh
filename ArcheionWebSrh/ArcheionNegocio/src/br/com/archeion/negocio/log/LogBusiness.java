@@ -25,12 +25,12 @@ public interface LogBusiness {
 	
 	/**
 	 * Busca lista de Logs a partir de um Usuário e um período 
-	 * @param userId ID do Usuário
+	 * @param nome do Usuário
 	 * @param iniDate Data inicial
 	 * @param fimDate Data final
 	 * @return Lista de Logs que atendem os parametros informados
 	 */
-	List<Log> findAll(int userId, Date iniDate, Date fimDate);
+	List<Log> findAll(String user, Date iniDate, Date fimDate);
 	
 	/**
 	 * Busca um Log a partir do seu ID

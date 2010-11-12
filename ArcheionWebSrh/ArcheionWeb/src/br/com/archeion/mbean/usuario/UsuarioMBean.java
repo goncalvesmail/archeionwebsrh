@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 
 import org.acegisecurity.AccessDeniedException;
+import org.springframework.transaction.TransactionSystemException;
 
 import util.Relatorio;
 import br.com.archeion.exception.ArcheionException;
@@ -257,7 +258,13 @@ public class UsuarioMBean extends ArcheionBean {
 					ArcheionBean.PERSIST_SUCESS);
 		} catch (AccessDeniedException aex) {
 			return Constants.ACCESS_DENIED;
-		} catch (Exception e) {
+		} catch (TransactionSystemException e) {
+			ExceptionManagedBean excBean = (ExceptionManagedBean) Util
+			.getManagedBean("exceptionManagedBean");
+			excBean.setExc(e);
+			addMessage(FacesMessage.SEVERITY_INFO, "usuario.nao.pode.ser.removido.emprestimo",ArcheionBean.PERSIST_FAILURE);
+			//return Constants.ERROR_HANDLER;
+		}catch (Exception e) {
 			/*ExceptionManagedBean excBean = (ExceptionManagedBean) Util
 			.getManagedBean("exceptionManagedBean");
 			excBean.setExc(e);*/

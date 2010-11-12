@@ -121,8 +121,8 @@ public class EmpresaMBean extends ArcheionBean {
 	 */
 	public String goToAlterar() {
 		try {
-			String nome = Util.getParameter("_id");			
-			empresa = empresaBO.findByName(nome);
+			long id = Long.valueOf(Util.getParameter("_id"));			
+			empresa = empresaBO.findById(id);
 			
 			List<Empresa> listaEmpresas = empresaBO.findAllInvisivel();		
 			listaEmpresaPai = new ArrayList<SelectItem>();
@@ -308,6 +308,7 @@ public class EmpresaMBean extends ArcheionBean {
 		if ( lista!=null && lista.size()>0 ) {
 			rootNode = new TreeNodeImpl();
 			rootNode.setData("Empresas");
+			
 			addNodes(rootNode,lista);
 		}
 		else {
@@ -328,8 +329,8 @@ public class EmpresaMBean extends ArcheionBean {
 			String value = e.getNome();
 			if (value != null) {
 				TreeNodeImpl nodeImpl = new TreeNodeImpl();
-				nodeImpl.setData(value);
-
+				nodeImpl.setData(e);
+				
 				counter++;
 				node.addChild(new Integer(counter), nodeImpl);
 

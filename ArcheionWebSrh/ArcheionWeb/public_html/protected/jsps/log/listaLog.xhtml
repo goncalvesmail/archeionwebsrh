@@ -36,7 +36,7 @@
 						<td>
 							<h:outputLabel styleClass="labelObrigatorio" 
 								value="#{msgs['log.usuario']}:" for="usuario" />
-							<h:selectOneMenu id="usuario" value="#{logBean.usuario.id}" styleClass="campo">  
+							<h:selectOneMenu id="usuario" value="#{logBean.usuarioSelecionado}" styleClass="campo">  
 								<f:selectItem itemValue="-1" itemLabel="#{msgs['geral.combo.vazio']}"/>
 								<f:selectItems value="#{logBean.listaUsuario}" />  
 							</h:selectOneMenu>							
@@ -74,7 +74,7 @@
 								<f:facet name="header">
 									<h:outputText value="#{msgs['log.usuario']}" />
 								</f:facet>
-								<h:outputText value="#{lista.usuario.nome}" />
+								<h:outputText value="#{lista.usuario}" />
 							</h:column>	
 							<h:column>
 								<f:facet name="header">

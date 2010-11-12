@@ -150,17 +150,17 @@ public class Empresa extends AbstractTO implements Serializable {
 	@Override
 	public String toString() {
 		StringBuffer buff = new StringBuffer();
-		buff.append("EMPRESA[ID:");
+/*		buff.append("EMPRESA[ID:");
 		buff.append(this.id);
 		buff.append(",");
 		
-		buff.append("NOME:");
+		buff.append("NOME:");*/
 		buff.append(this.nome);
-		buff.append(",");
+		/*buff.append(",");
 		
 		buff.append("RAZAO SOCIAL:");
 		buff.append(this.razaoSocial);
-		buff.append("]");
+		buff.append("]");*/
 		
 		return buff.toString();
 	}

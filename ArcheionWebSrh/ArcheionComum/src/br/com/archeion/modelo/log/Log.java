@@ -8,14 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.archeion.modelo.AbstractTO;
-import br.com.archeion.modelo.usuario.Usuario;
 
 /**
  * Classe responsavel por salvar os logs
@@ -38,9 +35,8 @@ public class Log extends AbstractTO implements Serializable  {
 	/**
 	 * Usuário responsável pela ação logada
 	 */
-	@ManyToOne(optional=false) 
-    @JoinColumn(name="ID_USUARIO", nullable=false)
-	private Usuario usuario;
+	@Column(name = "NM_USUARIO")
+	private String usuario;
 	
 	/**
 	 * Ação logada
@@ -61,14 +57,6 @@ public class Log extends AbstractTO implements Serializable  {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	public String getAcao() {
@@ -125,5 +113,13 @@ public class Log extends AbstractTO implements Serializable  {
 		buff.append("]");
 		
 		return buff.toString();
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 }

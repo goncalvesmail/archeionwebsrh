@@ -3,6 +3,7 @@ package br.com.archeion.persistencia.impl;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -85,9 +86,9 @@ public class JpaGenericDAO<T, ID extends Serializable> extends JpaDaoSupport
 	
 	public Connection getConnection(){
 		EntityManager em = getJpaTemplate().getEntityManagerFactory().createEntityManager();
+		Connection c = ((oracle.toplink.essentials.ejb.cmp3.EntityManager) em)
+		.getServerSession().getDefaultConnectionPool().acquireConnection().getConnection();
 		
-		return ((oracle.toplink.essentials.ejb.cmp3.EntityManager) em)
-		.getServerSession().getDefaultConnectionPool().
-		acquireConnection().getConnection();
+		return c; 
 	}
 }

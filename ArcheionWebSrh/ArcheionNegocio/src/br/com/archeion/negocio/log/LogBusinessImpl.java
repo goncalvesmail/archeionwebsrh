@@ -17,8 +17,8 @@ public class LogBusinessImpl implements LogBusiness {
 		return logDAO.findAll();
 	}
 	
-	public List<Log> findAll(int userId, Date iniDate, Date fimDate) {
-		return logDAO.findAll(userId, iniDate, fimDate);
+	public List<Log> findAll(String user, Date iniDate, Date fimDate) {
+		return logDAO.findAll(user, iniDate, fimDate);
 	}
 
 	public Log findById(Long id) {

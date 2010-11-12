@@ -10,14 +10,14 @@ import br.com.archeion.persistencia.impl.JpaGenericDAO;
 public class LogDAOImpl extends JpaGenericDAO<Log, Long> implements LogDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<Log> findAll(int userId, Date iniDate, Date fimDate) {
+	public List<Log> findAll(String user, Date iniDate, Date fimDate) {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 
 		StringBuilder sql = new StringBuilder("SELECT u FROM Log u");
 		
 		boolean where = false;
-		if ( userId!=-1 ) {
-			parametros.put("userId", userId);
+		if ( (user != null) && !user.equals(" ") ) {
+			parametros.put("userId", user);
 			sql.append(" WHERE u.usuario.id = :userId ");
 			where = true;
 		}
