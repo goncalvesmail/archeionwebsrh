@@ -17,7 +17,7 @@ public class ExceptionManagedBean {
         StringWriter writer = new StringWriter();
         PrintWriter pw = new PrintWriter(writer);
         fillStackTrace(this.exc, pw);
-        return writer.toString();
+        return writer.toString().replaceAll("\\n", " ");
     }
 
     private void fillStackTrace(Throwable ex, PrintWriter pw) {

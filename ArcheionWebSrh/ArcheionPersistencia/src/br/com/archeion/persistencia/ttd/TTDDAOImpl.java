@@ -104,37 +104,40 @@ public class TTDDAOImpl extends JpaGenericDAO<TTD,Long> implements TTDDAO {
 		
 		//PARA TODOS: Setar previsão de recolhimento (referência+tempo corrente)
 		for( Pasta p:pastas ) {
-			Date ref = (Date)p.getDataReferencia().clone();
-			ref.setYear( ref.getYear()+corrente.intValue() );
-			
-			p.setPrevisaoRecolhimento(ref);
-			
-			//Se for intermediário, setar a previsão de expurgo
-			if ( ttd.isArquivoIntermediario() ) {
-				Integer intermediario = ttd.getTempoArquivoIntermediario();
+			if ( p.getDataReferencia() != null ) {
+				Date ref = (Date)p.getDataReferencia().clone();
+				ref.setYear( ref.getYear()+corrente.intValue() );
 				
-				Date rec = (Date)p.getPrevisaoRecolhimento().clone();
-				rec.setYear( rec.getYear()+intermediario.intValue() );
+				p.setPrevisaoRecolhimento(ref);
 				
-				p.setPrevisaoExpurgo(rec);
-				
-				//Retirar da caixa caso tenha mudado de tipo
-				if ( p.getCaixa()!=null && !p.getCaixa().getTipo().equals(TipoArquivo.INTERMEDIARIO) ) {
-					p.setCaixa(null);
+				//Se for intermediário, setar a previsão de expurgo
+				if ( ttd.isArquivoIntermediario() ) {
+					Integer intermediario = ttd.getTempoArquivoIntermediario();
+					
+					Date rec = (Date)p.getPrevisaoRecolhimento().clone();
+					rec.setYear( rec.getYear()+intermediario.intValue() );
+					
+					p.setPrevisaoExpurgo(rec);
+					
+					//Retirar da caixa caso tenha mudado de tipo
+					if ( p.getCaixa()!=null && !p.getCaixa().getTipo().equals(TipoArquivo.INTERMEDIARIO) ) {
+						p.setCaixa(null);
+					}
 				}
-			}
-			else { //Se não, limpar a previsão expurgo
-				p.setPrevisaoExpurgo(null);
-				
-				//Retirar da caixa caso tenha mudado de tipo
-				if ( p.getCaixa()!=null && p.getCaixa().getTipo().equals(TipoArquivo.INTERMEDIARIO) ) {
-					p.setCaixa(null);
+				else { //Se não, limpar a previsão expurgo
+					p.setPrevisaoExpurgo(null);
+					
+					//Retirar da caixa caso tenha mudado de tipo
+					if ( p.getCaixa()!=null && p.getCaixa().getTipo().equals(TipoArquivo.INTERMEDIARIO) ) {
+						p.setCaixa(null);
+					}
 				}
+				
+				pastaDAO.merge(p);
 			}
-			
-			pastaDAO.merge(p);
 		}
 	}
+
 	
 
 	public PastaDAO getPastaDAO() {

@@ -428,6 +428,8 @@ public class PastaMBean extends ArcheionBean {
      */
     public String alterar() {
         try {           
+
+            pasta.setDataReferencia(pasta.getDataAbertura());
             pasta = pastaBO.merge(pasta);
            
             addMessage(FacesMessage.SEVERITY_INFO,"geral.alteracao.sucesso",ArcheionBean.PERSIST_SUCESS);
@@ -607,6 +609,7 @@ public class PastaMBean extends ArcheionBean {
     public String findAll() {
         try {
            
+        	
             if(origemAlteracao==null || origemAlteracao.equals("listaPasta")){
                
                 return "listaPasta";
@@ -616,9 +619,15 @@ public class PastaMBean extends ArcheionBean {
             }
            
            
-        } catch (AccessDeniedException aex) {
+        }  
+        catch (AccessDeniedException aex) {
             return Constants.ACCESS_DENIED;
         }
+        catch (Exception e) {
+            ExceptionManagedBean excBean = (ExceptionManagedBean) Util.getManagedBean("exceptionManagedBean");
+            excBean.setExc(e);
+            return Constants.ERROR_HANDLER;
+        }   
        
     }
    
