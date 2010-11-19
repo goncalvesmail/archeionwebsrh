@@ -47,6 +47,7 @@ public interface PastaDAO extends GenericDAO<Pasta, Long> {
 	 * @return Lista de Pastas que atendam o referido critério
 	 */
 	List<Pasta> consultaEtiquetaPasta(String where);
+	List<Pasta> consultaEtiquetaPastaConection(String where);
 	
 	/**
 	 * Busca o tamanho da lista de Pasta para impressão de etiquetas a partir de uma consulta pré-formatada

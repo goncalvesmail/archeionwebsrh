@@ -1,5 +1,8 @@
 package br.com.archeion.persistencia.pasta;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -281,6 +284,33 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 
 		return getJpaTemplate().findByNamedParams(sql.toString(),
 				parametros);
+	}
+	
+	public List<Pasta> consultaEtiquetaPastaConection(String where) {
+		List<Pasta> listaPastas = new ArrayList<Pasta>();
+		try {
+			Statement stmt = this.getConnection().createStatement();
+			StringBuilder sql = new StringBuilder("SELECT ID_PASTA FROM tb_pasta ");
+			if(where.length() > 2){
+				sql.append(" WHERE ");
+				sql.append(where);
+				sql.append(" order by NM_TITULO ");
+			}
+			
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			while(rs.next()) {
+				Pasta p = new Pasta();
+				p.setId(rs.getLong(1));
+				p = this.findById(rs.getLong(1));
+				listaPastas.add(p);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaPastas;
 	}
 	
 	public Long consultaEtiquetaPastaSize(ParametroConsulta param) {

@@ -362,7 +362,7 @@ public class LocalizarPastaMBean extends ArcheionBean {
 				sb.append("UPPER("+ChavesPasta.getDataBaseValue(this.chave1)+")");
 			} else {
 				if (conv.equals("date")) {
-					//sb.append("to_char(' ");					
+					//sb.append("to_date(' ");					
 					sb.append(ChavesPasta.getDataBaseValue(this.chave1));
 					//sb.append(" ','DD/MM/YYYY') ");
 				}else{
@@ -370,13 +370,17 @@ public class LocalizarPastaMBean extends ArcheionBean {
 				}
 			}
 			sb.append(Operadores.getDataBaseValue(this.operador1));
-			sb.append("'");			
+			if (conv != null && !conv.equals("date")) {
+				sb.append("'");		
+			}
 			if ( this.operador1==Operadores.CONTEM.getId() ) sb.append("%");			
 			
 			if(conv != null && conv.equals("date")){
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				try {
+					sb.append("to_date(' ");
 					sb.append(sdf.format(sdf.parse(this.valor1)));
+					sb.append(" ','DD/MM/YYYY') ");
 				} catch (ParseException e) {
 					addMessage(FacesMessage.SEVERITY_INFO, 
 							"error.business.dataInvalida",ArcheionBean.PERSIST_FAILURE);
@@ -386,7 +390,9 @@ public class LocalizarPastaMBean extends ArcheionBean {
 				sb.append(this.valor1.toUpperCase());
 			}
 			if ( this.operador1==Operadores.CONTEM.getId() ) sb.append("%");
-			sb.append("'");
+			if (conv != null && !conv.equals("date")) {
+				sb.append("'");		
+			}
 
 			if(this.chave2 != -1 && !this.valor2.equals("")){
 				String conv2 = ChavesPasta.getConversorValue(this.chave2);
@@ -445,8 +451,6 @@ public class LocalizarPastaMBean extends ArcheionBean {
 			}
 		}
 
-		//System.out.println(sb.toString());
-		
 		if ( !sb.toString().equals("") ) {
 			listaPasta = pastaBO.consultaEtiquetaPasta(sb.toString());	
 		}

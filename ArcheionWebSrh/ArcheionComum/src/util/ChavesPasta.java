@@ -1,20 +1,20 @@
 package util;
 
 public enum ChavesPasta {
-	CAIXETA(1,"Caixeta","u.caixeta"),
-	DATAREFERENCIA(2,"Data de Referência","u.dataReferencia","date"),
-	EMPRESA(3,"Empresa","u.local.empresa.nome"),
-	ITEMDOCUMENTAL(4,"Item Documental","u.itemDocumental.nome"),
-	LIMITEDATA(5,"Limite Data","u.limiteDataInicial","date"),
-	LIMITENOME(6,"Limite Nome","u.limiteNomeInicial"),
-	LIMITEVALOR(7,"Limite Valor","u.limiteNumeroInicial","number"),
-	LOCAL(8,"Local","u.local.nome"),
-	OBSERVACAO(9,"Observação","u.observacao"),
-	TITULOPASTA(10,"Título Pasta","u.titulo"),
-	VAO(11,"Vão","u.caixa.vao.vao"),
-	VAONUMERO(12,"Número Vão","u.caixa.numeroVao","number"),
-	DESCRICAO(13,"Descrição","u.descricao"),
-	NUMEROPROTOCOLO(14,"Número de protocolo","u.numeroProtocolo");
+	CAIXETA(1,"Caixeta","NM_CAIXETA","string"),
+	DATAREFERENCIA(2,"Data de Referência","DT_REFERENCIA","date"),
+	EMPRESA(3,"Empresa","u.local.empresa.nome","empresa"),
+	ITEMDOCUMENTAL(4,"Item Documental","itemDocumental.nome","itemdocumental"),
+	LIMITEDATA(5,"Limite Data","DT_DATA_LIMITE_INICIAL","date"),
+	LIMITENOME(6,"Limite Nome","NM_NOME_LIMITE_INICIAL","string"),
+	LIMITEVALOR(7,"Limite Valor","NU_NUMERO_LIMITE_INICIAL","number"),
+	LOCAL(8,"Local","local.nome","local"),
+	OBSERVACAO(9,"Observação","TX_OBSERVACAO","string"),
+	TITULOPASTA(10,"Título Pasta","NM_TITULO","string"),
+	//VAO(11,"Vão","caixa.vao.vao"),
+	//VAONUMERO(12,"Número Vão","caixa.numeroVao","number"),
+	DESCRICAO(11,"Descrição","NM_DESCRICAO","string"),
+	NUMEROPROTOCOLO(12,"Número de protocolo","NM_NUMERO_PROTOCOLO","string");
 	
 	ChavesPasta(int id, String label, String dataValue) {
 		this.id = id;
