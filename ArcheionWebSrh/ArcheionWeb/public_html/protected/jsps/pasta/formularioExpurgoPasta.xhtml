@@ -43,7 +43,7 @@ td,input {
 						<td align="right" width="50%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['documento.empresa']}:" for="empresa" />
 						</td>
-						<td align="left">
+						<td align="left" width="50%">
 						<a4j:region id="localRegion">
 							<h:selectOneMenu id="empresa" value="#{expurgoPastaBean.pasta.local.empresa.id}" 
 								styleClass="campo" 
@@ -58,7 +58,7 @@ td,input {
 						<td align="right" width="50%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['local.nome']}:" for="local" />
 						</td>
-						<td>
+						<td align="left" width="50%">
 							<a4j:outputPanel ajaxRendered="true" id="outLocal"> 
 								<a4j:region id="containerLocal">
 									<h:selectOneMenu id="local" value="#{expurgoPastaBean.pasta.local.id}" 

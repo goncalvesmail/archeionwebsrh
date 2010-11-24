@@ -55,7 +55,7 @@ td,input {
 						<td align="right" width="50%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['local.nome']}:" for="local" />
 						</td>
-						<td>
+						<td align="left">
 							<a4j:outputPanel ajaxRendered="true" id="outLocal"> 
 								<a4j:region id="containerLocal">
 									<h:selectOneMenu id="local" value="#{pastaBean.pasta.local.id}" 
@@ -81,7 +81,7 @@ td,input {
 						<td align="right" width="50%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['itemdocumental.nome']}:" for="item" />
 						</td>
-						<td>
+						<td align="left">
 							<a4j:region id="containerItem">
 								<h:selectOneMenu id="item" value="#{pastaBean.pasta.itemDocumental.id}" 
 									styleClass="campo" disabled="#{pastaBean.visualizar}"
@@ -327,7 +327,7 @@ td,input {
 							<tr><td>
 								<table>
 									<tr>
-										<td colspan="2">
+										<td colspan="2" align="left" >
 											<h:outputLabel styleClass="label" value="#{msgs['geral.observacao']}:" for="observacao" />
 										</td>
 									</tr>
