@@ -732,15 +732,24 @@ public class CaixaMBean extends ArcheionBean {
 
 	private void atualizaListaPasta() {
 		if ( caixa.getLocal()!=null && caixa.getLocal().getId()!=null ) {			
-			if ( caixa.getTipo().getId().intValue() ==
-				TipoArquivo.PERMANENTE.getId().intValue() ) {
-				listaPastas = pastaBO.consultaPermanenteRecolhimento(caixa.getLocal());
+			if ( caixa.getTipo()!=null ) {
+				if ( caixa.getTipo().getId().intValue() ==
+					TipoArquivo.PERMANENTE.getId().intValue() ) {
+					listaPastas = pastaBO.consultaPermanenteRecolhimento(caixa.getLocal());
+				}
+				else {
+					listaPastas = pastaBO.consultaTemporarioRecolhimento(caixa.getLocal());
+				}
 			}
 			else {
-				listaPastas = pastaBO.consultaTemporarioRecolhimento(caixa.getLocal());
+				listaCaixa = caixaBO.findByEmpresaLocal((int)caixa.getLocal().getEmpresa().getId().intValue(),
+						caixa.getLocal().getId().intValue());
 			}
 		}
-		listaPastaSize = listaPastas.size();
+		if( listaPastas!=null )
+			listaPastaSize = listaPastas.size();
+		else
+			listaPastaSize = 0;
 	}
 
 	/**

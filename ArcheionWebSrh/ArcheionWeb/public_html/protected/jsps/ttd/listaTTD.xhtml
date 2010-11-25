@@ -28,9 +28,11 @@
 				</tr>				
 			</table>
 
+			<center>
 			<h:form>
+			
 				<table class="tabelasemlinha" align="center" cellpadding="2"
-					cellspacing="2">
+					cellspacing="2" >
 					<tr>
 						<td>
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['empresa.nome']}:" for="emp" />
@@ -179,6 +181,8 @@
 				<h:commandButton value="#{msgs['geral.botao.imprimir.txt']}" styleClass="botaoIntuitivo"
 					action="#{ttdBean.imprimirTxt}" />				
 			</h:form>
+		</center>
+
 
 		</ui:define>
 	</ui:composition>

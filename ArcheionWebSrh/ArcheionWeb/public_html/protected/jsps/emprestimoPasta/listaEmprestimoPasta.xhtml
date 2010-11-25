@@ -28,44 +28,17 @@
 				</tr>				
 			</table>
 
+			<center>
 			<h:form>
 			
-				<fieldset>
+				<fieldset style="width: 80%;">
 				<legend><span class="label">#{msgs['emprestimo.pasta.pesquisa']}</span></legend>
 										
-				<table class="tabelasemlinha" align="center">
+				<table class="tabelasemlinha" align="center" style="table-layout: fixed">
 					<tr>
 						<td>
 							<h:outputText value="#{msgs['pasta.empresa']}" />
-						</td>		
-						<td>
-							<h:outputText value="#{msgs['pasta.local']}" />
-						</td>					
-						<td>
-							<h:outputText value="#{msgs['emprestimo.pasta.data.saida']}" />
-						</td>						
-						<td>
-							<h:outputText value="#{msgs['emprestimo.pasta.solicitante']}" />
-						</td>							
-						<td rowspan="2" valign="middle">
-							<fieldset>
-								<legend><span class="label">#{msgs['emprestimo.pasta.situacao']}</span></legend>
-									<h:selectOneRadio value="#{emprestimoPastaBean.situacaoFiltro}">  
-										<f:selectItem itemLabel="#{msgs['emprestimo.pasta.emprestada']}" 
-											itemValue="1" styleClass="label"/>  
-										<f:selectItem itemLabel="#{msgs['emprestimo.pasta.devolvida']}" 
-											itemValue="2" styleClass="label"/>  
-									</h:selectOneRadio> 
-							</fieldset>		
-						</td>
-						<td rowspan="2" valign="middle">
-							<h:commandButton value="#{msgs['geral.botao.pesquisar']}" 
-								styleClass="botaoIntuitivo"
-								action="#{emprestimoPastaBean.pesquisar}" />	
-						</td>							
-															
-					</tr>					
-					<tr>
+						</td>	
 						<td>
 							<a4j:region id="localRegion">						
 								<h:selectOneMenu id="emp" styleClass="campo" 
@@ -77,7 +50,13 @@
 								</h:selectOneMenu> 
 							</a4j:region>
 						</td>
+						
+						
 						<td>
+							<h:outputText value="#{msgs['pasta.local']}" />
+						</td>
+						<td style="max-width: 300px;">
+							<div style="width: 330px; overflow:hidden;">
 							<a4j:outputPanel ajaxRendered="true" id="outLocal"> 
 								<h:selectOneMenu id="local" styleClass="campo" 
 									value="#{emprestimoPastaBean.pastaFiltro.local.id}">  
@@ -89,8 +68,26 @@
 				                <f:facet name="start">
 				                    <h:graphicImage  value="/images/loader.gif"/>
 				                </f:facet>
-				            </a4j:status>						
+				            </a4j:status>
+				            </div>						
 						</td>
+												
+						<td valign="middle">
+							<fieldset>
+								<legend><span class="label">#{msgs['emprestimo.pasta.situacao']}</span></legend>
+									<h:selectOneRadio value="#{emprestimoPastaBean.situacaoFiltro}">  
+										<f:selectItem itemLabel="#{msgs['emprestimo.pasta.emprestada']}" 
+											itemValue="1" styleClass="label"/>  
+										<f:selectItem itemLabel="#{msgs['emprestimo.pasta.devolvida']}" 
+											itemValue="2" styleClass="label"/>  
+									</h:selectOneRadio> 
+							</fieldset>		
+						</td>						
+					</tr>
+					<tr>						
+						<td>
+							<h:outputText value="#{msgs['emprestimo.pasta.data.saida']}" />
+						</td>	
 						<td align="left" nowrap="nowrap">
 							<t:inputCalendar id="dataFiltro"
 								renderAsPopup="true"
@@ -106,21 +103,31 @@
 							</t:inputCalendar>
 							<h:message for="dataFiltro" errorStyle="color: red;" />
 						</td>	
+											
+						<td>
+							<h:outputText value="#{msgs['emprestimo.pasta.solicitante']}" />
+						</td>
 						<td>
 							<h:selectOneMenu id="interno" styleClass="campo" 
 								value="#{emprestimoPastaBean.usuarioFiltro.id}" >  
 								<f:selectItem itemValue="-1" itemLabel=""/>
 								<f:selectItems value="#{emprestimoPastaBean.listaSolicitante}" />  
 							</h:selectOneMenu>	
-						</td>									
-					</tr>					
+						</td>
+						<td valign="middle">
+							<h:commandButton value="#{msgs['geral.botao.pesquisar']}" 
+								styleClass="botaoIntuitivo"
+								action="#{emprestimoPastaBean.pesquisar}" />	
+						</td>								
+					</tr>			
 				</table>
+				
 				</fieldset>
 			</h:form>
 
 			
 			
-			<fieldset>
+			<fieldset  style="width: 80%;">
 			<legend><span class="label">#{msgs['emprestimo.pasta.rapido']}</span></legend>
 			
 				<h:form>
@@ -338,6 +345,7 @@
 					</tr>
 				</table>
 			</h:form>
+			</center>
 
 		</ui:define>
 	</ui:composition>

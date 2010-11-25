@@ -35,12 +35,12 @@ td,input {
 
 			<h:form>
 			
-				<table width="70%">
+				<table width="70%" style="table-layout: fixed">
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['documento.empresa']}:" for="empresa" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 						<a4j:region id="localRegion">
 							<h:selectOneMenu id="empresa" value="#{ttdBean.ttd.local.empresa.id}" 
 								styleClass="campo" valueChangeListener="#{ttdBean.valueChanged}"
@@ -52,10 +52,10 @@ td,input {
 						</td>	
 					</tr>
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['documento.local']}:" for="local" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 							<a4j:outputPanel ajaxRendered="true" id="outLocal"> 
 								<h:selectOneMenu id="local" 
 										value="#{ttdBean.ttd.local.id}" 
@@ -71,20 +71,20 @@ td,input {
 						</td>	
 					</tr>
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['itemdocumental.nome']}:" for="itemDocumental" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 							<h:selectOneMenu id="itemDocumental" value="#{ttdBean.ttd.itemDocumental.id}" styleClass="campo" disabled="#{ttdBean.visualizar}">  
 								<f:selectItems value="#{ttdBean.listaItemDocumental}" />  
 							</h:selectOneMenu>
 						</td>	
 					</tr>						
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['eventocontagem.nome']}:" for="evento" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 							<h:selectOneMenu id="evento" disabled="#{ttdBean.visualizar}"
 								value="#{ttdBean.ttd.eventoContagem.id}" styleClass="campo">  
 								<f:selectItems value="#{ttdBean.listaEventoContagem}" />  
@@ -92,10 +92,10 @@ td,input {
 						</td>	
 					</tr>
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['ttd.texto.arquivocorrente']}:" for="ac" />
 						</td>
-						<td align="left" >
+						<td align="left" width="60%" >
 							<h:inputText id="ac" required="false" 
 								styleClass="campo" value="#{ttdBean.ttd.tempoArquivoCorrente}" 
 								converterMessage="#{msgs['error.business.numericField']}"
@@ -142,13 +142,13 @@ td,input {
 								</td>
 								</tr>
 								<tr>								
-									<td colspan="2">									
+									<td colspan="2"  align="left">									
 										<h:outputLabel styleClass="label" 
 											value="#{msgs['geral.observacao']}:" for="observacao" />									
 									</td>
 								</tr>
 								<tr>								
-									<td colspan="2">									
+									<td colspan="2" align="left">									
 										<h:inputTextarea id="observacao" 
 											disabled="#{ttdBean.visualizar}"
 											value="#{ttdBean.ttd.observacao}" cols="75"/>										

@@ -61,11 +61,13 @@
 				            </a4j:status>
 				        </td>
 						<td>
+							<div style="width: 400px; overflow:hidden;">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['itemdocumental.nome']}:" for="item" />
 							<h:selectOneMenu id="tipo" value="#{graficoDocumentoBean.item.id}" styleClass="campo">  
 								<f:selectItem itemValue="-1" itemLabel="#{msgs['geral.combo.vazio']}"/>
 								<f:selectItems value="#{graficoDocumentoBean.listaTipoDocumento}" />  
-							</h:selectOneMenu>					
+							</h:selectOneMenu>
+							</div>					
 						</td>				        
 						<td>				
 							<h:commandButton value="#{msgs['geral.botao.pesquisa']}" styleClass="botaoIntuitivo"

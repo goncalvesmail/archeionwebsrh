@@ -46,7 +46,8 @@
 								</h:selectOneMenu> 
 							</a4j:region>
 						</td>
-						<td>
+						<td>						
+							<div style="width: 400px; overflow:hidden;">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['local.nome']}:" for="local" />
 						
 							<a4j:outputPanel ajaxRendered="true" id="outLocal"> 
@@ -60,6 +61,7 @@
 				                    <h:graphicImage  value="/images/loader.gif"/>
 				                </f:facet>
 				            </a4j:status>
+				            </div>
 				        </td>
 						<td>
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['geral.previsao']}:" for="previsao" />

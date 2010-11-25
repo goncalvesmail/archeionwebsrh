@@ -35,12 +35,12 @@ td,input {
 
 			<h:form id="form">
 			
-				<table width="70%">
+				<table width="70%" style="table-layout: fixed">
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['documento.empresa']}:" for="empresa" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 						<a4j:region id="localRegion">
 							<h:selectOneMenu id="empresa" value="#{caixaBean.caixa.local.empresa.id}" 
 								styleClass="campo" valueChangeListener="#{caixaBean.valueChangedEmpresa}"
@@ -52,10 +52,10 @@ td,input {
 						</td>	
 					</tr>				
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['local.nome']}:" for="local" />
 						</td>
-						<td>
+						<td align="left" width="60%">
 							<a4j:region id="pastaRegion">
 							<a4j:outputPanel ajaxRendered="true" id="outLocal"> 
 								<h:selectOneMenu id="local" value="#{caixaBean.caixa.local.id}" 
@@ -74,10 +74,10 @@ td,input {
 						</td>
 					</tr>
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['caixa.texto.vao']}:" for="vao" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 							<a4j:region id="vaoRegion">
 								<h:selectOneMenu id="vao" value="#{caixaBean.caixa.vao.id}" styleClass="campo"
 									valueChangeListener="#{caixaBean.valueChangedVaoAlterar}" disabled="#{caixaBean.visualizar}">  
@@ -100,10 +100,10 @@ td,input {
 						</td>
 					</tr>
 					<tr>
-						<td align="right">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['caixa.tipo']}:" for="origem" />
 						</td>
-						<td align="left">
+						<td  align="left" width="60%">
 							<a4j:region id="tipoRegion">
 							<h:selectOneMenu id="origem" value="#{caixaBean.caixa.tipo}" 
 								styleClass="campo"  valueChangeListener="#{caixaBean.valueChangedTipo}"

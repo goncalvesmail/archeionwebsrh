@@ -35,12 +35,12 @@ td,input {
 
 			<h:form id="form">
 			
-				<table width="70%">
+				<table width="70%" style="table-layout: fixed">
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['documento.empresa']}:" for="empresa" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 						<a4j:region id="localRegion">
 							<h:selectOneMenu id="empresa" value="#{pastaBean.pasta.local.empresa.id}" 
 								styleClass="campo" valueChangeListener="#{pastaBean.valueChangedEmpresa}"
@@ -52,10 +52,10 @@ td,input {
 						</td>	
 					</tr>				
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['local.nome']}:" for="local" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 							<a4j:outputPanel ajaxRendered="true" id="outLocal"> 
 								<a4j:region id="containerLocal">
 									<h:selectOneMenu id="local" value="#{pastaBean.pasta.local.id}" 
@@ -78,10 +78,10 @@ td,input {
 					</tr>
 					
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['itemdocumental.nome']}:" for="item" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 							<a4j:region id="containerItem">
 								<h:selectOneMenu id="item" value="#{pastaBean.pasta.itemDocumental.id}" 
 									styleClass="campo" disabled="#{pastaBean.visualizar}"
@@ -95,10 +95,10 @@ td,input {
 					</tr>
 					
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['pasta.texto.titulo']}:" for="titulo" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 							<h:inputText id="titulo" required="true" 
 								styleClass="campo" value="#{pastaBean.pasta.titulo}" 
 								requiredMessage="#{msgs['error.business.requiredField']}" 
@@ -108,30 +108,30 @@ td,input {
 					</tr>
 					
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="label" value="#{msgs['pasta.text.descricao']}:" for="descricao" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 							<h:inputText id="descricao" required="false" 
 								styleClass="campo" value="#{pastaBean.pasta.descricao}"	/>
 						</td>	
 					</tr>	
 					
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="label" value="#{msgs['pasta.numero.protocolo']}:" for="numProtocolo" />
 						</td>
-						<td align="left">
+						<td align="left" width="60%">
 							<h:inputText id="numProtocolo" required="false" 
 								styleClass="campo" value="#{pastaBean.pasta.numeroProtocolo}"	/>
 						</td>	
 					</tr>	
 					
 					<tr>
-						<td align="right">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['pasta.data.abertura.referencia']}:" for="dataAbertura" />
 						</td>						
-						<td align="left" valign="middle">
+						<td align="left" valign="middle" width="60%">
 							<a4j:region id="containerData">
 								<t:inputCalendar id="dataAbertura"
 									renderAsPopup="true"
@@ -153,10 +153,10 @@ td,input {
 						</td>
 					</tr>		
 					<tr>
-						<td align="right" width="50%">
+						<td align="right" width="40%">
 							<h:outputLabel styleClass="labelObrigatorio" value="#{msgs['pasta.texto.caixeta']}:" for="caixeta" />
 						</td>
-						<td align="left" >
+						<td align="left" width="60%" >
 							<h:inputText id="caixeta" 
 								styleClass="campo" value="#{pastaBean.pasta.caixeta}" 
 								required="true"
