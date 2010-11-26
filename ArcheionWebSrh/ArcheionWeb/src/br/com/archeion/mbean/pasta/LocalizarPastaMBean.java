@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -354,17 +356,21 @@ public class LocalizarPastaMBean extends ArcheionBean {
 	private void consultarPasta() {
 		listaPasta = new ArrayList<Pasta>();
 		listaPastaTarget  = new ArrayList<Pasta>();
+		String from = null;
+		
 		StringBuffer sb = new StringBuffer();
 
 		if(this.chave1 != -1 && !this.valor1.equals("")){
 			String conv = ChavesPasta.getConversorValue(this.chave1);
+			if(ChavesPasta.getFromValue(this.chave1) != null){
+				from = ChavesPasta.getFromValue(this.chave1);
+			}
+			
 			if(conv == null){
 				sb.append("UPPER("+ChavesPasta.getDataBaseValue(this.chave1)+")");
 			} else {
 				if (conv.equals("date")) {
-					//sb.append("to_date(' ");					
 					sb.append(ChavesPasta.getDataBaseValue(this.chave1));
-					//sb.append(" ','DD/MM/YYYY') ");
 				}else{
 					sb.append(ChavesPasta.getDataBaseValue(this.chave1));
 				}
@@ -396,6 +402,14 @@ public class LocalizarPastaMBean extends ArcheionBean {
 
 			if(this.chave2 != -1 && !this.valor2.equals("")){
 				String conv2 = ChavesPasta.getConversorValue(this.chave2);
+				if ((from != null) && (ChavesPasta.getFromValue(this.chave2) != null)){
+					from += ","+ChavesPasta.getFromValue(this.chave2);
+				} else {
+					if (from == null) {
+						from = ChavesPasta.getFromValue(this.chave2);
+					}
+				}
+				
 				sb.append(OperadoresBoleanos.getDataBaseValue(this.operadorBoleano1));
 				if(conv2 == null){
 					sb.append("UPPER("+ChavesPasta.getDataBaseValue(this.chave2)+")");
@@ -403,26 +417,40 @@ public class LocalizarPastaMBean extends ArcheionBean {
 					sb.append(ChavesPasta.getDataBaseValue(this.chave2));
 				}
 				sb.append(Operadores.getDataBaseValue(this.operador2));
-				sb.append("'");
+				if (conv2 != null && !conv2.equals("date")) {
+					sb.append("'");		
+				}
 				if ( this.operador2==Operadores.CONTEM.getId() ) sb.append("%");
 				
 				if(conv2 != null && conv2.equals("date")){
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					try {
-						sb.append(new SimpleDateFormat(conv2).format(sdf.parse(this.valor2)) );
+						sb.append("to_date(' ");
+						sb.append(sdf.format(sdf.parse(this.valor2)));
+						sb.append(" ','DD/MM/YYYY') ");
 					} catch (ParseException e) {
 						addMessage(FacesMessage.SEVERITY_INFO, 
 								"error.business.dataInvalida",ArcheionBean.PERSIST_FAILURE);
 						return;
-					}
+					}					
 				} else {
 					sb.append(this.valor2.toUpperCase());
 				}
 				if ( this.operador2==Operadores.CONTEM.getId() ) sb.append("%");
-				sb.append("'");
+				if (conv2 != null && !conv2.equals("date")) {
+					sb.append("'");
+				}
 
 				if(this.chave3 != -1 && !this.valor3.equals("")){
 					String conv3 = ChavesPasta.getConversorValue(this.chave3);
+					if ((from != null) && (ChavesPasta.getFromValue(this.chave3) != null)) {
+						from += ","+ChavesPasta.getFromValue(this.chave3);
+					} else {
+						if (from == null) {
+							from = ChavesPasta.getFromValue(this.chave3);
+						}
+					}
+					
 					sb.append(OperadoresBoleanos.getDataBaseValue(this.operadorBoleano2));
 					if(conv3 == null){
 						sb.append("UPPER("+ChavesPasta.getDataBaseValue(this.chave3)+")");
@@ -430,29 +458,52 @@ public class LocalizarPastaMBean extends ArcheionBean {
 						sb.append(ChavesPasta.getDataBaseValue(this.chave3));
 					}
 					sb.append(Operadores.getDataBaseValue(this.operador3));
-					sb.append("'");
+					if (conv3 != null && !conv3.equals("date")) {
+						sb.append("'");		
+					}
 					if ( this.operador3==Operadores.CONTEM.getId() ) sb.append("%");
 					
 					if(conv3 != null && conv3.equals("date")){
-						SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 						try {
-							sb.append(new SimpleDateFormat(conv3).format(sdf.parse(this.valor3)) );
+							sb.append("to_date(' ");
+							sb.append(sdf.format(sdf.parse(this.valor3)));
+							sb.append(" ','DD/MM/YYYY') ");
 						} catch (ParseException e) {
 							addMessage(FacesMessage.SEVERITY_INFO, 
 									"error.business.dataInvalida",ArcheionBean.PERSIST_FAILURE);
 							return;
-						}
+						}					
 					} else {
 						sb.append(this.valor3.toUpperCase());
 					}
 					if ( this.operador3==Operadores.CONTEM.getId() ) sb.append("%");
-					sb.append("'");
+					if (conv3 != null && !conv3.equals("date")) {
+						sb.append("'");
+					}
 				}
 			}
 		}
 
 		if ( !sb.toString().equals("") ) {
-			listaPasta = pastaBO.consultaEtiquetaPasta(sb.toString());	
+			
+			String[] f = from.split(",");
+			HashSet<String> fs = new HashSet<String>();
+						
+			for(int i=0;i<f.length;i++){
+				if(!fs.contains(f[i])){
+					fs.add(f[i]);
+				}
+			}
+			String rf = "";
+			Iterator<String> iterator =  fs.iterator();
+			
+			while(iterator.hasNext()){
+				rf += iterator.next()+",";
+			}
+			rf = rf.substring(0, rf.lastIndexOf(","));
+			listaPasta = pastaBO.localizarPasta(rf,sb.toString());	
+			//listaPasta = pastaBO.consultaEtiquetaPasta(sb.toString());	
 		}
 		else {
 			listaPasta = pastaBO.findAll();

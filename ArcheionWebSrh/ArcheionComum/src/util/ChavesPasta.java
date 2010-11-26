@@ -3,12 +3,16 @@ package util;
 public enum ChavesPasta {
 	CAIXETA(1,"Caixeta","NM_CAIXETA","string"),
 	DATAREFERENCIA(2,"Data de Referência","DT_REFERENCIA","date"),
-	EMPRESA(3,"Empresa","u.local.empresa.nome","empresa"),
-	ITEMDOCUMENTAL(4,"Item Documental","itemDocumental.nome","itemdocumental"),
+	
+	EMPRESA(3,"Empresa","L.ID_LOCAL = P.ID_LOCAL AND L.ID_EMPRESA = E.ID_EMPRESA AND E.NM_EMPRESA","empresa","TB_LOCAL L,TB_EMPRESA E"),
+	ITEMDOCUMENTAL(4,"Item Documental","P.ID_ITEM_DOCUMENTAL = IT.ID_ITEM_DOCUMENTAL AND IT.NM_ITEM_DOCUMENTAL","itemdocumental","TB_ITEM_DOCUMENTAL IT"),
+
 	LIMITEDATA(5,"Limite Data","DT_DATA_LIMITE_INICIAL","date"),
 	LIMITENOME(6,"Limite Nome","NM_NOME_LIMITE_INICIAL","string"),
 	LIMITEVALOR(7,"Limite Valor","NU_NUMERO_LIMITE_INICIAL","number"),
-	LOCAL(8,"Local","local.nome","local"),
+	
+	LOCAL(8,"Local","L.ID_LOCAL = P.ID_LOCAL AND L.NM_LOCAL","local","TB_LOCAL L"),
+	
 	OBSERVACAO(9,"Observação","TX_OBSERVACAO","string"),
 	TITULOPASTA(10,"Título Pasta","NM_TITULO","string"),
 	//VAO(11,"Vão","caixa.vao.vao"),
@@ -28,10 +32,19 @@ public enum ChavesPasta {
 		this.dataValue = dataValue;
 		this.conversor = conversor;
 	}
+	ChavesPasta(int id, String label, String dataValue, String conversor, String from) {
+		this.id = id;
+		this.label = label;
+		this.dataValue = dataValue;
+		this.conversor = conversor;
+		this.from = from;
+	}
+	
 	private int id;
 	private String label;
 	private String dataValue;
 	private String conversor;
+	private String from;
 	
 	public static String getById(int id){
 		for(ChavesPasta c: ChavesPasta.values()){
@@ -69,6 +82,15 @@ public enum ChavesPasta {
 		return null;
 	}
 	
+	public static String getFromValue(int id) {
+		for(ChavesPasta c: ChavesPasta.values()){
+			if(c.getId() == id){
+				return c.getFrom();
+			}
+		}
+		return null;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -94,5 +116,11 @@ public enum ChavesPasta {
 
 	public void setConversor(String conversor) {
 		this.conversor = conversor;
+	}
+	public String getFrom() {
+		return from;
+	}
+	public void setFrom(String from) {
+		this.from = from;
 	}
 }

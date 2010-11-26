@@ -47,8 +47,11 @@ public class PastaBOImpl implements PastaBO {
 	}
 	
 	public List<Pasta> consultaEtiquetaPasta(String where){
-		//return pastaDAO.consultaEtiquetaPasta(where);
-		return pastaDAO.consultaEtiquetaPastaConection(where);
+		return pastaDAO.consultaEtiquetaPasta(where);
+	}
+	
+	public List<Pasta> localizarPasta(String from, String where){
+		return pastaDAO.localizarPasta(from, where);
 	}
 	
 	public List<Pasta> findPastaAtivasEmprestimo() {

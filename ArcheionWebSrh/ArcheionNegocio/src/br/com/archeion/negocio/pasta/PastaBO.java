@@ -113,6 +113,9 @@ public interface PastaBO extends PaginationSupport<Pasta, Pasta> {
 	@Secured({ "ROLE_BUSCAR_PASTA" })
 	List<Pasta> consultaEtiquetaPasta(String where);
 	
+	@Secured({ "ROLE_BUSCAR_PASTA" })
+	List<Pasta> localizarPasta(String from, String where);
+	
 	/**
 	 * Busca a lista de Pastas a partir de uma Empresa e/ou Local e/ou Situação
 	 * @param emp Empresa com ID

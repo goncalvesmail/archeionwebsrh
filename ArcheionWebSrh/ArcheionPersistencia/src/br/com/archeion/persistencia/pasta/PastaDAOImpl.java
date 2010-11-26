@@ -286,15 +286,20 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 				parametros);
 	}
 	
-	public List<Pasta> consultaEtiquetaPastaConection(String where) {
+	public List<Pasta> localizarPasta(String from, String where) {
 		List<Pasta> listaPastas = new ArrayList<Pasta>();
 		try {
 			Statement stmt = this.getConnection().createStatement();
-			StringBuilder sql = new StringBuilder("SELECT ID_PASTA FROM tb_pasta ");
+			StringBuilder sql = new StringBuilder("SELECT ID_PASTA ");
+			if (from != null && !from.equals("")) {
+				sql.append("FROM TB_PASTA P, "+from);
+			} else {
+				sql.append("FROM TB_PASTA P ");
+			}
 			if(where.length() > 2){
 				sql.append(" WHERE ");
 				sql.append(where);
-				sql.append(" order by NM_TITULO ");
+				sql.append(" order by P.NM_TITULO ");
 			}
 			
 			ResultSet rs = stmt.executeQuery(sql.toString());
