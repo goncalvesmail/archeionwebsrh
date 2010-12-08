@@ -6,7 +6,7 @@ public enum Operadores {
 	MENOR(3,"< menor que"," < "),
 	MAIORIGUAL(4,">= maior ou igual"," >= "),
 	MENORIGUAL(5,"<= menor ou igual"," <= "),
-	CONTEM(6,"contém"," like "),	
+	CONTEM(6,"contém"," ilike "),	
 	DIFERENTE(7,"diferente"," <> ");	
 	
 	Operadores(int id, String label, String dataValue){

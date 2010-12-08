@@ -87,7 +87,7 @@ public class JpaGenericDAO<T, ID extends Serializable> extends JpaDaoSupport
 	public Connection getConnection(){
 		EntityManager em = getJpaTemplate().getEntityManagerFactory().createEntityManager();
 		Connection c = ((oracle.toplink.essentials.ejb.cmp3.EntityManager) em)
-		.getServerSession().getDefaultConnectionPool().acquireConnection().getConnection();
+		.getServerSession().getReadConnectionPool().acquireConnection().getConnection();
 		
 		return c; 
 	}

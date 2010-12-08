@@ -1,5 +1,6 @@
 package br.com.archeion.persistencia.pasta;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -288,11 +289,13 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 	
 	public List<Pasta> localizarPasta(String from, String where) {
 		List<Pasta> listaPastas = new ArrayList<Pasta>();
+		Connection conn = null;
 		try {
-			Statement stmt = this.getConnection().createStatement();
+			conn = this.getConnection();
+			Statement stmt = conn.createStatement();
 			StringBuilder sql = new StringBuilder("SELECT ID_PASTA ");
 			if (from != null && !from.equals("")) {
-				sql.append("FROM TB_PASTA P, "+from);
+				sql.append("FROM "+from);
 			} else {
 				sql.append("FROM TB_PASTA P ");
 			}
@@ -314,6 +317,15 @@ public class PastaDAOImpl extends JpaGenericDAO<Pasta, Long> implements PastaDAO
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (conn != null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		return listaPastas;
 	}
