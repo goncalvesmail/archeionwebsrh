@@ -22,8 +22,8 @@ public class ChavePesquisaPasta {
 		operadores.put(8, new Operadores[] {Operadores.IGUAL, Operadores.CONTEM} );
 		operadores.put(9, new Operadores[] {Operadores.CONTEM} );
 		operadores.put(10, new Operadores[] {Operadores.IGUAL, Operadores.CONTEM} );
-		operadores.put(11, new Operadores[] {Operadores.IGUAL} );
-		operadores.put(12, new Operadores[] {Operadores.IGUAL, Operadores.MAIOR, Operadores.MAIORIGUAL, 
+		operadores.put(11, new Operadores[] {Operadores.IGUAL, Operadores.CONTEM} );
+		operadores.put(12, new Operadores[] {Operadores.IGUAL, Operadores.CONTEM, Operadores.MAIOR, Operadores.MAIORIGUAL, 
 				Operadores.MENOR, Operadores.MENORIGUAL, Operadores.DIFERENTE} );
 		operadores.put(13, new Operadores[] {Operadores.IGUAL, Operadores.CONTEM} );
 		operadores.put(14, new Operadores[] {Operadores.IGUAL, Operadores.CONTEM} );
