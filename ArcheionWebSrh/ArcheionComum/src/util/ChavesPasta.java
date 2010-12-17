@@ -2,19 +2,32 @@ package util;
 
 public enum ChavesPasta {
 	CAIXETA(1,"Caixeta","P.NM_CAIXETA","string","TB_PASTA P"),
+	
 	DATAREFERENCIA(2,"Data de Referência","DT_REFERENCIA","date","TB_PASTA P"),
 	
-	EMPRESA(3,"Empresa","L.ID_LOCAL = P.ID_LOCAL AND L.ID_EMPRESA = E.ID_EMPRESA AND E.NM_EMPRESA","empresa","TB_LOCAL L,TB_EMPRESA E"),
-	ITEMDOCUMENTAL(4,"Item Documental","P.ID_ITEM_DOCUMENTAL = IT.ID_ITEM_DOCUMENTAL AND IT.NM_ITEM_DOCUMENTAL","itemdocumental","TB_ITEM_DOCUMENTAL IT"),
+	EMPRESA(3,"Empresa",
+			"L.ID_LOCAL = P.ID_LOCAL AND L.ID_EMPRESA = E.ID_EMPRESA AND E.NM_EMPRESA",
+			"empresa",
+			"TB_PASTA P, TB_LOCAL L,TB_EMPRESA E"),
+			
+	ITEMDOCUMENTAL(4,"Item Documental",
+			"P.ID_ITEM_DOCUMENTAL = IT.ID_ITEM_DOCUMENTAL AND IT.NM_ITEM_DOCUMENTAL",
+			"itemdocumental",
+			"TB_PASTA P, TB_ITEM_DOCUMENTAL IT"),
 
 	LIMITEDATA(5,"Limite Data","P.DT_DATA_LIMITE_INICIAL","date","TB_PASTA P"),
 	LIMITENOME(6,"Limite Nome","NM_NOME_LIMITE_INICIAL","string","TB_PASTA P"),
 	LIMITEVALOR(7,"Limite Valor","NU_NUMERO_LIMITE_INICIAL","number","TB_PASTA P"),
 	
-	LOCAL(8,"Local","L.ID_LOCAL = P.ID_LOCAL AND L.NM_LOCAL","local","TB_LOCAL L"),
-	
+	LOCAL(8,"Local",
+			"L.ID_LOCAL = P.ID_LOCAL AND L.NM_LOCAL",
+			"local",
+			"TB_PASTA P, TB_LOCAL L"),
+
 	OBSERVACAO(9,"Observação","P.TX_OBSERVACAO","string","TB_PASTA P"),
 	TITULOPASTA(10,"Título Pasta","P.NM_TITULO","string","TB_PASTA P"),
+
+	
 	//VAO(11,"Vão","caixa.vao.vao"),
 	//VAONUMERO(12,"Número Vão","caixa.numeroVao","number"),
 	DESCRICAO(11,"Descrição","P.NM_DESCRICAO","string","TB_PASTA P"),
